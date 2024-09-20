@@ -1,0 +1,242 @@
+body {
+    background-image: url("ld-bg-img.png");
+    background-repeat: no-repeat;
+    background-position: 50% 90px;
+    background-size: 500px 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .fa-lemon {
+    color: #fff700;
+    font-size: 42px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  h3 {
+    text-align: left;
+    padding-left: 75px;
+  }
+  
+  h4 {
+    text-align: left;
+    padding-left: 50px;
+  }
+  
+  h5 {
+    text-align: left;
+  }
+  
+  .menu {
+    text-align: center;
+  }
+  
+  .menu a {
+    margin: 10px;
+    text-decoration: none;
+  }
+  
+  .menu a:HOVER {
+    text-decoration: underline;
+  }
+  
+  hr {
+    border: 0.5px solid black;
+  }
+  
+  .right-para {
+    padding-right: 75px;
+    float: right;
+  }
+  
+  .right-caption {
+    padding-right: 50px;
+    float: right;
+  }
+  
+  .playfair-display-heading {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 60px;
+  }
+  
+  .playfair-display-article-heading {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 550;
+    font-style: normal;
+    font-size: 33px;
+  }
+  
+  .playfair-display-sub-heading {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 22px;
+  }
+  
+  .playfair-display-caption {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 18px;
+  }
+  
+  .playfair-display-para {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+    font-size: 16px;
+  }
+  
+  .playfair-display-link {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+  }
+  
+  .grid-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    margin: 10px;
+    font-size: 30px;
+    text-align: left;
+    height: auto;
+  }
+  
+  .grid-item a {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .grid-item a:HOVER {
+    text-decoration: underline;
+  }
+  
+  .grid-container-article {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    padding: 10px;
+  }
+  
+  .grid-item-article {
+    padding: 20px;
+    margin: 10px;
+    font-size: 30px;
+    text-align: left;
+    height: auto;
+  }
+  
+  .grid-item-article a {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .grid-item-article a:hover {
+    text-decoration: underline;
+  }
+  
+  .date {
+    font-family: "Playfair Display", serif;
+    font-size: 14px;
+  }
+  
+  .justify {
+    text-align: justify;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  .pic {
+    max-width: 90%;
+    text-align: center;
+  }
+  
+  footer {
+    padding: 6%;
+  }
+  
+  .right {
+    float: right;
+  }
+  
+  .footer-link {
+    font-family: "Playfair Display", serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+  
+  @media all and (max-width: 599px){
+  .grid-container {
+    grid-template-columns: 100%;
+    }
+  .grid-container-article {
+    grid-template-columns: 100%;
+    }
+  }
+  
+  @media all and (min-width: 600px) and (max-width:799px){
+  .grid-container {
+    grid-template-columns: 50% 50%;
+    }
+  .grid-container-article {
+    grid-template-columns: 100%;
+    }
+  }
+  
+  @media all and (min-width: 800px) and (max-width:1024px){
+  .grid-container {
+    grid-template-columns: 50% 50%;
+    }
+  .grid-container-article {
+    grid-template-columns: 20% 60% 20%;
+    }
+  }
+  
+  @media all and (min-width: 1025px) and (max-width: 1399px){
+  .grid-container {
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    }
+  .grid-container-article {
+    grid-template-columns: 20% 60% 20%;
+    }
+  }
+  
+  @media all and (min-width: 1400px){
+  .grid-container {
+    grid-template-columns: 25% 25% 25% 25%;
+    }
+  .grid-container-article {
+    grid-template-columns: 20% 60% 20%;
+    }
+  }
+  
