@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+
+{% endblock %}
+
+{% block content %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+      <h1 class="playfair-display-article-heading">{{ article.headline }}</h1>
+       <p class="date">article_date</p>
+       <div class="container">
+        <img src="" alt="{{ article.image_description }}" class="pic">
+       </div>
+      <p class="playfair-display-para justify">
+        {{ article.article_text }}
+      </p>
+    </div>
+   
+   </div>
+{% endblock %}

@@ -6,14 +6,15 @@
 {% endblock %}
 
 {% block content %}
-{% for article in articles %}
 <div class="grid-container">
+    {% for article in articles %}
     <div class="grid-item">
-     <h5 class="playfair-display-caption">{{ article.sub_category }}</h5>
+     <h5 class="playfair-display-caption">{{ article.sub_category|upper }}</h5>
       <div class="container">
-       <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
+       <img src="" alt="{{ article.image_description }}" class="pic">
       </div>
        <a href="">{{ article.headline }}</a>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

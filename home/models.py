@@ -4,25 +4,11 @@ from django.utils import timezone
 
 class Category(models.Model):
 
-    CATEGORY_CHOICES = [
-        ('world', 'World'),
-        ('politics', 'Politics'),
-        ('culture', 'Culture'),
-        ('sport', 'Sport'),
-        ('sci-tech', 'Science & Technology'),
-        ('entertainment', 'Entertainment'),
-    ]
-
     class Meta:
         verbose_name_plural = 'Categories'
 
-    name = models.CharField(
-        max_length=15,
-        choices=CATEGORY_CHOICES,  # Define choices here
-        null=False,
-        blank=False
-    )
-    friendly_name = models.CharField(max_length=254, null=False, blank=False)
+    name = models.CharField(max_length=254)
+    friendly_name = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -38,9 +24,9 @@ class Article(models.Model):
     headline = models.CharField(max_length=1024, null=False, blank=False)
     article_text = models.TextField(null=True, blank=True)
     date = models.DateTimeField(default=timezone.now)
-    image_url = models.URLField(max_length=1024, null=False, blank=False)
-    image = models.ImageField(null=False, blank=False)
-    image_description = models.CharField(max_length=254, null=False, blank=False)
+    image_url = models.URLField(max_length=1024, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    image_description = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
         return self.headline
