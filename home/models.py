@@ -1,3 +1,46 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
+
+class Category(models.Model):
+
+    CATEGORY_CHOICES = [
+        ('world', 'World'),
+        ('politics', 'Politics'),
+        ('culture', 'Culture'),
+        ('sport', 'Sport'),
+        ('sci-tech', 'Science & Technology'),
+        ('entertainment', 'Entertainment'),
+    ]
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+    name = models.CharField(
+        max_length=15,
+        choices=CATEGORY_CHOICES,  # Define choices here
+        null=False,
+        blank=False
+    )
+    friendly_name = models.CharField(max_length=254, null=False, blank=False)
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
+
+
+class Article(models.Model):
+    category = models.ForeignKey('Category', null=True, blank=False,
+                                 on_delete=models.SET_NULL)
+    sub_category = models.CharField(max_length=254, null=False, blank=False)
+    headline = models.CharField(max_length=1024, null=False, blank=False)
+    article_text = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(default=timezone.now)
+    image_url = models.URLField(max_length=1024, null=False, blank=False)
+    image = models.ImageField(null=False, blank=False)
+    image_description = models.CharField(max_length=254, null=False, blank=False)
+
+    def __str__(self):
+        return self.headline
