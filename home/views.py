@@ -14,7 +14,7 @@ def index(request):
 
     if latest:
         # Fetch the 20 most recent articles ordered by 'date' in descending order
-        articles = Article.objects.order_by('-date')[:20]
+        articles = Article.objects.order_by('-date')[:8]
     else:
         # If not showing the latest, check if filtering by category
         category_id = request.GET.get('category')
@@ -23,7 +23,7 @@ def index(request):
         if category_id:
             articles = Article.objects.filter(category_id=category_id)
         else:
-            articles = Article.objects.all()
+            articles = Article.objects.order_by('-date')
 
     # Pass both categories and filtered articles to the template
     context = {

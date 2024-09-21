@@ -29,3 +29,8 @@
     {% endfor %}
 </div>
 {% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+    <script src="{% static 'js/bottom-border-remover.js' %}"></script>
+{% endblock %}

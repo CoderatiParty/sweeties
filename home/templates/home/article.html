@@ -15,7 +15,7 @@
       <h1 class="playfair-display-article-heading">{{ article.headline }}</h1>
        <p class="date">{{ article.date }}</p>
        <div class="container">
-        <img src="" alt="{{ article.image_description }}" class="pic">
+        <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
        </div>
       <p class="playfair-display-para justify">
         {{ article.article_text }}

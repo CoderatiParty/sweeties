@@ -135,6 +135,10 @@ body a {
   .grid-item a:HOVER {
     text-decoration: underline;
   }
+
+  .no-border-bottom {
+    border-bottom: none !important;
+}
   
   .grid-container-article {
     display: grid;
@@ -164,6 +168,7 @@ body a {
   .date {
     font-family: "Playfair Display", serif;
     font-size: 14px;
+    padding-bottom: 5px;
   }
   
   .justify {
@@ -172,6 +177,7 @@ body a {
   
   .container {
     text-align: center;
+    padding-bottom: 5px;
   }
   
   .pic {
