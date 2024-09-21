@@ -7,8 +7,11 @@
 
 {% block content %}
 <div class="menu">
+    <a class="playfair-display-link" href="?latest=true">
+        LATEST
+    </a>
         {% for category in categories %}
-            <a class="playfair-display-link" href="{% url 'article' category.id %}">
+            <a class="playfair-display-link" href="?category={{ category.id }}">
                 {{ category.friendly_name|upper }}
             </a>
         {% endfor %}
@@ -19,7 +22,7 @@
     <div class="grid-item">
      <h5 class="playfair-display-caption">{{ article.sub_category|upper }}</h5>
       <div class="container">
-       <img src="" alt="{{ article.image_description }}" class="pic">
+       <img src="media/{{ article.image }}" alt="{{ article.image_description }}" class="pic">
       </div>
        <a href="{% url 'article' article.id %}">{{ article.headline }}</a>
     </div>

@@ -6,12 +6,29 @@ from .models import Article, Category
 
 def index(request):
     """ A view to return the home page """
-    articles = Article.objects.all().order_by('-date')
-    categories = Category.objects.all().order_by('name')
+    # Get all categories to display in the menu
+    categories = Category.objects.all()
 
+    # Check if the 'latest' parameter is present in the URL
+    latest = request.GET.get('latest')
+
+    if latest:
+        # Fetch the 20 most recent articles ordered by 'date' in descending order
+        articles = Article.objects.order_by('-date')[:20]
+    else:
+        # If not showing the latest, check if filtering by category
+        category_id = request.GET.get('category')
+
+        # Filter articles by category if category_id exists, otherwise show all articles
+        if category_id:
+            articles = Article.objects.filter(category_id=category_id)
+        else:
+            articles = Article.objects.all()
+
+    # Pass both categories and filtered articles to the template
     context = {
-        'articles': articles,
         'categories': categories,
+        'articles': articles,
     }
 
     return render(request, 'home/index.html', context)

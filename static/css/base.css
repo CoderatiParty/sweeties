@@ -1,12 +1,14 @@
 body {
     background-image: url("/media/ld-bg-img.png");
     background-repeat: no-repeat;
-    background-position: 50% 90px;
+    background-position: 50% 80px;
     background-size: 500px 20px;
   }
   
-  h1 {
+body a {
+    display: block;
     text-align: center;
+    text-decoration: none;
   }
   
   .fa-lemon {
@@ -16,6 +18,7 @@ body {
   
   h2 {
     text-align: center;
+    padding-top: 0;
   }
   
   h3 {
@@ -24,8 +27,7 @@ body {
   }
   
   h4 {
-    text-align: left;
-    padding-left: 50px;
+    text-align: center;
   }
   
   h5 {
@@ -37,6 +39,7 @@ body {
   }
   
   .menu a {
+    display: inline;
     margin: 10px;
     text-decoration: none;
   }
@@ -80,7 +83,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-    font-size: 22px;
+    font-size: 14px;
   }
   
   .playfair-display-caption {
@@ -88,7 +91,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
-    font-size: 18px;
+    font-size: 24px;
   }
   
   .playfair-display-para {
@@ -96,7 +99,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 450;
     font-style: normal;
-    font-size: 16px;
+    font-size: 17px;
   }
   
   .playfair-display-link {
@@ -104,7 +107,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-    font-size: 16px;
+    font-size: 18px;
   }
   
   .grid-container {
