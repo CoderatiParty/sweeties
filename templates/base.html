@@ -55,20 +55,27 @@
         <a id="closeButton" class="closebtn">&times;</a>
       <br>
       <br>
+      <br>
+      <br>
+      <br>
+      <br>
         <div class="menu-content">
-          <a class="comic-neue-bold" href="homepage.htm">Home</a>
-          <a class="comic-neue-bold" href="question_1.htm">Go Green</a>
-          <a class="comic-neue-bold" href="for_business.htm">For Your Business</a>
+          <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
+          <br>
+      <hr>
       <br>
+          <a class="playfair-display-link" href="#">Subscribe</a>
       <br>
-          <a class="comic-neue-bold" href="#">Account details</a>
-          <a class="comic-neue-bold" href="#">Account settings</a>
+          <a class="playfair-display-link" href="#">Account details</a>
+          <a class="playfair-display-link" href="#">Account settings</a>
+          <br>
+      <hr>
       <br>
-      <br>
-          <a class="comic-neue-bold" href="#">About GreenStar</a>
-          <a class="comic-neue-bold" href="#">FAQs</a>
-          <a class="comic-neue-bold" href="#">Contact</a>
-          <a class="comic-neue-bold" href="#">Terms</a>
+            <a href="" class="playfair-display-link">About</a>
+            <a href="" class="playfair-display-link">FAQs</a>
+            <a href="" class="playfair-display-link">Contact</a>
+            <a href="" class="playfair-display-link">Privacy</a>
+            <a href="" class="playfair-display-link">Terms</a>
         </div>
       </div>
        <div id="menuButton" class="menuButton_index">
@@ -123,6 +130,7 @@
     </div>
     </footer>
     {% block postloadjs %}
+        <script src="{% static 'js/menu-function.js' %}"></script>
         <script src="{% static 'js/date.js' %}"></script>
         <script src="{% static 'js/show-toasts.js' %}"></script>
         <script src="{% static 'js/copyright.js' %}"></script>

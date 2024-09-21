@@ -1,66 +1,132 @@
-body {
-    background-image: url("/media/ld-bg-img.png");
-    background-repeat: no-repeat;
-    background-position: 50% 80px;
-    background-size: 500px 20px;
-  }
-  
-body a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  .fa-lemon {
-    color: #fff700;
-    font-size: 42px;
-  }
+/* GOOGLE FONTS */
 
-  h1 {
-    text-align: center;
-    padding-top: 0;
-  }
-  
-  h2 {
-    text-align: center;
-    padding-top: 0;
-  }
-  
-  h3 {
-    text-align: left;
-    padding-left: 75px;
-  }
-  
-  h4 {
-    text-align: center;
-  }
-  
-  h5 {
-    text-align: left;
-  }
-
-  /* MENU STYLING */
-
-@keyframes fade_in_menu {
-  from {opacity: 0;}
-  to {opacity: 1;}
+.playfair-display-heading {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 56px;
 }
+
+.playfair-display-heading-footer {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 45px;
+}
+
+.playfair-display-sub-heading-footer {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+}
+
+.playfair-display-article-heading {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 550;
+  font-style: normal;
+  font-size: 33px;
+}
+
+.playfair-display-sub-heading {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.playfair-display-caption {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.playfair-display-para {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
+  font-size: 17px;
+}
+
+.playfair-display-link {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+}
+
+.playfair-display-link-article {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+}
+
+/* MAIN ELEMENTS */
+
+body {
+  background-image: url("/media/ld-bg-img.png");
+  background-repeat: no-repeat;
+  background-position: 50% 80px;
+  background-size: 500px 20px;
+}
+
+body a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding-left: 50px;
+  cursor: pointer;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 0;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 0;
+  padding-right: 10px;
+}
+
+h3 {
+  text-align: left;
+  padding-left: 50px;
+}
+
+h4 {
+  text-align: center;
+  padding-right: 10px;
+}
+
+h5 {
+  text-align: left;
+}
+
+hr {
+  border: 0.5px solid black;
+}
+
+/* MENU ELEMENTS */
 
 .menuButton_index {
   margin-top: 10px;
   margin-right: 15px;
   float: right;
   width: 35px;
-  opacity: 0;
-  animation-name: fade_in_menu;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  animation-timing-function: ease-in;
-  animation-fill-mode: forwards;
-  animation-delay: 11s;
-}
-
-.menuButton_index:hover {
+  z-index: 1;
+  display: block;
   cursor: pointer;
 }
 
@@ -68,34 +134,9 @@ body a {
   width: 30px;
   height: 3px;
   border-radius: 1.5px;
-  background-color: #106936;
-  margin: 6px 0;
-  opacity: 0;
-  animation-name: fade_in_menu;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  animation-timing-function: ease-in;
-  animation-fill-mode: forwards;
-  animation-delay: 11s;
-}
-
-.menuButton {
-  margin-top: 10px;
-  margin-right: 15px;
-  float: right;
-  width: 35px;
-}
-
-.menuButton:hover {
-  cursor: pointer;
-}
-
-.lines {
-  width: 30px;
-  height: 3px;
-  border-radius: 1.5px;
   background-color: #000000;
   margin: 6px 0;
+  z-index: 1;
 }
 
 .menu-overlay {
@@ -105,338 +146,308 @@ body a {
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: #62cc8e;
+  background-color: #fff700;
   opacity: 0.95;
   overflow-x: hidden;
   transition: 0.5s;
-  text-align: left;
-}
-
-.menu-content a {
-  margin-left: 20px;
-  padding: 8px;
-  text-decoration: none;
-  font-size: 2.5vh;
-  color: #106936;
-  display: block;
-  transition: 0.3s;
 }
 
 .menu-overlay a:hover, .menu-overlay a:focus {
   text-decoration: underline;
 }
 
+.menu-content {
+  margin: 20px;
+  padding: 8px;
+  text-decoration: none;
+  font-size: 2.5vh;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.menu-content a {
+  text-align: left;
+}
+
 .menu-overlay .closebtn {
   position: relative;
   top: 4%;
-  color: #106936;
+  color: #000000;
   font-size: 3vh;
   padding-left: 0.95vw;
+  float: left;
 }
 
+/* HEADER ELEMENTS */
 
-  
-  .category-links {
-    text-align: center;
-  }
-  
-  .category-links a {
-    display: inline;
-    margin: 10px;
-    text-decoration: none;
-  }
-  
-  .category-links a:HOVER {
-    text-decoration: underline;
-  }
-  
-  hr {
-    border: 0.5px solid black;
-  }
-  
-  .right-para {
-    padding-right: 75px;
-    float: right;
-  }
-  
-  .right-caption {
-    padding-right: 50px;
-    float: right;
-  }
-  
-  .playfair-display-heading {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 60px;
-  }
+.fa-lemon {
+  color: #fff700;
+  font-size: 42px;
+}
 
-  .playfair-display-heading-footer {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 45px;
-  }
+.date {
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  padding-bottom: 5px;
+}
 
-  .playfair-display-sub-heading-footer {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 12px;
-  }
-  
-  .playfair-display-article-heading {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 550;
-    font-style: normal;
-    font-size: 33px;
-  }
-  
-  .playfair-display-sub-heading {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 14px;
-  }
-  
-  .playfair-display-caption {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 24px;
-  }
-  
+.category-links {
+  text-align: center;
+}
+
+.category-links a {
+  display: inline;
+  margin: 10px;
+  text-decoration: none;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.category-links a:HOVER {
+  text-decoration: underline;
+}
+
+.category-links-article {
+  text-align: center;
+}
+
+.category-links-article a {
+  display: inline;
+  margin: 10px;
+  text-decoration: none;
+  padding-right: 50px;
+  cursor: pointer;
+}
+
+.category-links-article a:HOVER {
+  text-decoration: underline;
+}
+
+.fa-arrow-left {
+  font-size: 16px;
+}
+
+/* LAYOUT CLASSES */
+
+.right {
+  float: right;
+}
+
+.right-para {
+  padding-right: 50px;
+  float: right;
+}
+
+.justify {
+  text-align: justify;
+}
+
+/* GRID ELEMENTS */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.grid-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  margin: 10px;
+  font-size: 30px;
+  text-align: left;
+  height: auto;
+}
+
+.grid-item a {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.grid-item a:HOVER {
+  text-decoration: underline;
+}
+
+.grid-container-article {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  padding: 10px;
+}
+
+.grid-item-article {
+  padding: 20px;
+  margin: 10px;
+  font-size: 30px;
+  text-align: left;
+  height: auto;
+}
+
+.grid-item-article a {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.grid-item-article a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.pic {
+  max-width: 90%;
+  text-align: center;
+}
+
+/* FOOTER ELEMENTS */
+
+footer {
+  background-color: white;
+  width: 100%;
+}
+
+footer .fa-lemon {
+  font-size: 34px;
+}
+
+.grid-container-footer {
+  display: grid;
+  grid-template-columns: 30% 60%;
+  padding: 10px;
+}
+
+.grid-item-footer {
+  padding: 5px;
+  margin: 5px;
+  font-size: 30px;
+  text-align: center;
+  height: auto;
+}
+
+.grid-item-footer a {
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 5px;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.grid-item-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-link {
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.back_to_top {
+  background-color: #ffffff;
+  border: 0px;
+  color: #000000;
+  padding: 0px 0px;
+  font-size: 20px;
+  cursor: n-resize;
+  float: right;
+}
+
+/* MEDIA QUERY */
+
+@media all and (max-width: 599px){
   .playfair-display-para {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
     font-weight: 450;
-    font-style: normal;
-    font-size: 17px;
+    font-size: 15px;
   }
-  
-  .playfair-display-link {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 18px;
-  }
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    padding: 10px;
-  }
-  
-  .grid-item {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    margin: 10px;
-    font-size: 30px;
-    text-align: left;
-    height: auto;
-  }
-  
-  .grid-item a {
-    font-family: "Playfair Display", serif;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  
-  .grid-item a:HOVER {
-    text-decoration: underline;
-  }
-
-  .no-border-bottom {
-    border-bottom: none !important;
-}
-  
-  .grid-container-article {
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    padding: 10px;
-  }
-  
-  .grid-item-article {
-    padding: 20px;
-    margin: 10px;
-    font-size: 30px;
-    text-align: left;
-    height: auto;
-  }
-  
-  .grid-item-article a {
-    font-family: "Playfair Display", serif;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  
-  .grid-item-article a:hover {
-    text-decoration: underline;
-  }
-  
-  .date {
-    font-family: "Playfair Display", serif;
-    font-size: 14px;
-    padding-bottom: 5px;
-  }
-  
-  .justify {
-    text-align: justify;
-  }
-  
-  .container {
-    text-align: center;
-    padding-bottom: 5px;
-  }
-  
-  .pic {
-    max-width: 90%;
-    text-align: center;
-  }
-  
-  footer {
-    background-color: white;
-    width: 100%;
-  }
-
-  footer .fa-lemon {
-    font-size: 34px;
-  }
-
-  .grid-container-footer {
-    display: grid;
-    grid-template-columns: 30% 60%;
-    padding: 10px;
-  }
-  
-  .grid-item-footer {
-    padding: 5px;
-    margin: 5px;
-    font-size: 30px;
-    text-align: center;
-    height: auto;
-  }
-  
-  .grid-item-footer a {
-    font-family: "Playfair Display", serif;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 5px;
-    margin: 0;
-    border: 0;
-  }
-  
-  .grid-item-footer a:hover {
-    text-decoration: underline;
-  }
-  
-  .right {
-    float: right;
-  }
-  
-  .footer-link {
-    font-family: "Playfair Display", serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  
-  .footer-link:hover {
-    text-decoration: underline;
-  }
-
-  .back_to_top {
-    background-color: #ffffff;
-    border: 0px;
-    color: #000000;
-    padding: 0px 0px;
-    font-size: 20px;
-    cursor: n-resize;
-    float: right;
-  }
-  
-  @media all and (max-width: 599px){
   .grid-container {
     grid-template-columns: 100%;
-    }
+  }
   .grid-item:nth-last-child(1) {
     border-bottom: none;
   }
   .grid-container-article {
     grid-template-columns: 100%;
-    }
+  }
   .grid-container-footer {
     grid-template-columns: 100%;
-    }
   }
-  
-  @media all and (min-width: 600px) and (max-width:799px){
+}
+
+@media all and (min-width: 600px) and (max-width:799px){
   .grid-container {
     grid-template-columns: 50% 50%;
-    }
+  }
   .grid-item:nth-last-child(-n + 2) {
     border-bottom: none;
   }
   .grid-container-article {
     grid-template-columns: 100%;
-    }
+  }
   .grid-container-footer {
     grid-template-columns: 100%;
-    }
   }
-  
-  @media all and (min-width: 800px) and (max-width:1024px){
+}
+
+@media all and (min-width: 800px) and (max-width:1024px){
   .grid-container {
     grid-template-columns: 50% 50%;
-    }
+  }
   .grid-item:nth-last-child(-n + 2) {
     border-bottom: none;
   }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
-    }
+  }
   .grid-container-footer {
     grid-template-columns: 30% 60%;
-    }
   }
-  
-  @media all and (min-width: 1025px) and (max-width: 1399px){
+}
+
+@media all and (min-width: 1025px) and (max-width: 1399px){
   .grid-container {
     grid-template-columns: 33.33% 33.33% 33.33%;
-    }
+  }
   .grid-item:nth-last-child(-n + 3) {
     border-bottom: none;
   }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
-    }
+  }
   .grid-container-footer {
     grid-template-columns: 30% 60%;
-    }
   }
-  
-  @media all and (min-width: 1400px){
+}
+
+@media all and (min-width: 1400px){
   .grid-container {
     grid-template-columns: 25% 25% 25% 25%;
-    }
+  }
   .grid-item:nth-last-child(-n + 4) {
     border-bottom: none;
   }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
-    }
+  }
   .grid-container-footer {
     grid-template-columns: 30% 60%;
-    }
   }
-  
+}

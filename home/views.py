@@ -37,10 +37,16 @@ def index(request):
 def article(request, article_id):
     """ A view to show each article in full """
 
+    current_path = request.path
+    referrer = request.META.get('HTTP_REFERER')
+
+
     article = get_object_or_404(Article, pk=article_id)
 
     context = {
         'article': article,
+        'current_path': current_path,
+        'referrer': referrer,
     }
 
     return render(request, 'home/article.html', context)
