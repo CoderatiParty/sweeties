@@ -21,7 +21,7 @@ def index(request):
 
         # Filter articles by category if category_id exists, otherwise show all articles
         if category_id:
-            articles = Article.objects.filter(category_id=category_id)
+            articles = Article.objects.filter(category_id=category_id).order_by('-date')
         else:
             articles = Article.objects.order_by('-date')
 

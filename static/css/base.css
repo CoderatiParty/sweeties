@@ -15,6 +15,11 @@ body a {
     color: #fff700;
     font-size: 42px;
   }
+
+  h1 {
+    text-align: center;
+    padding-top: 0;
+  }
   
   h2 {
     text-align: center;
@@ -68,6 +73,14 @@ body a {
     font-weight: 600;
     font-style: normal;
     font-size: 60px;
+  }
+
+  .playfair-display-footer {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 45px;
   }
   
   .playfair-display-article-heading {
@@ -186,7 +199,38 @@ body a {
   }
   
   footer {
-    padding: 6%;
+    background-color: white;
+    border: 6%;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .grid-container-footer {
+    display: grid;
+    grid-template-columns: 30% 60%;
+    padding: 10px;
+  }
+  
+  .grid-item-footer {
+    padding: 5px;
+    margin: 5px;
+    font-size: 30px;
+    text-align: center;
+    height: auto;
+  }
+  
+  .grid-item-footer a {
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    margin: 0;
+    border: 0;
+  }
+  
+  .grid-item-footer a:hover {
+    text-decoration: underline;
   }
   
   .right {
@@ -211,6 +255,9 @@ body a {
   .grid-container-article {
     grid-template-columns: 100%;
     }
+  .grid-container-footer {
+    grid-template-columns: 100%;
+    }
   }
   
   @media all and (min-width: 600px) and (max-width:799px){
@@ -218,6 +265,9 @@ body a {
     grid-template-columns: 50% 50%;
     }
   .grid-container-article {
+    grid-template-columns: 100%;
+    }
+  .grid-container-footer {
     grid-template-columns: 100%;
     }
   }
@@ -229,6 +279,9 @@ body a {
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
     }
+  .grid-container-footer {
+    grid-template-columns: 30% 60%;
+    }
   }
   
   @media all and (min-width: 1025px) and (max-width: 1399px){
@@ -238,6 +291,9 @@ body a {
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
     }
+  .grid-container-footer {
+    grid-template-columns: 30% 60%;
+    }
   }
   
   @media all and (min-width: 1400px){
@@ -246,6 +302,9 @@ body a {
     }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
+    }
+  .grid-container-footer {
+    grid-template-columns: 30% 60%;
     }
   }
   
