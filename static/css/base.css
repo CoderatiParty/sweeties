@@ -38,18 +38,115 @@ body a {
   h5 {
     text-align: left;
   }
+
+  /* MENU STYLING */
+
+@keyframes fade_in_menu {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.menuButton_index {
+  margin-top: 10px;
+  margin-right: 15px;
+  float: right;
+  width: 35px;
+  opacity: 0;
+  animation-name: fade_in_menu;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  animation-delay: 11s;
+}
+
+.menuButton_index:hover {
+  cursor: pointer;
+}
+
+.lines_index {
+  width: 30px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #106936;
+  margin: 6px 0;
+  opacity: 0;
+  animation-name: fade_in_menu;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  animation-delay: 11s;
+}
+
+.menuButton {
+  margin-top: 10px;
+  margin-right: 15px;
+  float: right;
+  width: 35px;
+}
+
+.menuButton:hover {
+  cursor: pointer;
+}
+
+.lines {
+  width: 30px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #000000;
+  margin: 6px 0;
+}
+
+.menu-overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #62cc8e;
+  opacity: 0.95;
+  overflow-x: hidden;
+  transition: 0.5s;
+  text-align: left;
+}
+
+.menu-content a {
+  margin-left: 20px;
+  padding: 8px;
+  text-decoration: none;
+  font-size: 2.5vh;
+  color: #106936;
+  display: block;
+  transition: 0.3s;
+}
+
+.menu-overlay a:hover, .menu-overlay a:focus {
+  text-decoration: underline;
+}
+
+.menu-overlay .closebtn {
+  position: relative;
+  top: 4%;
+  color: #106936;
+  font-size: 3vh;
+  padding-left: 0.95vw;
+}
+
+
   
-  .menu {
+  .category-links {
     text-align: center;
   }
   
-  .menu a {
+  .category-links a {
     display: inline;
     margin: 10px;
     text-decoration: none;
   }
   
-  .menu a:HOVER {
+  .category-links a:HOVER {
     text-decoration: underline;
   }
   
@@ -75,12 +172,20 @@ body a {
     font-size: 60px;
   }
 
-  .playfair-display-footer {
+  .playfair-display-heading-footer {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
     font-size: 45px;
+  }
+
+  .playfair-display-sub-heading-footer {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
   }
   
   .playfair-display-article-heading {
@@ -200,9 +305,11 @@ body a {
   
   footer {
     background-color: white;
-    border: 6%;
     width: 100%;
-    z-index: 999;
+  }
+
+  footer .fa-lemon {
+    font-size: 34px;
   }
 
   .grid-container-footer {
@@ -247,11 +354,24 @@ body a {
   .footer-link:hover {
     text-decoration: underline;
   }
+
+  .back_to_top {
+    background-color: #ffffff;
+    border: 0px;
+    color: #000000;
+    padding: 0px 0px;
+    font-size: 20px;
+    cursor: n-resize;
+    float: right;
+  }
   
   @media all and (max-width: 599px){
   .grid-container {
     grid-template-columns: 100%;
     }
+  .grid-item:nth-last-child(1) {
+    border-bottom: none;
+  }
   .grid-container-article {
     grid-template-columns: 100%;
     }
@@ -264,6 +384,9 @@ body a {
   .grid-container {
     grid-template-columns: 50% 50%;
     }
+  .grid-item:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
   .grid-container-article {
     grid-template-columns: 100%;
     }
@@ -276,6 +399,9 @@ body a {
   .grid-container {
     grid-template-columns: 50% 50%;
     }
+  .grid-item:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
     }
@@ -288,6 +414,9 @@ body a {
   .grid-container {
     grid-template-columns: 33.33% 33.33% 33.33%;
     }
+  .grid-item:nth-last-child(-n + 3) {
+    border-bottom: none;
+  }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
     }
@@ -300,6 +429,9 @@ body a {
   .grid-container {
     grid-template-columns: 25% 25% 25% 25%;
     }
+  .grid-item:nth-last-child(-n + 4) {
+    border-bottom: none;
+  }
   .grid-container-article {
     grid-template-columns: 20% 60% 20%;
     }

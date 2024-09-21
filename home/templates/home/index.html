@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="menu">
+<div class="category-links">
     <a class="playfair-display-link" href="?latest=true">
         LATEST
     </a>
@@ -28,9 +28,4 @@
     </div>
     {% endfor %}
 </div>
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
-    <script src="{% static 'js/bottom-border-remover.js' %}"></script>
 {% endblock %}

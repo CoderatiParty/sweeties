@@ -51,6 +51,30 @@
     <title>``` LEMON DROPS ```{% block extra_title %}{% endblock %}</title>
   </head>
   <body>
+    <div id="mainMenu" class="menu-overlay">
+        <a id="closeButton" class="closebtn">&times;</a>
+      <br>
+      <br>
+        <div class="menu-content">
+          <a class="comic-neue-bold" href="homepage.htm">Home</a>
+          <a class="comic-neue-bold" href="question_1.htm">Go Green</a>
+          <a class="comic-neue-bold" href="for_business.htm">For Your Business</a>
+      <br>
+      <br>
+          <a class="comic-neue-bold" href="#">Account details</a>
+          <a class="comic-neue-bold" href="#">Account settings</a>
+      <br>
+      <br>
+          <a class="comic-neue-bold" href="#">About GreenStar</a>
+          <a class="comic-neue-bold" href="#">FAQs</a>
+          <a class="comic-neue-bold" href="#">Contact</a>
+          <a class="comic-neue-bold" href="#">Terms</a>
+        </div>
+      </div>
+       <div id="menuButton" class="menuButton_index">
+        <div class="lines_index"></div>
+        <div class="lines_index"></div>
+       </div>
     <a href="{% url 'home' %}" class="playfair-display-heading">Lemon <i class="fa-solid fa-lemon"></i> Drops</a>
     <h2 class="playfair-display-sub-heading">Experrectus ut irrumabo</h2>
     <h4 class="playfair-display-caption">FAKE NEWS DAILY</h4>
@@ -81,11 +105,6 @@
     {% block content %}
     {% endblock %}
 
-    {% block postloadjs %}
-        <script src="{% static 'js/date.js' %}"></script>
-        <script src="{% static 'js/show-toasts.js' %}"></script>
-    {% endblock %}
-
     <footer>
         <hr>
         <div class="grid-container-footer">
@@ -97,9 +116,17 @@
             <a href="" class="footer-link">Terms</a>
         </div>
         <div class="grid-item-footer">
-            <h1 class="playfair-display-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+            <h1 class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+            <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
+            <button onclick="topFunction()" class="back_to_top">&#8673;</button>
         </div>
     </div>
     </footer>
+    {% block postloadjs %}
+        <script src="{% static 'js/date.js' %}"></script>
+        <script src="{% static 'js/show-toasts.js' %}"></script>
+        <script src="{% static 'js/copyright.js' %}"></script>
+        <script src="{% static 'js/back-to-top.js' %}"></script>
+    {% endblock %}
   </body>
 </html>
