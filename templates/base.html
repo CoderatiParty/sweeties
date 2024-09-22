@@ -80,11 +80,13 @@
         <div class="lines_index"></div>
         <div class="lines_index"></div>
        </div>
+       {% url 'corporate' as corporate_url %}
+       {% if request.path != corporate_url %}
     <a href="{% url 'home' %}" class="playfair-display-heading">Lemon <i class="fa-solid fa-lemon"></i> Drops</a>
     <h2 class="playfair-display-sub-heading">Experrectus ut irrumabo</h2>
     <h4 class="playfair-display-caption">FAKE NEWS DAILY</h4>
     <h3 class="playfair-display-para">Scooby Pips, Editor-In-Chief<span id="date" class="right-para"></span></h3>
-
+    {% endif %}
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -108,24 +110,30 @@
 
     {% block content %}
     {% endblock %}
-
+    {% url 'corporate' as corporate_url %}
+    {% if request.path != corporate_url %}
     <footer>
         <hr>
-        <div class="grid-container-footer">
-        <div class="grid-item-footer">
-            <a href="{% url 'about' %}" class="footer-link">About</a>
-            <a href="{% url 'faqs' %}" class="footer-link">FAQs</a>
-            <a href="{% url 'contact' %}" class="footer-link">Contact</a>
-            <a href="{% url 'privacy' %}" class="footer-link">Privacy</a>
-            <a href="{% url 'terms' %}" class="footer-link">Terms</a>
-        </div>
-        <div class="grid-item-footer">
-            <h1 class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+            <div class="grid-container-footer">
+                <div class="grid-item-footer">
+                    <br>
+                    <a href="{% url 'about' %}" class="footer-link">About</a>
+                    <a href="{% url 'faqs' %}" class="footer-link">FAQs</a>
+                    <a href="{% url 'contact' %}" class="footer-link">Contact</a>
+                    <a href="{% url 'privacy' %}" class="footer-link">Privacy</a>
+                    <a href="{% url 'terms' %}" class="footer-link">Terms</a>
+                </div>
+                <div class="grid-item-footer">
+                    <h1 class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+                    <a href="" class="playfair-display-caption">Subscribe for less than 1 pence per day <sup>*</sup></a>
+                    <p class="playfair-display-para"><sup>*</sup> Offer only available for eternity</p>
+                    <button onclick="topFunction()" class="back_to_top">&#8673;</button>
+                </div>
+            </div>
             <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
-            <button onclick="topFunction()" class="back_to_top">&#8673;</button>
-        </div>
-    </div>
+            <br>
     </footer>
+    {% endif %}
     {% block postloadjs %}
         <script src="{% static 'js/menu-function.js' %}"></script>
         <script src="{% static 'js/date.js' %}"></script>
