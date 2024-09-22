@@ -3,20 +3,23 @@
 
 {% block page_header %}
 
+<div class="category-links">
+    <hr>
+        <a class="playfair-display-link" href="?latest=true">
+            LATEST
+        </a>
+            {% for category in categories %}
+                <a class="playfair-display-link" href="?category={{ category.id }}">
+                    {{ category.friendly_name|upper }}
+                </a>
+            {% endfor %}
+    <hr>
+</div>
+
 {% endblock %}
 
 {% block content %}
-<div class="category-links">
-    <a class="playfair-display-link" href="?latest=true">
-        LATEST
-    </a>
-        {% for category in categories %}
-            <a class="playfair-display-link" href="?category={{ category.id }}">
-                {{ category.friendly_name|upper }}
-            </a>
-        {% endfor %}
-        <hr>
-</div>
+
 <div class="grid-container">
     {% for article in articles %}
     <div class="grid-item">
@@ -28,4 +31,5 @@
     </div>
     {% endfor %}
 </div>
+
 {% endblock %}

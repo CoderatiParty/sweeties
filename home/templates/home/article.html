@@ -2,16 +2,17 @@
 {% load static %}
 
 {% block page_header %}
+<div class="category-links">
+  <hr>
+    <a class="playfair-display-link" onclick="goBack('{{ referrer }}')">
+      <i class="fa-solid fa-arrow-left">&nbsp;</i>Back
+    </a>
+  <hr>
+</div>
 
 {% endblock %}
 
 {% block content %}
-<div class="category-links-article">
-  <a class="playfair-display-link-article" onclick="goBack('{{ referrer }}')">
-      <i class="fa-solid fa-arrow-left"> </i>Back
-  </a>
-      <hr>
-</div>
 
 <div class="grid-container-article">
 
@@ -30,6 +31,7 @@
     </div>
    
    </div>
+   
 {% endblock %}
 
 {% block postloadjs %}

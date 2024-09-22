@@ -64,20 +64,12 @@
   font-size: 18px;
 }
 
-.playfair-display-link-article {
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 18px;
-}
-
 /* MAIN ELEMENTS */
 
 body {
   background-image: url("/media/ld-bg-img.png");
   background-repeat: no-repeat;
-  background-position: 50% 80px;
+  background-position: 50% 110px;
   background-size: 500px 20px;
 }
 
@@ -85,19 +77,16 @@ body a {
   display: block;
   text-align: center;
   text-decoration: none;
-  padding-left: 50px;
   cursor: pointer;
+  padding-top: 34px;
 }
 
 h1 {
   text-align: center;
-  padding-top: 0;
 }
 
 h2 {
   text-align: center;
-  padding-top: 0;
-  padding-right: 10px;
 }
 
 h3 {
@@ -107,11 +96,14 @@ h3 {
 
 h4 {
   text-align: center;
-  padding-right: 10px;
 }
 
 h5 {
   text-align: left;
+}
+
+h6 {
+  text-align: center;
 }
 
 hr {
@@ -147,7 +139,6 @@ hr {
   top: 0;
   right: 0;
   background-color: #fff700;
-  opacity: 0.95;
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -169,6 +160,9 @@ hr {
 
 .menu-content a {
   text-align: left;
+  padding-top: 5px;
+  padding-left: 40px;
+  padding-bottom: 5px;
 }
 
 .menu-overlay .closebtn {
@@ -194,6 +188,7 @@ hr {
 }
 
 .category-links {
+  background-color: #fefdcf;
   text-align: center;
 }
 
@@ -201,27 +196,10 @@ hr {
   display: inline;
   margin: 10px;
   text-decoration: none;
-  padding-left: 0;
   cursor: pointer;
 }
 
 .category-links a:HOVER {
-  text-decoration: underline;
-}
-
-.category-links-article {
-  text-align: center;
-}
-
-.category-links-article a {
-  display: inline;
-  margin: 10px;
-  text-decoration: none;
-  padding-right: 50px;
-  cursor: pointer;
-}
-
-.category-links-article a:HOVER {
   text-decoration: underline;
 }
 
@@ -266,7 +244,6 @@ hr {
   font-size: 18px;
   font-weight: 600;
   text-decoration: none;
-  padding-left: 0;
   cursor: pointer;
 }
 
@@ -313,7 +290,7 @@ hr {
 /* FOOTER ELEMENTS */
 
 footer {
-  background-color: white;
+  background-color: #fefdcf;
   width: 100%;
 }
 
@@ -362,13 +339,24 @@ footer .fa-lemon {
 }
 
 .back_to_top {
-  background-color: #ffffff;
+  background-color: #fefdcf;
   border: 0px;
   color: #000000;
   padding: 0px 0px;
   font-size: 20px;
   cursor: n-resize;
   float: right;
+}
+
+/* CORPORATE PAGES */
+
+.corp-head {
+  background-color: #fefdcf;
+}
+
+.corp-body {
+  margin: 0;
+  padding: 0;
 }
 
 /* MEDIA QUERY */
