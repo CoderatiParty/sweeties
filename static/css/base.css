@@ -369,7 +369,7 @@ footer .fa-lemon {
   background-color: #fefdcf;
   border: 0px;
   color: #000000;
-  padding: 0px 0px;
+  padding: 0 0;
   font-size: 20px;
   cursor: n-resize;
   float: right;
@@ -381,6 +381,13 @@ footer .fa-lemon {
   background-color: #fefdcf;
   margin: 0;
   padding: 0;
+}
+
+.corp-footer {
+  background-color: #fefdcf;
+  margin: 0;
+  padding-right: 30px;
+  padding-left: 30px;
 }
 
 .grid-container-corp {
