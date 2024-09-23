@@ -57,8 +57,6 @@
       <br>
       <br>
       <br>
-      <br>
-      <br>
         <div class="menu-content">
           <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
       <hr>
@@ -68,20 +66,44 @@
           <a class="playfair-display-link" href="#">Account settings</a>
       <hr>
       <a href="{% url 'corporate' %}" class="playfair-display-link">Corporate Pages</a>
-      <br>
-            <a href="{% url 'about' %}" class="playfair-display-link">About</a>
-            <a href="{% url 'faqs' %}" class="playfair-display-link">FAQs</a>
-            <a href="{% url 'contact' %}" class="playfair-display-link">Contact</a>
-            <a href="{% url 'privacy' %}" class="playfair-display-link">Privacy</a>
-            <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
+            <ul>
+                <li>
+                    <a href="{% url 'about' %}" class="playfair-display-link">About</a>
+                </li>
+                <li>
+                    <a href="{% url 'faqs' %}" class="playfair-display-link">FAQs</a>
+                </li>
+                <li>
+                    <a href="{% url 'contact' %}" class="playfair-display-link">Contact</a>
+                </li>
+                <li>
+                    <a href="{% url 'privacy' %}" class="playfair-display-link">Privacy</a>
+                </li>
+                <li>
+                    <a href="{% url 'payments' %}" class="playfair-display-link">Payments</a>
+                </li>
+                <li>
+                    <a href="{% url 'refunds' %}" class="playfair-display-link">Refunds</a>
+                </li>
+                <li>
+                    <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
+                </li>
+            </ul>
         </div>
       </div>
        <div id="menuButton" class="menuButton_index">
         <div class="lines_index"></div>
         <div class="lines_index"></div>
        </div>
-       {% url 'corporate' as corporate_url %}
-       {% if request.path != corporate_url %}
+        {% url 'corporate' as corporate_url %}
+        {% url 'about' as about_url %}
+        {% url 'faqs' as faqs_url %}
+        {% url 'contact' as contact_url %}
+        {% url 'privacy' as privacy_url %}
+        {% url 'payments' as payments_url %}
+        {% url 'refunds' as refunds_url %}
+        {% url 'terms' as terms_url %}
+        {% if request.path != corporate_url and request.path != about_url and request.path != faqs_url and request.path != contact_url and request.path != privacy_url and request.path != payments_url and request.path != refunds_url and request.path != terms_url %}
     <a href="{% url 'home' %}" class="playfair-display-heading">Lemon <i class="fa-solid fa-lemon"></i> Drops</a>
     <h2 class="playfair-display-sub-heading">Experrectus ut irrumabo</h2>
     <h4 class="playfair-display-caption">FAKE NEWS DAILY</h4>
@@ -111,7 +133,14 @@
     {% block content %}
     {% endblock %}
     {% url 'corporate' as corporate_url %}
-    {% if request.path != corporate_url %}
+    {% url 'about' as about_url %}
+    {% url 'faqs' as faqs_url %}
+    {% url 'contact' as contact_url %}
+    {% url 'privacy' as privacy_url %}
+    {% url 'payments' as payments_url %}
+    {% url 'refunds' as refunds_url %}
+    {% url 'terms' as terms_url %}
+    {% if request.path != corporate_url and request.path != about_url and request.path != faqs_url and request.path != contact_url and request.path != privacy_url and request.path != payments_url and request.path != refunds_url and request.path != terms_url %}
     <footer>
         <hr>
             <div class="grid-container-footer">

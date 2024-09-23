@@ -84,3 +84,31 @@ def terms(request):
     }
 
     return render(request, 'corporate/terms.html', context)
+
+
+def payments(request):
+    """ A view to show the main corporate page """
+
+    current_path = request.path
+    referrer = request.META.get('HTTP_REFERER')
+
+    context = {
+        'current_path': current_path,
+        'referrer': referrer,
+    }
+
+    return render(request, 'corporate/payments.html', context)
+
+
+def refunds(request):
+    """ A view to show the main corporate page """
+
+    current_path = request.path
+    referrer = request.META.get('HTTP_REFERER')
+
+    context = {
+        'current_path': current_path,
+        'referrer': referrer,
+    }
+
+    return render(request, 'corporate/refunds.html', context)

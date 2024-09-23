@@ -3,10 +3,10 @@
 
 {% block page_header %}
 <div class="corp-head">
-        <h4 class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</h4>
-            <h6 class="playfair-display-sub-heading">Where personality goes to die</h6>
-            <br>
-            <br>
+    <a href="{% url 'corporate' %}" class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</a>
+        <h6 class="playfair-display-sub-heading">Where the will to live dies</h6>
+    <br>
+    <br>
 </div>
 {% endblock %}
 {% block content %}
@@ -14,17 +14,46 @@
     <hr>
     <div class="grid-container-corp">
         <div class="grid-item-corp">
-            <p class="playfair-display-caption">"Lawyers are like vegetables - no one likes them but you need them." <sub>A LAWYER</sub></p>
+            <p class="playfair-display-quote">"Lawyers are like vegetables - no one likes them but you need them."<br><span class="playfair-display-name">A. Lawyer</span></p>
             <p class="playfair-display-text justify">Congratulations for visiting Lemon Drops' <sup>TM</sup> Corporate Pages. Your dedication to the satirical cause is beyond our wildest dreams.</p>
             <p class="playfair-display-text justify">Here you will find everything we could think to say about Lemon Drops <sup>TM</sup> before we buried our foreheads onto our keyboards and cursed Apple for making the keys so wonderful to the touch.</p>
-            <a href="{% url 'about' %}" class="footer-link">About</a>
-            <a href="{% url 'faqs' %}" class="footer-link">FAQs</a>
-            <a href="{% url 'contact' %}" class="footer-link">Contact</a>
-            <a href="{% url 'privacy' %}" class="footer-link">Privacy</a>
-            <a href="{% url 'terms' %}" class="footer-link">Terms</a>
+                <ul>
+                    <li>
+                        <a href="{% url 'about' %}" class="playfair-display-para">About</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'faqs' %}" class="playfair-display-para">FAQs</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'contact' %}" class="playfair-display-para">Contact</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'privacy' %}" class="playfair-display-para">Privacy</a>
+                    </li>
+                </ul>
         </div>
         <div class="grid-item-corp">
-            <h1 class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+            <div class="container">
+                <a href="{% url 'home' %}" class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
+                <a href="" class="playfair-display-caption">Subscriptions</a>
+            </div>
+                <p class="playfair-display-text justify">Should you wish to subscribe to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup></p>
+                <p class="playfair-display-text justify">Subscribers receive exclusive news bulletins sent directly before anything actually happens. That's right, World leading spam for less 1 pence a day! <sup>*</sup></p>
+                <p class="playfair-display-text justify">Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.</p>
+                <p class="playfair-display-text justify">Subscriptions are available on a monthly or annual basis.</p>
+                <p class="playfair-display-text justify">Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? Below we have compiled some pages of legal sounding words to convince you otherwise.</p>
+                    <ul>
+                        <li>
+                            <a href="{% url 'payments' %}" class="playfair-display-para">Payments</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'refunds' %}" class="playfair-display-para">Refunds</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
+                        </li>
+                    </ul>
+                <p class="playfair-display-text justify"><sup>*</sup> Sign up for 4 years and get leap day free!</p>
         </div>
     </div>
     <hr>

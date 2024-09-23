@@ -7,7 +7,7 @@ closeButton.addEventListener("click", closeMenu);
 
 function openMenu() {
   if (window.innerWidth > 700) {
-  document.getElementById("mainMenu").style.width = "30%";
+  document.getElementById("mainMenu").style.width = "50%";
   } else {
   document.getElementById("mainMenu").style.width = "75%";
   }

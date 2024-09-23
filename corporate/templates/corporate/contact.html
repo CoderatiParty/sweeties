@@ -3,13 +3,25 @@
 
 {% block page_header %}
 <div class="corp-head">
-    <hr>
-        <h4 class="playfair-display-caption">CORPORATE PAGES</h4>
-            <h6 class="playfair-display-para">Where personality goes to die</h6>
-    <hr>
+    <a href="{% url 'corporate' %}" class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</a>
+        <h6 class="playfair-display-sub-heading">Where the will to live dies</h6>
+    <br>
+    <br>
 </div>
 {% endblock %}
-
 {% block content %}
+<div class="corp-body">
+    <hr>
+    <div class="grid-container-corp">
+        <div class="grid-item-corp">
+            
+        </div>
+        <div class="grid-item-corp">
 
+        </div>
+    </div>
+    <hr>
+    <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
+<br>
+</div>
 {% endblock %}
