@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cart_tools %}
+
+{% block page_header %}
+<div class="category-links">
+    <hr>
+    <h2 class="playfair-display-article-heading">Shopping Cart</h2>
+    <hr>
+  </div>
+{% endblock %}
+
+{% block content %}
+        
+                {% if cart_items %}
+                    <div class="">
+                        <div class="">
+                            <div class="">
+                                {% include "cart/cart-total.html" %}
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="">
+                                {% include "cart/checkout-buttons.html" %}
+                                <p class="">A summary of your subscriptions is below</p>
+                            </div>
+                        </div>
+                        {% for item in cart_items %}
+                            <div class="">
+                                <div class="">
+                                    {% include "cart/product-image.html" %}
+                                </div>
+                                <div class="">
+                                    {% include "cart/subscription-info.html" %}
+                                </div>
+                            </div>
+                            <div class=""><div class=""><hr></div></div>
+                        {% endfor %}
+                        <div class="">
+                            <a class="">
+                                <i class=""></i>
+                            </a>	
+                        </div>
+                    </div>
+                    <div class="">
+                        <table class="">
+                            <thead class="">
+                                <tr>
+                                    <th scope="">Subscription Type</th>
+                                    <th scope="">Duration</th>
+                                    <th scope="">Price</th>
+                                </tr>
+                            </thead>
+
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td class="">
+                                        {% include "cart/product-image.html" %}
+                                    </td>
+                                    <td class="">
+                                        {% include "cart/subscription-info.html" %}
+                                    </td>
+                                    <td class="">
+                                        <p class=""">${{ subscription.cost }}</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="5" class="">
+                                    {% include "cart/cart-total.html" %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="">
+                                    {% include "cart/checkout-buttons.html" %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="playfair-display-para">The cart is empty.</p>
+                    <a href="{% url 'subscriptions' %}" class="">
+                        <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        <span class="playfair-display-para">Keep Shopping</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

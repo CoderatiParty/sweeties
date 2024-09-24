@@ -55,8 +55,6 @@
         <a id="closeButton" class="closebtn">&times;</a>
       <br>
       <br>
-      <br>
-      <br>
         <div class="menu-content">
           <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
       <hr>
@@ -89,8 +87,11 @@
                     <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
                 </li>
             </ul>
+            <hr>
+          <a class="playfair-display-link" href="{% url 'cart' %}">View Cart</a>
         </div>
       </div>
+      <a style="display:inline;" href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
        <div id="menuButton" class="menuButton_index">
         <div class="lines_index"></div>
         <div class="lines_index"></div>
@@ -104,10 +105,12 @@
         {% url 'refunds' as refunds_url %}
         {% url 'terms' as terms_url %}
         {% if request.path != corporate_url and request.path != about_url and request.path != faqs_url and request.path != contact_url and request.path != privacy_url and request.path != payments_url and request.path != refunds_url and request.path != terms_url %}
+    <div class="news-head">
     <a href="{% url 'home' %}" class="playfair-display-heading">Lemon <i class="fa-solid fa-lemon"></i> Drops</a>
     <h2 class="playfair-display-sub-heading">Experrectus ut irrumabo</h2>
     <h3 class="playfair-display-caption">FAKE NEWS DAILY</h3>
     <h4 class="playfair-display-para">Scooby Pips, Editor-In-Chief<span id="date" class="right-para"></span></h4>
+    </div>
     {% endif %}
     {% if messages %}
         <div class="message-container">

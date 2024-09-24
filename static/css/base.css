@@ -93,21 +93,6 @@
 
 /* MAIN ELEMENTS */
 
-body {
-  background-image: url("/media/ld-bg-img.png");
-  background-repeat: no-repeat;
-  background-position: 50% 110px;
-  background-size: 500px 20px;
-}
-
-body a {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  padding-top: 34px;
-}
-
 h1 {
   text-align: center;
 }
@@ -189,15 +174,22 @@ hr {
   cursor: pointer;
 }
 
-.menu-content a {
+a.playfair-display-link {
+  display: block;
   text-align: left;
   padding-top: 5px;
-  padding-left: 40px;
   padding-bottom: 5px;
+  padding-left: 20px;
+  text-decoration: none;
+}
+
+a.playfair-display-link:hover {
+  text-decoration: underline;
 }
 
 .menu-content ul {
   list-style-type: none;
+  text-align: left;
 }
 
 .menu-overlay .closebtn {
@@ -211,9 +203,45 @@ hr {
 
 /* HEADER ELEMENTS */
 
+.news-head {
+  background-image: url("/media/ld-bg-img.png");
+  background-repeat: no-repeat;
+  background-position: 50% 75px;
+  background-size: 500px 20px;
+  text-align: center;
+}
+
+.news-head a {
+  text-decoration: none;
+  cursor: pointer;
+  padding-left: 45px;
+}
+
 .fa-lemon {
   color: #fff700;
   font-size: 42px;
+}
+
+.fa-cart-shopping {
+  color: #000000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 15px;
+}
+
+.corp-head {
+  background-image: url("/media/ld-bg-img.png");
+  background-repeat: no-repeat;
+  background-position: 50% 75px;
+  background-size: 500px 20px;
+  text-align: center;
+}
+
+.corp-head a {
+text-decoration: none;
+cursor: pointer;
+padding-left: 45px;
 }
 
 .date {
@@ -274,12 +302,13 @@ hr {
   height: auto;
 }
 
-.grid-item a {
+.grid-container .grid-item a {
   font-family: "Playfair Display", serif;
   font-size: 18px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  text-align: left;
 }
 
 .grid-item a:HOVER {
@@ -352,6 +381,7 @@ footer .fa-lemon {
   margin: 0;
   border: 0;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .grid-item-footer a:hover {
@@ -363,6 +393,7 @@ footer .fa-lemon {
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+  display: block;
 }
 
 .footer-link:hover {
@@ -382,7 +413,6 @@ footer .fa-lemon {
 /* SUBSCRIPTION PAGE */
 
 .subscription-box {
-  background-image: url("{% static 'css/icons/apple-touch-icon-180x180.png' %}");
   background-color: #fff700;
   color: #000000;
   padding-top: 0;
@@ -395,7 +425,7 @@ footer .fa-lemon {
 }
 
 .subscription-box:hover {
-  opacity: .7;
+  background-color: #fdf86a;
 }
 
 a .subscription-box {
@@ -448,9 +478,9 @@ a .subscription-box {
 
 .grid-item-corp a {
   cursor: pointer;
-  padding: 10px;
   text-align: left;
-}container
+  text-decoration: none;
+}
 
 .grid-item-corp a:hover {
   text-decoration: underline;
@@ -464,9 +494,8 @@ a.playfair-display-para:hover {
   text-decoration: underline;
 }
 
-.playfair-display-text a {
-  display: inline;
-  padding: 0;
+a.playfair-display-text {
+  text-decoration: underline;
 }
 
 .playfair-display-text a:hover {
@@ -476,6 +505,7 @@ a.playfair-display-para:hover {
 .grid-item-corp article a {
   display: inline;
   padding: 0;
+  text-decoration: none;
 }
 
 details p {
@@ -488,6 +518,7 @@ summary {
 
 summary a {
   display: inline;
+  text-decoration: none;
 }
 
 .grid-item-corp .tab {

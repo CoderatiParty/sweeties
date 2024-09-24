@@ -2,11 +2,10 @@
 {% load static %}
 
 {% block page_header %}
+
 <div class="category-links">
   <hr>
-    <a class="playfair-display-link" onclick="goBack('{{ referrer }}')">
-      <i class="fa-solid fa-arrow-left">&nbsp;</i>Back
-    </a>
+  <h2 class="playfair-display-article-heading">Subscriptions</h2>
   <hr>
 </div>
 
@@ -20,15 +19,14 @@
     </div>
    
     <div class="grid-item-article">
-      <h1 class="playfair-display-article-heading">Subscriptions</h1>
-      <h2 class="playfair-display-caption">Select a subscription below and join today!</h2>
+      <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
       {% for subscription in subscriptions %}
       <br>
       <a href="" class="box-link">
         <div class="subscription-box">
-          <p class="playfair-display-article-heading">{{ subscription.type }}</p>
+          <p class="playfair-display-article-heading">{{ subscription.type }}<span class="right"><b>{% if subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
           <p class="playfair-display-para">{{ subscription.description }}</p>
-          <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration }} year(s)<span class="right"><b>Price: </b>£{{ subscription.cost }}</span></p>
+          <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration_years }} {% if subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ subscription.cost }}</span></p>
         </div>
       </a>
      {% endfor %}
