@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="category-links">
+  <hr>
+    <a class="playfair-display-link" onclick="goBack('{{ referrer }}')">
+      <i class="fa-solid fa-arrow-left">&nbsp;</i>Back
+    </a>
+  <hr>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+      <h1 class="playfair-display-article-heading">Subscriptions</h1>
+      <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
+      <br>
+      {% for subscription in subscriptions %}
+      <div class="subscription-box">
+        <p class="playfair-display-article-heading">{{ subscription.type }}</p>
+        <p class="playfair-display-para">{{ subscription.description }}</p>
+        <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration }} year(s)<span class="right"><b>Price: </b>£{{ subscription.cost }}</span></p>
+      </div>
+      <br>
+     {% endfor %}
+    </div>
+   
+   </div>
+   
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script src="{% static 'js/back-button.js' %}"></script>
+{% endblock %}

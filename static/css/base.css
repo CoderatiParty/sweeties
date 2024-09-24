@@ -117,12 +117,12 @@ h2 {
 }
 
 h3 {
-  text-align: left;
-  padding-left: 50px;
+  text-align: center;
 }
 
 h4 {
-  text-align: center;
+  text-align: left;
+  padding-left: 50px;
 }
 
 h5 {
@@ -377,6 +377,25 @@ footer .fa-lemon {
   font-size: 20px;
   cursor: n-resize;
   float: right;
+}
+
+/* SUBSCRIPTION PAGE */
+
+.subscription-box {
+  background-image: url("{% static 'css/icons/apple-touch-icon-180x180.png' %}");
+  background-color: #fff700;
+  color: #000000;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 100%;
+  cursor: pointer;
+  border: 0.5px solid black;
+}
+
+.subscription-box:hover {
+  opacity: .7;
 }
 
 /* CORPORATE PAGES */
