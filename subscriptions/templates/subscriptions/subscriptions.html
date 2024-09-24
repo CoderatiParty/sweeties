@@ -22,7 +22,7 @@
       <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
       {% for subscription in subscriptions %}
       <br>
-      <a href="" class="box-link">
+      <a href="{% url 'subscription' subscription.id %}" class="box-link">
         <div class="subscription-box">
           <p class="playfair-display-article-heading">{{ subscription.type }}<span class="right"><b>{% if subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
           <p class="playfair-display-para">{{ subscription.description }}</p>
@@ -34,9 +34,4 @@
    
    </div>
    
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
-<script src="{% static 'js/back-button.js' %}"></script>
 {% endblock %}

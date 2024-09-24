@@ -1,21 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import (
+    render, redirect, reverse, HttpResponse, get_object_or_404
+)
 from .models import User_Subscriptions
+from django.contrib import messages
 
 # Create your views here.
 
-def cart(request):
-    """ A view to show subscriptions page """
+def view_cart(request):
+    """ A view to show the cart """
 
-    # Get all categories to display in the menu
-    subscriptions = User_Subscriptions.objects.all()
 
-    current_path = request.path
-    referrer = request.META.get('HTTP_REFERER')
+    return render(request, 'cart/cart.html')
 
-    context = {
-        'subscriptions': subscriptions,
-        'current_path': current_path,
-        'referrer': referrer,
-    }
 
-    return render(request, 'cart/cart.html', context)
+def add_to_cart(request, item_id):
+    """ Add the subscription to the cart """
+
+    subscription = get_object_or_404(User_Subscriptions, pk=item_id)
+    quantity = int(1)
+    redirect_url = request.POST.get('redirect_url')
+    cart = request.session.get('cart', {})
+
+    messages.success(request, f'Added {subscription.description} to the cart')
+
+    request.session['cart'] = cart
+    return redirect(redirect_url)
