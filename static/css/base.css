@@ -398,6 +398,14 @@ footer .fa-lemon {
   opacity: .7;
 }
 
+a .subscription-box {
+  text-align: left;
+}
+
+.grid-item-article a.box-link {
+  text-decoration: none;
+}
+
 /* CORPORATE PAGES */
 
 .corp-body {
@@ -442,9 +450,26 @@ footer .fa-lemon {
   cursor: pointer;
   padding: 10px;
   text-align: left;
-}
+}container
 
 .grid-item-corp a:hover {
+  text-decoration: underline;
+}
+
+.container a.playfair-display-caption:hover {
+  text-decoration: underline;
+}
+
+a.playfair-display-para:hover {
+  text-decoration: underline;
+}
+
+.playfair-display-text a {
+  display: inline;
+  padding: 0;
+}
+
+.playfair-display-text a:hover {
   text-decoration: underline;
 }
 
