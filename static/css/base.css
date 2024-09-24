@@ -429,6 +429,27 @@ footer .fa-lemon {
   text-decoration: underline;
 }
 
+.grid-item-corp article a {
+  display: inline;
+  padding: 0;
+}
+
+details p {
+  padding-left: 30px;
+}
+
+summary {
+  padding: 10px;
+}
+
+summary a {
+  display: inline;
+}
+
+.grid-item-corp .tab {
+  padding-left: 50px;
+}
+
 /* MEDIA QUERY */
 
 @media all and (max-width: 599px){
