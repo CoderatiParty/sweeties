@@ -7,7 +7,12 @@ class User_SubscriptionsAdmin(admin.ModelAdmin):
         'type',
         'description',
         'cost',
-        'duration',
+        'duration_years',
+        'duration_days',
+        'auto_renew',
+        'purchase_date',
+        'renew_date',
+        'user',
     )
 
 

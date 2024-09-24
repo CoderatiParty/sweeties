@@ -38,12 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_countries',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
     'home',
     'corporate',
     'subscriptions',
+    'cart',
+    'profiles',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +85,7 @@ TEMPLATES = [
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
