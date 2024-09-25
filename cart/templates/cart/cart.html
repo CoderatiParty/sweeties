@@ -11,82 +11,106 @@
 {% endblock %}
 
 {% block content %}
-        
-                {% if cart_items %}
-                    <div class="">
-                        <div class="">
-                            <div class="">
-                                {% include "cart/cart-total.html" %}
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="">
-                                {% include "cart/checkout-buttons.html" %}
-                                <p class="">A summary of your subscriptions is below</p>
-                            </div>
-                        </div>
-                        {% for item in cart_items %}
-                            <div class="">
-                                <div class="">
-                                    {% include "cart/subscription-image.html" %}
-                                </div>
-                                <div class="">
-                                    {% include "cart/subscription-info.html" %}
-                                </div>
-                            </div>
-                            <div class=""><div class=""><hr></div></div>
-                        {% endfor %}
-                        <div class="">
-                            <a class="">
-                                <i class=""></i>
-                            </a>	
-                        </div>
-                    </div>
-                    <div class="">
-                        <table class="">
-                            <thead class="">
-                                <tr>
-                                    <th scope="">Subscription Type</th>
-                                    <th scope="">Duration</th>
-                                    <th scope="">Price</th>
-                                </tr>
-                            </thead>
 
-                            {% for item in cart_items %}
-                                <tr>
-                                    <td class="">
-                                        {% include "cart/subscription-image.html" %}
-                                    </td>
-                                    <td class="">
-                                        {% include "cart/subscription-info.html" %}
-                                    </td>
-                                    <td class="">
-                                        <p class=""">${{ subscription.cost }}</p>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td colspan="5" class="">
-                                    {% include "cart/cart-total.html" %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" class="">
-                                    {% include "cart/checkout-buttons.html" %}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                {% else %}
-                    <p class="playfair-display-para">The cart is empty.</p>
-                    <a href="{% url 'subscriptions' %}" class="">
-                        <span class="icon">
-                            <i class="fas fa-chevron-left"></i>
-                        </span>
-                        <span class="playfair-display-para">Keep Shopping</span>
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
     </div>
+   
+    <div class="grid-item-article">
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="container">
+                <p class="playfair-display-caption">You are about to purchase:</p>
+                    <!-- Subscription Image -->
+                    <img src="{{ item.image }}" alt="{{ item.subscription.image_description }}" class="pic">
+            </div>
+            <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2"><strong>ORDER DETAILS</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Type:</th>
+                            <td>{{ item.subscription.type }} Subscription</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>{{ item.subscription.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Duration:</th>
+                            <td>{{ item.subscription.duration_years }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price:</th>
+                            <td>£{{ item.subscription.cost }}</td>
+                        </tr>
+                        <tr>
+                            <th>Auto-Renew:</th>
+                            <td>{{ item.auto_renew|yesno:"Yes,No" }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2"><strong>CONFIRMATION</th>
+                        </tr>
+                        <tr>
+                            <th>Continue or:</th>
+                            <td>
+                                <form action="{% url 'remove_from_cart' item.item_id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-button">Remove from Cart</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            {% endfor %}
+            <br>
+                <!-- Cart Summary -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2"><strong>CART SUMMARY</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Total Items:</th>
+                            <td>{{ product_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Subtotal:</th>
+                            <td>£{{ total }}</td>
+                        </tr>
+                        <tr>
+                            <th>VAT:</th>
+                            <td>£{{ vat }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Grand Total:</th>
+                            <td>£{{ grand_total }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            <br>
+                <!-- Checkout Button -->
+                 <div class="container">
+                    <a href="" class="cart-button">Proceed to Checkout</a>
+                </div>
+        {% else %}
+            <p class="playfair-display-link">The cart is empty.</p>
+                <a class="playfair-display-link" href="{% url 'subscriptions' %}">
+                    <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
+                </a>
+        {% endif %}
+    </div>
+   
+</div>
 {% endblock %}

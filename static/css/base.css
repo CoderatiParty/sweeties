@@ -488,6 +488,92 @@ input[type=submit]:hover {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+/* CART */
+
+table, th, td {
+  border: 1px solid black;
+  width: 100%;
+  padding: 5px;
+}
+
+thead {
+  background-color: #fefdcf;
+  color: #000000;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+}
+
+tfoot {
+  background-color: #fefdcf;
+  color: #000000;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+}
+
+tfoot td {
+  text-align: center;
+  font-weight: 700;
+}
+
+th {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 18px;
+  width: 35%;
+}
+
+td {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  width: 65%;
+}
+
+.remove-button {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  background-color: #fe3838;
+  color: #ffffff;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.cart-button {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  background-color: #fff700;
+  color: #000000;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+a.cart-button:hover {
+  background-color: #fdf86a;
+  text-decoration: none;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
 /* CORPORATE PAGES */
 
 .corp-body {

@@ -3,6 +3,7 @@ from django.shortcuts import (
 )
 from .models import User_Subscriptions
 from django.contrib import messages
+from django.utils.safestring import mark_safe
 
 # Create your views here.
 
@@ -26,8 +27,11 @@ def add_to_cart(request, item_id):
         cart = request.session.get('cart', {})
 
         # If the cart already contains an item, prevent adding another one
-        if cart:
-            messages.error(request, 'You already have a subscription in your cart. Please remove it before adding a new one.')
+        if cart:  # Assuming this check is for an already existing subscription in the cart
+            cart_url = reverse('cart')  # Generate the URL for the cart page
+            # Construct the message with HTML and mark it as safe
+            message = mark_safe(f'You already have a subscription in your <a href="{cart_url}">cart</a>. Please remove it before adding a new one.')
+            messages.error(request, message)
         else:
             # Add the subscription to the cart. Only one item allowed.
             cart[subscription.id] = {
@@ -38,7 +42,9 @@ def add_to_cart(request, item_id):
                 'image': subscription.image.url if subscription.image else None
             }
 
-            messages.success(request, f'{subscription.type} Subscription added to cart!')
+            cart_url = reverse('cart')  # Generate the cart URL
+            success_message = mark_safe(f'Subscription added to your cart successfully! <a href="{cart_url}">View Cart</a>')
+            messages.success(request, success_message)
 
         # Save the cart back into the session
         request.session['cart'] = cart
@@ -50,7 +56,7 @@ def add_to_cart(request, item_id):
     return redirect('/')
 
 
-def remove_from_cart(request):
+def remove_from_cart(request, item_id):
     """ Remove the subscription from the cart """
     request.session['cart'] = {}  # Clear the cart
     messages.success(request, 'Subscription removed from cart.')
