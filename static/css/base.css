@@ -201,6 +201,39 @@ a.playfair-display-link:hover {
   float: left;
 }
 
+/* --- FLASH MESSAGE STYLING ---- */
+
+.flash {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 0px;
+}
+
+.flash.error {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
+.flash.success {
+  background-color: #00c853;
+  color: #ffffff;
+}
+
+.close-alert {
+  float: right;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.close-alert:hover {
+  color: #555;
+}
+
 /* HEADER ELEMENTS */
 
 .news-head {
@@ -434,6 +467,25 @@ a .subscription-box {
 
 .grid-item-article a.box-link {
   text-decoration: none;
+}
+
+input[type=submit] {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  background-color: #fff700;
+  color: #000000;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+input[type=submit]:hover {
+  background-color: #fdf86a;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 /* CORPORATE PAGES */

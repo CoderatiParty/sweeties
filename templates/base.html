@@ -112,26 +112,19 @@
     <h4 class="playfair-display-para">Scooby Pips, Editor-In-Chief<span id="date" class="right-para"></span></h4>
     </div>
     {% endif %}
-    {% if messages %}
-        <div class="message-container">
-            {% for message in messages %}
-                {% with message.level as level %}
-                    {% if level == 40 %}
-                        {% include 'includes/toasts/toast_error.html' %}
-                    {% elif level == 30 %}
-                        {% include 'includes/toasts/toast_warning.html' %}
-                    {% elif level == 25 %}
-                        {% include 'includes/toasts/toast_success.html' %}
-                    {% else %}
-                        {% include 'includes/toasts/toast_info.html' %}
-                    {% endif %}
-                {% endwith %}
-            {% endfor %}
-        </div>
-    {% endif %}
 
     {% block page_header %}
     {% endblock %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="flash {{ message.tags }}" role="alert">
+            {{ message }}
+            <button type="button" class="close-alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    {% endif %}
 
     {% block content %}
     {% endblock %}
@@ -171,7 +164,7 @@
     {% block postloadjs %}
         <script src="{% static 'js/menu-function.js' %}"></script>
         <script src="{% static 'js/date.js' %}"></script>
-        <script src="{% static 'js/show-toasts.js' %}"></script>
+        <script src="{% static 'js/close-alert-messages.js' %}"></script>
         <script src="{% static 'js/copyright.js' %}"></script>
         <script src="{% static 'js/back-to-top.js' %}"></script>
     {% endblock %}
