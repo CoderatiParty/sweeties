@@ -335,6 +335,10 @@ padding-left: 45px;
   height: auto;
 }
 
+.grid-item h1.playfair-display-caption {
+  text-align: left;
+}
+
 .grid-container .grid-item a {
   font-family: "Playfair Display", serif;
   font-size: 18px;

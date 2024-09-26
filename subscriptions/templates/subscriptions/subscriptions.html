@@ -26,7 +26,7 @@
         <div class="subscription-box">
           <p class="playfair-display-article-heading">{{ subscription.type }}<span class="right"><b>{% if subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
           <p class="playfair-display-para">{{ subscription.description }}</p>
-          <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration_years }} {% if subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ subscription.cost }}</span></p>
+          <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration_years }} {% if subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ subscription.total_cost }}</span></p>
         </div>
       </a>
      {% endfor %}
