@@ -4,6 +4,7 @@ from django.shortcuts import (
 from .models import User_Subscriptions
 from django.contrib import messages
 from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 # Create your views here.
 
@@ -54,6 +55,38 @@ def add_to_cart(request, item_id):
 
     # If the request method is not POST, redirect to a fallback page
     return redirect('/')
+
+
+def update_auto_renew(request, item_id):
+    """Update the auto-renew setting for the subscription in the cart."""
+    if request.method == 'POST':
+        # Retrieve the cart from the session
+        cart = request.session.get('cart', {})
+
+        # Ensure the item exists in the cart
+        if item_id in cart:
+            # Get the auto_renew checkbox value from the POST data
+            auto_renew = request.POST.get('auto_renew', 'off') == '1'
+
+            # Update the cart item's auto_renew status
+            cart[item_id]['auto_renew'] = auto_renew
+
+            # Save the updated cart back to the session
+            request.session['cart'] = cart
+
+            # Success message
+            if auto_renew:
+                messages.success(request, "Auto-renew has been enabled for this subscription.")
+            else:
+                messages.success(request, "Auto-renew has been disabled for this subscription.")
+        else:
+            messages.error(request, "This item is not in your cart.")
+
+        # Redirect back to the cart page
+        return redirect('cart')
+
+    # If it's not a POST request, just redirect back to the cart
+    return redirect('cart')
 
 
 def remove_from_cart(request, item_id):

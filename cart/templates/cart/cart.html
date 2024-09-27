@@ -50,15 +50,23 @@
                         </tr>
                         <tr>
                             <th>Auto-Renew:</th>
-                            <td>{{ item.auto_renew|yesno:"Yes,No" }}</td>
+                            <td>
+                                <form action="{% url 'update_auto_renew' item.item_id %}" method="POST">
+                                    {% csrf_token %}
+                                        <input type="checkbox" name="auto_renew" value="1" {% if item.auto_renew %}checked{% endif %}><button type="submit" class="cart-button right">Confirm Auto-Renew</button>
+                                        Enable
+                                </form>
+                            </td>
                         </tr>
                     </tbody>
-                    <tfoot>
+                </table>
+                <table>
+                    <thead>
                         <tr>
                             <th colspan="2"><strong>CONFIRMATION</th>
                         </tr>
                         <tr>
-                            <th>Continue or:</th>
+                            <th>Proceed or:</th>
                             <td>
                                 <form action="{% url 'remove_from_cart' item.item_id %}" method="POST">
                                     {% csrf_token %}
@@ -66,7 +74,7 @@
                                 </form>
                             </td>
                         </tr>
-                    </tfoot>
+                    </thead>
                 </table>
             {% endfor %}
             <br>
