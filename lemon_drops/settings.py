@@ -168,5 +168,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Cart
+VAT_PERCENTAGE = 20
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

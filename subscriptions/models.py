@@ -6,8 +6,6 @@ class User_Subscriptions(models.Model):
     type = models.CharField(max_length=12, null=False, blank=False)
     description = models.CharField(max_length=254, null=False, blank=False)
     cost = models.DecimalField(max_digits=4, decimal_places=2, null=False, blank=False)
-    vat = models.DecimalField(max_digits=3, decimal_places=2, null=False, blank=False)
-    total_cost = models.DecimalField(max_digits=4, decimal_places=2, null=False, blank=False)
     duration_years = models.DecimalField(max_digits=1, decimal_places=0, null=False, blank=False)
     duration_days = models.DecimalField(max_digits=4, decimal_places=0, null=True, blank=True)
     auto_renew = models.BooleanField(default=False, null=True, blank=True)

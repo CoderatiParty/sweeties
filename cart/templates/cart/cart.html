@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load cart_tools %}
 
 {% block page_header %}
 <div class="category-links">
@@ -85,17 +84,17 @@
                         </tr>
                         <tr>
                             <th>Subtotal:</th>
-                            <td>£{{ cost }}</td>
+                            <td>£{{ total }}</td>
                         </tr>
                         <tr>
                             <th>VAT:</th>
-                            <td>£{{ vat }}</td>
+                            <td>£{{ vat_amount }}</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Grand Total:</th>
-                            <td>£{{ total_cost }}</td>
+                            <td>£{{ grand_total }}</td>
                         </tr>
                     </tfoot>
                 </table>
