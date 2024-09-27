@@ -63,13 +63,16 @@ def update_auto_renew(request, item_id):
         # Retrieve the cart from the session
         cart = request.session.get('cart', {})
 
+        # Convert item_id to a string because session data keys are stored as strings
+        item_id_str = str(item_id)
+
         # Ensure the item exists in the cart
-        if item_id in cart:
+        if item_id_str in cart:
             # Get the auto_renew checkbox value from the POST data
             auto_renew = request.POST.get('auto_renew', 'off') == '1'
 
             # Update the cart item's auto_renew status
-            cart[item_id]['auto_renew'] = auto_renew
+            cart[item_id_str]['auto_renew'] = auto_renew
 
             # Save the updated cart back to the session
             request.session['cart'] = cart

@@ -53,7 +53,7 @@
                             <td>
                                 <form action="{% url 'update_auto_renew' item.item_id %}" method="POST">
                                     {% csrf_token %}
-                                        <input type="checkbox" name="auto_renew" value="1" {% if item.auto_renew %}checked{% endif %}><button type="submit" class="cart-button right">Confirm Auto-Renew</button>
+                                        <input type="checkbox" name="auto_renew" value="1" {% if item.auto_renew %}checked{% endif %}><button type="submit" class="cart-button right">Update Auto-Renew</button>
                                         Enable
                                 </form>
                             </td>

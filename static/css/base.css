@@ -255,12 +255,14 @@ a.playfair-display-link:hover {
   font-size: 42px;
 }
 
-.fa-cart-shopping {
+.fa-cart-shopping, .fa-cart-arrow-down, .fa-cart-plus {
   color: #000000;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 15px;
+  margin-top: 10px;
+  margin-left: 15px;
+  font-size: 24px;
 }
 
 .corp-head {
@@ -550,12 +552,16 @@ td {
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
-  background-color: #fe3838;
+  background-color: #e53935;
   color: #ffffff;
   padding: 5px 10px;
   cursor: pointer;
   border: 1px solid black;
   border-radius: 4px;
+}
+
+.remove-button:hover {
+  opacity: .7;
 }
 
 .cart-button {
@@ -570,6 +576,10 @@ td {
   cursor: pointer;
   border: 1px solid black;
   border-radius: 4px;
+}
+
+.cart-button:hover {
+  opacity: .7;
 }
 
 a.cart-button:hover {

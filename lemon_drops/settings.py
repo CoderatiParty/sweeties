@@ -170,5 +170,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cart
 VAT_PERCENTAGE = 20
+VAT_MULTIPLIER = 1.2
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

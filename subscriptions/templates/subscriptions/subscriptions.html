@@ -20,13 +20,13 @@
    
     <div class="grid-item-article">
       <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
-      {% for subscription in subscriptions %}
+      {% for item in subscriptions %}
       <br>
-      <a href="{% url 'subscription' subscription.id %}" class="box-link">
+      <a href="{% url 'subscription' item.subscription.id %}" class="box-link">
         <div class="subscription-box">
-          <p class="playfair-display-article-heading">{{ subscription.type }}<span class="right"><b>{% if subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
-          <p class="playfair-display-para">{{ subscription.description }}</p>
-          <p class="playfair-display-caption"><b>Duration: </b>{{ subscription.duration_years }} {% if subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ subscription.total_cost }}</span></p>
+          <p class="playfair-display-article-heading">{{ item.subscription.type }}<span class="right"><b>{% if item.subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
+          <p class="playfair-display-para">{{ item.subscription.description }}</p>
+          <p class="playfair-display-caption"><b>Duration: </b>{{ item.subscription.duration_years }} {% if item.subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ item.vat_cost|floatformat:2 }}</span></p>
         </div>
       </a>
      {% endfor %}

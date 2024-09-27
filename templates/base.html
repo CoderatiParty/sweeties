@@ -91,7 +91,11 @@
           <a class="playfair-display-link" href="{% url 'cart' %}">View Cart</a>
         </div>
       </div>
-      <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
+        {% if cart_items %}
+        <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+        {% else %}
+        <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-plus"></i></a>
+        {% endif %}
        <div id="menuButton" class="menuButton_index">
         <div class="lines_index"></div>
         <div class="lines_index"></div>
