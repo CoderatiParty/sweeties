@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+
+<div class="category-links">
+  <hr>
+  <h2 class="playfair-display-article-heading">Manage Profile</h2>
+  <hr>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+        <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-black rounded-0 text-uppercase float-right">Update Information</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

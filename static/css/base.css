@@ -139,7 +139,7 @@ input[type=text], [type=password] {
   font-size: 18px;
   cursor: pointer;
   border-radius: 4px;
-  width: 75%;
+  width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -621,6 +621,19 @@ a.cart-button:hover {
   background-color: #fdf86a;
   text-decoration: none;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+/* ALL AUTH PAGES */
+
+.login-card {
+  margin: auto;
+  border-radius: 10px;
+  text-align: left;
+  background-color: #fefdcf;
+  padding: 25px;
+  width: 100%;
+  color: #000000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* CORPORATE PAGES */

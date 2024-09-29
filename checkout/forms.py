@@ -1,11 +1,14 @@
 from django import forms
-from .models import User_Profile
+from .models import Order
 
 
-class UserProfileForm(forms.ModelForm):
+class OrderForm(forms.ModelForm):
     class Meta:
-        model = User_Profile
-        exclude = ('user', 'member_number')
+        model = Order
+        fields = ('first_name', 'last_name', 'email', 'phone_number',
+                  'street_address1', 'street_address2',
+                  'town_or_city', 'postcode', 'country',
+                  'county',)
 
     def __init__(self, *args, **kwargs):
         """
@@ -16,17 +19,16 @@ class UserProfileForm(forms.ModelForm):
         placeholders = {
             'first_name': 'First Name',
             'last_name': 'Last Name',
+            'email': 'Email Address',
+            'phone_number': 'Phone Number',
+            'postcode': 'Postal Code',
+            'town_or_city': 'Town or City',
             'street_address1': 'Street Address 1',
             'street_address2': 'Street Address 2',
-            'town_or_city': 'Town or City',
             'county': 'County, State or Locality',
-            'post_or_zipcode': 'Postal Code',
-            'country': 'Country',
-            'phone_number': 'Phone Number',
-            'email': 'Email',
         }
 
-        self.fields['phone_number'].widget.attrs['autofocus'] = True
+        self.fields['first_name'].widget.attrs['autofocus'] = True
         for field in self.fields:
             if field != 'country':
                 if self.fields[field].required:
@@ -34,7 +36,5 @@ class UserProfileForm(forms.ModelForm):
                 else:
                     placeholder = placeholders[field]
                 self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = ('border-black '
-                                                        'rounded-0 '
-                                                        'profile-form-input')
+            self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False

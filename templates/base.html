@@ -90,14 +90,18 @@
                     <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
                 </li>
             </ul>
+            {% if not request.user.is_authenticated %}
             <hr>
           <a class="playfair-display-link" href="{% url 'cart' %}">View Cart</a>
+          {% endif %}
         </div>
       </div>
+      {% if not request.user.is_authenticated %}
         {% if cart_items %}
         <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
         {% else %}
         <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-plus"></i></a>
+        {% endif %}
         {% endif %}
        <div id="menuButton" class="menuButton_index">
         <div class="lines_index"></div>

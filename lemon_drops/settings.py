@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'subscriptions',
     'cart',
     'profiles',
+    'checkout',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +80,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cart.contexts.cart_contents',
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',
+            ]
         },
     },
 ]
@@ -147,7 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -171,5 +176,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Cart
 VAT_PERCENTAGE = 20
 VAT_MULTIPLIER = 1.2
+
+# Stripe
+STRIPE_CURRENCY = 'gbp'
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

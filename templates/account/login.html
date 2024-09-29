@@ -18,6 +18,7 @@
     </div>
    
     <div class="grid-item-article">
+        <div class="login-card">
     {% if not SOCIALACCOUNT_ONLY %}
         {% setvar link %}
             <a href="{{ signup_url }}">
@@ -66,6 +67,7 @@
         {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
     {% endif %}
     {% endblock extra_body %}
-    </div>
+</div>
+</div>
 </div>
 {% endblock %}
