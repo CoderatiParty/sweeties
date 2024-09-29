@@ -5,7 +5,7 @@
 
 <div class="category-links">
   <hr>
-  <h2 class="playfair-display-article-heading">Sign In</h2>
+  <h2 class="playfair-display-article-heading">Members Sign In</h2>
   <hr>
 </div>
 
@@ -25,9 +25,7 @@
             {% setvar end_link %}
             </a>
         {% endsetvar %}
-        {% element p %}
-            {% blocktranslate %}If you would like an account, please {{ link }}sign up{{ end_link }} first.{% endblocktranslate %}
-        {% endelement %}
+            <p class="playfair-display-text">To become a member, please <a href="{% url 'subscriptions' %}">Subscribe</a>.</p>
         {% url 'account_login' as login_url %}
         {% element form form=form method="post" action=login_url tags="entrance,login" %}
             {% slot body %}

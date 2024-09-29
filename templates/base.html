@@ -58,9 +58,14 @@
         <div class="menu-content">
           <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
       <hr>
+          {% if request.user.is_authenticated %}
+          <a class="playfair-display-link" href="{% url 'profile' %}">Manage Profile</a>
+          <a class="playfair-display-link" href="{% url 'account_logout' %}">Sign Out</a>
+          {% else %}
           <a class="playfair-display-link" href="{% url 'subscriptions' %}">Subscribe</a>
-      <br>
-          <a class="playfair-display-link" href="{% url 'account_login' %}">Members Page</a>
+            <br>
+          <a class="playfair-display-link" href="{% url 'account_login' %}">Members Sign In</a>
+          {% endif %}
       <hr>
       <a href="{% url 'corporate' %}" class="playfair-display-link">Corporate Pages</a>
             <ul>

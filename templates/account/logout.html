@@ -1,15 +1,23 @@
 {% extends "account/base_manage.html" %}
 {% load allauth i18n %}
-{% block head_title %}
-    {% trans "Sign Out" %}
-{% endblock head_title %}
+{% block page_header %}
+
+<div class="category-links">
+  <hr>
+  <h2 class="playfair-display-article-heading">Members Sign Out</h2>
+  <hr>
+</div>
+
+{% endblock %}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Out" %}
-    {% endelement %}
-    {% element p %}
-        {% trans 'Are you sure you want to sign out?' %}
-    {% endelement %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+        <p class="playfair-display-text">Are you sure you want to sign out?</p>
     {% url 'account_logout' as action_url %}
     {% element form method="post" action=action_url no_visible_fields=True %}
         {% slot body %}
@@ -22,4 +30,6 @@
             {% endelement %}
         {% endslot %}
     {% endelement %}
-{% endblock content %}
+    </div>
+</div>
+{% endblock %}
