@@ -139,7 +139,7 @@ input[type=text], [type=password] {
   font-size: 18px;
   cursor: pointer;
   border-radius: 4px;
-  width: 50%;
+  width: 75%;
   padding: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -377,7 +377,6 @@ padding-left: 45px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
   margin: 10px;
-  font-size: 30px;
   text-align: left;
   height: auto;
 }
@@ -400,16 +399,16 @@ padding-left: 45px;
 }
 
 .grid-container-article {
+  margin: auto;
+  width: 90%;
   display: grid;
   grid-template-columns: 20% 60% 20%;
   padding: 10px;
 }
 
 .grid-item-article {
-  padding: 20px;
-  margin: 10px;
-  font-size: 30px;
   text-align: left;
+  margin: auto;
   height: auto;
 }
 
@@ -455,7 +454,6 @@ footer .fa-lemon {
 .grid-item-footer {
   padding: 5px;
   margin: 5px;
-  font-size: 30px;
   text-align: center;
   height: auto;
 }
@@ -503,7 +501,8 @@ footer .fa-lemon {
   padding-bottom: 0;
   padding-left: 25px;
   padding-right: 25px;
-  width: 100%;
+  width: 425px;
+  margin: auto;
   cursor: pointer;
   border: 0.5px solid black;
 }
@@ -591,18 +590,9 @@ td {
   width: 65%;
 }
 
-.remove-button {
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 18px;
+button[type=submit].remove-button {
   background-color: #e53935;
   color: #ffffff;
-  padding: 5px 10px;
-  cursor: pointer;
-  border: 1px solid black;
-  border-radius: 4px;
 }
 
 .remove-button:hover {
@@ -655,9 +645,8 @@ a.cart-button:hover {
 }
 
 .grid-item-corp {
-  padding: 75px;
-  margin: 5px;
-  font-size: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
   height: auto;
 }
 
@@ -685,6 +674,10 @@ a.cart-button:hover {
 
 .grid-item-corp a:hover {
   text-decoration: underline;
+}
+
+.container a.playfair-display-caption {
+  display: block;
 }
 
 .container a.playfair-display-caption:hover {
@@ -751,6 +744,12 @@ summary a {
   .grid-item-corp {
     padding: 25px;
   }
+  .corp-head {
+    padding-top: 10px;
+  }
+  .corp-head a.playfair-display-heading {
+    font-size: 47px;
+  }
 }
 
 @media all and (min-width: 600px) and (max-width:799px){
@@ -797,6 +796,10 @@ summary a {
     font-weight: 600;
     font-size: 34px;
   }
+  .grid-item-corp {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
 
 @media all and (min-width: 1025px) and (max-width: 1399px){
@@ -815,6 +818,10 @@ summary a {
   .grid-container-corp {
     grid-template-columns: 50% 50%;
   }
+  .grid-item-corp {
+    margin-left: 75px;
+    margin-right: 75px;
+  }
 }
 
 @media all and (min-width: 1400px){
@@ -832,5 +839,9 @@ summary a {
   }
   .grid-container-corp {
     grid-template-columns: 50% 50%;
+  }
+  .grid-item-corp {
+    margin-left: 105px;
+    margin-right: 105px;
   }
 }
