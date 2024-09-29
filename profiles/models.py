@@ -12,6 +12,8 @@ class User_Profile(models.Model):
     A model for maintaining user's details, subscription information and history
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=80,
+                                               null=True, blank=True)
     first_name = models.CharField(max_length=80,
                                                null=True, blank=True)
     last_name = models.CharField(max_length=80,

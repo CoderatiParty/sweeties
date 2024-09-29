@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %}
+<form method="{{ form.helper.form_method }}" action="{{ form.helper.form_action }}" enctype="{{ form.helper.form_enctype }}">
+    {% csrf_token %}
+    <div class="custom-form">
+        <!-- Render each form field manually or using crispy_forms layout tools -->
+        {{ form|crispy }}
+    </div>
+    <div class="custom-buttons">
+        <button type="submit" class="custom-submit-button">Submit</button>
+    </div>
+</form>

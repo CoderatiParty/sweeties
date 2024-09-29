@@ -5,3 +5,4 @@ django-countries==7.6.1
 django-crispy-forms==2.3
 pillow==10.4.0
 sqlparse==0.5.1
+stripe==10.12.0
