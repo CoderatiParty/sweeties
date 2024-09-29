@@ -22,13 +22,23 @@
       <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
       {% for item in subscriptions %}
       <br>
-      <a href="{% url 'subscription' item.subscription.id %}" class="box-link">
+      {% if cart_items %}
+      <a href="" class="box-link">
         <div class="subscription-box">
           <p class="playfair-display-article-heading">{{ item.subscription.type }}<span class="right"><b>{% if item.subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
           <p class="playfair-display-para">{{ item.subscription.description }}</p>
           <p class="playfair-display-caption"><b>Duration: </b>{{ item.subscription.duration_years }} {% if item.subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ item.vat_cost|floatformat:2 }}</span></p>
         </div>
       </a>
+      {% else %}
+      <a href="{% url 'add_subscription' item.subscription.id %}" class="box-link">
+        <div class="subscription-box">
+          <p class="playfair-display-article-heading">{{ item.subscription.type }}<span class="right"><b>{% if item.subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} PASS</b></span></p>
+          <p class="playfair-display-para">{{ item.subscription.description }}</p>
+          <p class="playfair-display-caption"><b>Duration: </b>{{ item.subscription.duration_years }} {% if item.subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ item.vat_cost|floatformat:2 }}</span></p>
+        </div>
+      </a>
+      {% endif %}
      {% endfor %}
     </div>
    
