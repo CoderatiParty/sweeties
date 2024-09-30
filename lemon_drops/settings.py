@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
+    'crispy_bootstrap4',
     'home',
     'corporate',
     'subscriptions',
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 'cart.contexts.cart_contents',
             ],
             'builtins': [
@@ -91,7 +93,7 @@ TEMPLATES = [
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -179,8 +181,8 @@ VAT_MULTIPLIER = 1.2
 
 # Stripe
 STRIPE_CURRENCY = 'gbp'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
-STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+STRIPE_PUBLIC_KEY = 'pk_test_51Pd9bsAasUgG2ZFYCICyC9tOE1EIfItkJN8KNKTs9AlmThVE3O2mPEKnkXIIGmKAPw577XVBf36vx1gca87FfDS500eHMjsnvE'
+STRIPE_SECRET_KEY = 'sk_test_51Pd9bsAasUgG2ZFY11PoszpSVzhiOVks7hNBJlwt1sIK8CrTpXTJTX4QItYFfTaE48ms3ShuuIDlma2K6bVNoK0K00WwQA19zi'
+STRIPE_WH_SECRET = 'whsec_I2JoJUaUK04vGGIZKtGz6xp9kBxwELrG'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

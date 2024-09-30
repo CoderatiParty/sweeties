@@ -12,7 +12,7 @@ def view_cart(request):
     """ A view to show the cart """
 
 
-    return render(request, 'cart/cart.html')
+    return render(request, 'cart/view_cart.html')
 
 
 def add_to_cart(request, item_id):
@@ -29,7 +29,7 @@ def add_to_cart(request, item_id):
 
         # If the cart already contains an item, prevent adding another one
         if cart:  # Assuming this check is for an already existing subscription in the cart
-            cart_url = reverse('cart')  # Generate the URL for the cart page
+            cart_url = reverse('view_cart')  # Generate the URL for the cart page
             # Construct the message with HTML and mark it as safe
             message = mark_safe(f'You already have a subscription in your <a href="{cart_url}">cart</a>. Please remove it before adding a new one.')
             messages.error(request, message)
@@ -43,7 +43,7 @@ def add_to_cart(request, item_id):
                 'image': subscription.image.url if subscription.image else None
             }
 
-            cart_url = reverse('cart')  # Generate the cart URL
+            cart_url = reverse('view_cart')  # Generate the cart URL
             success_message = mark_safe(f'Subscription added to your cart successfully! <a href="{cart_url}">View Cart</a>')
             messages.success(request, success_message)
 
@@ -86,14 +86,14 @@ def update_auto_renew(request, item_id):
             messages.error(request, "This item is not in your cart.")
 
         # Redirect back to the cart page
-        return redirect('cart')
+        return redirect('view_cart')
 
     # If it's not a POST request, just redirect back to the cart
-    return redirect('cart')
+    return redirect('view_cart')
 
 
 def remove_from_cart(request, item_id):
     """ Remove the subscription from the cart """
     request.session['cart'] = {}  # Clear the cart
     messages.success(request, 'Subscription removed from cart.')
-    return redirect('cart')  # Replace 'cart' with the appropriate view or URL name
+    return redirect('view_cart')  # Replace 'cart' with the appropriate view or URL name

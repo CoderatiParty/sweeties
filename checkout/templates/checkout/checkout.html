@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+{{ block.super }}
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
@@ -14,7 +15,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="grid-container-article">
 
     <div class="grid-item-article">
@@ -58,30 +58,32 @@
                         </tr>
                     </tfoot>
                 </table>
+                <br>
                 <p>Please fill out the form below to complete your order</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
                     <fieldset class="">
                         <legend class="">Details</legend>
-                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.first_name | as_crispy_field }}
+                        {{ order_form.last_name | as_crispy_field }}
+                        {{ order_form.phone_number | as_crispy_field }}
                         {{ order_form.email | as_crispy_field }}
                     </fieldset>
                     <fieldset class="">
-                        <legend class="">Delivery</legend>
-                        {{ order_form.phone_number | as_crispy_field }}
+                        <legend class="">Address</legend>
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
                         {{ order_form.town_or_city | as_crispy_field }}
                         {{ order_form.county | as_crispy_field }}
-                        {{ order_form.postcode | as_crispy_field }}
+                        {{ order_form.post_or_zipcode | as_crispy_field }}
                         {{ order_form.country | as_crispy_field }}
                         <div class="">
 							{% if user.is_authenticated %}
-								<label class="" for="id-save-info">Save this delivery information to my profile</label>
+								<label class="" for="id-save-info">Save this address information to my profile</label>
                                 <input class="" type="checkbox" id="id-save-info" name="save-info" checked>
 							{% else %}
-								<label class="f" for="id-save-info">
-                                    <a class="" href="{% url 'account_signup' %}">Create an account</a> or 
+								<label class="" for="id-save-info">
+                                    <a class="" href="{% url 'account_signup' %}">Create an account</a>
                                     <a class="" href="{% url 'account_login' %}">login</a> to save this information
                                 </label>
 							{% endif %}
@@ -98,7 +100,7 @@
                     </fieldset>
 
                     <div class="">                    
-						<a href="{% url 'view_bag' %}" class="">
+						<a href="{% url 'view_cart' %}" class="">
 							<span class="">
 								<i class="fas fa-chevron-left"></i>
 							</span>
@@ -114,7 +116,8 @@
 							<span class="icon">
 								<i class="fas fa-exclamation-circle"></i>
 							</span>
-							<span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
+                            <br>
+							<span>Your card will be charged <strong>£{{ grand_total|floatformat:2 }}</strong></span>
 						</p>
 					</div>
                 </form>
@@ -125,10 +128,13 @@
                         </span>
                     </h1>
                 </div>
-
-
-
     </div>
-   
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}

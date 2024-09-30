@@ -22,7 +22,7 @@ def subscriptions(request):
 
     # If the cart already contains an item, prevent adding another one
     if cart:  # Assuming this check is for an already existing subscription in the cart
-        cart_url = reverse('cart')  # Generate the URL for the cart page
+        cart_url = reverse('view_cart')  # Generate the URL for the cart page
         # Construct the message with HTML and mark it as safe
         message = mark_safe(f'You already have a subscription in your <a href="{cart_url}">cart</a>. Please remove it before adding a new one.')
         messages.error(request, message)

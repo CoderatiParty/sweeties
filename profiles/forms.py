@@ -1,7 +1,5 @@
 from django import forms
 from .models import User_Profile
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field
 
 
 class UserProfileForm(forms.ModelForm):
@@ -40,18 +38,3 @@ class UserProfileForm(forms.ModelForm):
                                                         'rounded-0 '
                                                         'profile-form-input')
             self.fields[field].label = False
-
-
-class CustomForm(forms.Form):
-    name = forms.CharField(label="Your Name")
-    email = forms.EmailField(label="Your Email")
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Field('name'),
-            Field('email'),
-            Submit('submit', 'Submit')
-        )
-        self.helper.form_method = 'POST'
