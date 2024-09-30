@@ -557,6 +557,17 @@ thead {
   font-size: 24px;
 }
 
+fieldset {
+  background-color: #fefdcf;
+  color: #000000;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+}
+
 tfoot {
   background-color: #fefdcf;
   color: #000000;

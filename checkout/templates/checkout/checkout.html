@@ -59,18 +59,18 @@
                     </tfoot>
                 </table>
                 <br>
-                <p>Please fill out the form below to complete your order</p>
+                <p class="playfair-display-link">Please fill out the form below to complete your order:</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
                     <fieldset class="">
-                        <legend class="">Details</legend>
+                        <legend class="fieldset-label yellow">Details</legend>
                         {{ order_form.first_name | as_crispy_field }}
                         {{ order_form.last_name | as_crispy_field }}
                         {{ order_form.phone_number | as_crispy_field }}
                         {{ order_form.email | as_crispy_field }}
                     </fieldset>
                     <fieldset class="">
-                        <legend class="">Address</legend>
+                        <legend class="fieldset-label">Address</legend>
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
                         {{ order_form.town_or_city | as_crispy_field }}
@@ -90,7 +90,7 @@
 						</div>
                     </fieldset>
                     <fieldset class="">
-                        <legend class="">Payment</legend>
+                        <legend class="fieldset-label">Payment</legend>
                         <!-- A Stripe card element will go here -->
                         <div class="" id="card-element"></div>
                         <!-- Used to display form errors -->
