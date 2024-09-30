@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="category-links">
+    <hr>
+    <h2 class="playfair-display-article-heading">Checkout</h2>
+    <hr>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+                <!-- Cart Summary -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2"><strong>CART SUMMARY</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td colspan="2">
+                                <div class="container">
+                                    <img src="{{ item.image }}" alt="{{ item.subscription.image_description }}" class="pic">
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th>Total Items:</th>
+                            <td>{{ product_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Subtotal:</th>
+                            <td>£{{ total }}</td>
+                        </tr>
+                        <tr>
+                            <th>VAT:</th>
+                            <td>£{{ vat_amount }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Grand Total:</th>
+                            <td>£{{ grand_total }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p>Please fill out the form below to complete your order</p>
+                <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                    {% csrf_token %}
+                    <fieldset class="">
+                        <legend class="">Details</legend>
+                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                    </fieldset>
+                    <fieldset class="">
+                        <legend class="">Delivery</legend>
+                        {{ order_form.phone_number | as_crispy_field }}
+                        {{ order_form.street_address1 | as_crispy_field }}
+                        {{ order_form.street_address2 | as_crispy_field }}
+                        {{ order_form.town_or_city | as_crispy_field }}
+                        {{ order_form.county | as_crispy_field }}
+                        {{ order_form.postcode | as_crispy_field }}
+                        {{ order_form.country | as_crispy_field }}
+                        <div class="">
+							{% if user.is_authenticated %}
+								<label class="" for="id-save-info">Save this delivery information to my profile</label>
+                                <input class="" type="checkbox" id="id-save-info" name="save-info" checked>
+							{% else %}
+								<label class="f" for="id-save-info">
+                                    <a class="" href="{% url 'account_signup' %}">Create an account</a> or 
+                                    <a class="" href="{% url 'account_login' %}">login</a> to save this information
+                                </label>
+							{% endif %}
+						</div>
+                    </fieldset>
+                    <fieldset class="">
+                        <legend class="">Payment</legend>
+                        <!-- A Stripe card element will go here -->
+                        <div class="" id="card-element"></div>
+                        <!-- Used to display form errors -->
+                        <div class="" id="card-errors" role="alert"></div>
+                        <!-- Pass the client secret to the view so we can get the payment intent id -->
+                        <input type="hidden" value="{{ client_secret }}" name="client_secret">
+                    </fieldset>
+
+                    <div class="">                    
+						<a href="{% url 'view_bag' %}" class="">
+							<span class="">
+								<i class="fas fa-chevron-left"></i>
+							</span>
+							<span class="">Adjust Bag</span>
+						</a>
+						<button id="submit-button" class="">
+							<span class="">Complete Order</span>
+							<span class="">
+								<i class="fas fa-lock"></i>
+							</span>
+						</button>
+						<p class="">
+							<span class="icon">
+								<i class="fas fa-exclamation-circle"></i>
+							</span>
+							<span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
+						</p>
+					</div>
+                </form>
+                <div id="loading-overlay">
+                    <h1 class="loading-spinner">
+                        <span class="icon">
+                            <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                        </span>
+                    </h1>
+                </div>
+
+
+
+    </div>
+   
+</div>
+{% endblock %}

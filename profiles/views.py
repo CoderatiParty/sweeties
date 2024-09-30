@@ -10,20 +10,20 @@ from .forms import CustomForm
 def profile(request):
     """ A view to show subscriptions page """
 
-#    form = CustomForm(instance=request.user)
+    form = CustomForm(instance=request.user)
 
     current_path = request.path
     referrer = request.META.get('HTTP_REFERER')
 
-#    if request.method == "POST":
-#        form = CustomForm(request.POST, instance=request.user)
-#        if form.is_valid():
-#            form.save()
+    if request.method == "POST":
+        form = CustomForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
 
     context = {
         'current_path': current_path,
         'referrer': referrer,
-#        'form': form,
+        'form': form,
     }
 
     return render(request, 'profiles/profile.html', context)

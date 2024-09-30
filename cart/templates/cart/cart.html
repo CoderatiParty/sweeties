@@ -19,12 +19,7 @@
     <div class="grid-item-article">
         {% if cart_items %}
             {% for item in cart_items %}
-            <div class="container">
                 <p class="playfair-display-caption">You are about to purchase:</p>
-                    <!-- Subscription Image -->
-                    <img src="{{ item.image }}" alt="{{ item.subscription.image_description }}" class="pic">
-            </div>
-            <br>
                 <table>
                     <thead>
                         <tr>
@@ -76,7 +71,7 @@
                         </tr>
                     </thead>
                 </table>
-            {% endfor %}
+            <br>
             <br>
                 <!-- Cart Summary -->
                 <table>
@@ -86,6 +81,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div class="container">
+                                    <img src="{{ item.image }}" alt="{{ item.subscription.image_description }}" class="pic">
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
                         <tr>
                             <th>Total Items:</th>
                             <td>{{ product_count }}</td>
@@ -109,7 +112,7 @@
             <br>
                 <!-- Checkout Button -->
                  <div class="container">
-                    <a href="" class="cart-button">Proceed to Checkout <i class="fas fa-lock"></i></a>
+                    <a href="{% url 'checkout' %}" class="cart-button">Proceed to Checkout <i class="fas fa-lock"></i></a>
                 </div>
         {% else %}
             <p class="playfair-display-link">The cart is empty.</p>
