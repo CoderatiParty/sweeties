@@ -1,3 +1,49 @@
+legend {
+  background-color: #fefdcf;
+  color: #000000;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+  border: 1px solid black;
+}
+  
+fieldset {
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
+  border: 1px solid black;
+}
+
+.fieldset-label {
+  position: relative;
+  right: .5rem;
+}
+
+select {
+  color: #000000;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  resize: vertical;
+}
+
 .StripeElement,
 .stripe-style-input {
   box-sizing: border-box;
@@ -23,11 +69,6 @@
 
 .stripe-style-input::placeholder {
     color: #aab7c4;
-}
-
-.fieldset-label {
-    position: relative;
-    right: .5rem;
 }
 
 #payment-form .form-control,

@@ -1,4 +1,6 @@
 {% load account %}
 {% load i18n %}
+<div class="flash info">
 {% user_display user as name %}
 {% blocktrans %}Successfully signed in as {{name}}.{% endblocktrans %}
+</div>

@@ -26,7 +26,6 @@
             {% setvar end_link %}
             </a>
         {% endsetvar %}
-            <p class="playfair-display-text">To become a member, please <a href="{% url 'subscriptions' %}">Subscribe</a>.</p>
         {% url 'account_login' as login_url %}
         {% element form form=form method="post" action=login_url tags="entrance,login" %}
             {% slot body %}

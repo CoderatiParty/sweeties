@@ -110,10 +110,17 @@
                     </tfoot>
                 </table>
             <br>
+            {% if request.user.is_authenticated %}
                 <!-- Checkout Button -->
                  <div class="container">
                     <a href="{% url 'checkout' %}" class="cart-button">Proceed to Checkout <i class="fas fa-lock"></i></a>
                 </div>
+                {% else %}
+                <div class="container">
+                <a class="" href="{% url 'account_signup' %}?next={% url 'checkout' %}">Create an account</a> or
+                <a class="" href="{% url 'account_login' %}?next={% url 'checkout' %}">login</a> to proceed.
+            </div>
+                {% endif %}
         {% else %}
             <p class="playfair-display-link">The cart is empty.</p>
                 <a class="playfair-display-link" href="{% url 'subscriptions' %}">

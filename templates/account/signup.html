@@ -1,21 +1,30 @@
 {% extends "account/base_entrance.html" %}
-{% load allauth i18n %}
-{% block head_title %}
-    {% trans "Signup" %}
-{% endblock head_title %}
+{% load i18n %}
+{% load allauth account %}
+{% block page_header %}
+
+<div class="category-links">
+  <hr>
+  <h2 class="playfair-display-article-heading">Sign Up</h2>
+  <hr>
+</div>
+
+{% endblock %}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+   
+    <div class="grid-item-article">
+        <div class="login-card">
     {% setvar link %}
         <a href="{{ login_url }}">
         {% endsetvar %}
         {% setvar end_link %}
         </a>
     {% endsetvar %}
-    {% element p %}
-        {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
-    {% endelement %}
     {% if not SOCIALACCOUNT_ONLY %}
         {% url 'account_signup' as action_url %}
         {% element form form=form method="post" action=action_url tags="entrance,signup" %}
@@ -42,4 +51,7 @@
     {% if SOCIALACCOUNT_ENABLED %}
         {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
-{% endblock content %}
+</div>
+    </div>
+</div>
+{% endblock %}

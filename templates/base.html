@@ -54,17 +54,30 @@
   <body>
     <div id="mainMenu" class="menu-overlay">
         <a id="closeButton" class="closebtn">&times;</a>
-      <br>
-      <br>
         <div class="menu-content">
           <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
       <hr>
         <a class="playfair-display-link" href="{% url 'subscriptions' %}">Subscriptions</a>
+            <hr>
+            <p class="playfair-display-link">Account pages</p>
           {% if request.user.is_authenticated %}
+          <ul>
+            <li>
           <a class="playfair-display-link" href="{% url 'profile' %}">Manage Profile</a>
+        </li>
+        <li>
           <a class="playfair-display-link" href="{% url 'account_logout' %}">Sign Out</a>
+        </li>
+    </ul>
           {% else %}
+          <ul>
+            <li>
           <a class="playfair-display-link" href="{% url 'account_login' %}">Members Sign In</a>
+        </li>
+        <li>
+          <a class="playfair-display-link" href="{% url 'account_signup' %}">Sign Up</a>
+        </li>
+    </ul>
           {% endif %}
       <hr>
       <a href="{% url 'corporate' %}" class="playfair-display-link">Corporate Pages</a>

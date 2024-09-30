@@ -22,7 +22,8 @@ class OrderForm(forms.ModelForm):
             'street_address2': 'Street Address 2',
             'town_or_city': 'Town or City',
             'county': 'County, State or Locality',
-            'post_or_zipcode': 'Postal or Zip Code',
+            'post_or_zipcode': 'Post or Zip Code',
+            'country': 'Country',
             'phone_number': 'Phone Number',
             'email': 'Email Address',
         }

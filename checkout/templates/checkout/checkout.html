@@ -25,7 +25,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="2"><strong>CART SUMMARY</strong></th>
+                            <th class="head" colspan="2">CART SUMMARY</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,36 +59,36 @@
                     </tfoot>
                 </table>
                 <br>
-                <p class="playfair-display-link">Please fill out the form below to complete your order:</p>
+                <br>
+                <p class="playfair-display-link">Please fill out the sections below to complete your order</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
                     <fieldset class="">
-                        <legend class="fieldset-label yellow">Details</legend>
+                        <legend class="fieldset-label">PERSONAL DETAILS</legend>
                         {{ order_form.first_name | as_crispy_field }}
                         {{ order_form.last_name | as_crispy_field }}
-                        {{ order_form.phone_number | as_crispy_field }}
-                        {{ order_form.email | as_crispy_field }}
                     </fieldset>
+                    <br>
                     <fieldset class="">
-                        <legend class="fieldset-label">Address</legend>
+                        <legend class="fieldset-label">ADDRESS</legend>
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
                         {{ order_form.town_or_city | as_crispy_field }}
                         {{ order_form.county | as_crispy_field }}
                         {{ order_form.post_or_zipcode | as_crispy_field }}
                         {{ order_form.country | as_crispy_field }}
-                        <div class="">
-							{% if user.is_authenticated %}
-								<label class="" for="id-save-info">Save this address information to my profile</label>
-                                <input class="" type="checkbox" id="id-save-info" name="save-info" checked>
-							{% else %}
-								<label class="" for="id-save-info">
-                                    <a class="" href="{% url 'account_signup' %}">Create an account</a>
-                                    <a class="" href="{% url 'account_login' %}">login</a> to save this information
-                                </label>
-							{% endif %}
-						</div>
                     </fieldset>
+                    <br>
+                    <fieldset class="">
+                        <legend class="fieldset-label">CONTACT DETAILS</legend>
+                        {{ order_form.phone_number | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                    </fieldset>
+                    <br>
+                            <label class="" for="id-save-info">Save this information to my profile</label>
+                            <input class="" type="checkbox" id="id-save-info" name="save-info" checked>
+                    <br>
+                    <br>
                     <fieldset class="">
                         <legend class="fieldset-label">Payment</legend>
                         <!-- A Stripe card element will go here -->
@@ -100,19 +100,19 @@
                     </fieldset>
 
                     <div class="">                    
-						<a href="{% url 'view_cart' %}" class="">
-							<span class="">
+						<a href="{% url 'view_cart' %}" class="btn btn-outline-black rounded-0">
+							<span class="icon">
 								<i class="fas fa-chevron-left"></i>
 							</span>
-							<span class="">Adjust Bag</span>
+							<span class="font-weight-bold">Adjust Bag</span>
 						</a>
-						<button id="submit-button" class="">
-							<span class="">Complete Order</span>
-							<span class="">
+						<button id="submit-button" class="btn btn-black">
+							<span class="font-weight-bold">Complete Order</span>
+							<span class="icon">
 								<i class="fas fa-lock"></i>
 							</span>
 						</button>
-						<p class="">
+						<p class="small text-danger my-0">
 							<span class="icon">
 								<i class="fas fa-exclamation-circle"></i>
 							</span>

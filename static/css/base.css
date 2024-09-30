@@ -131,14 +131,14 @@ label {
   display: block;
 }
 
-input[type=text], [type=password] {
+input[type=text], [type=email], [type=password] {
+  color: #000000;
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
   cursor: pointer;
-  border-radius: 4px;
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
@@ -232,6 +232,15 @@ a.playfair-display-link:hover {
   text-decoration: underline;
 }
 
+p.playfair-display-link {
+  display: block;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  text-decoration: none;
+}
+
 .menu-content ul {
   list-style-type: none;
   text-align: left;
@@ -259,7 +268,17 @@ a.playfair-display-link:hover {
   color: #ffffff;
 }
 
+.flash.warning {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
 .flash.success {
+  background-color: #00c853;
+  color: #ffffff;
+}
+
+.flash.info {
   background-color: #00c853;
   color: #ffffff;
 }
@@ -550,22 +569,6 @@ thead {
   background-color: #fefdcf;
   color: #000000;
   text-align: center;
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 24px;
-}
-
-fieldset {
-  background-color: #fefdcf;
-  color: #000000;
-  text-align: center;
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 24px;
 }
 
 tfoot {
@@ -590,6 +593,14 @@ th {
   font-style: normal;
   font-size: 18px;
   width: 35%;
+}
+
+th.head {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px;
 }
 
 td {
