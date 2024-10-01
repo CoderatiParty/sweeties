@@ -3,8 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-from django_countries.fields import CountryField
+from subscriptions.models import User_Subscriptions
 
 
 class User_Profile(models.Model):
@@ -23,18 +22,9 @@ class User_Profile(models.Model):
                                             null=True, blank=True)
     email = models.CharField(max_length=80,
                                                null=True, blank=True)
-    street_address1 = models.CharField(max_length=80,
-                                               null=True, blank=True)
-    street_address2 = models.CharField(max_length=80,
-                                               null=True, blank=True)
-    town_or_city = models.CharField(max_length=40,
-                                            null=True, blank=True)
-    county = models.CharField(max_length=80,
-                                      null=True, blank=True)
-    post_or_zipcode = models.CharField(max_length=20,
-                                        null=True, blank=True)
-    country = CountryField(blank_label='Country',
-                                   null=True, blank=True)
+    subscription = models.ForeignKey(User_Subscriptions, 
+                                     on_delete=models.SET_NULL, 
+                                     null=True, blank=True)
 
     def __str__(self):
         return self.user.username

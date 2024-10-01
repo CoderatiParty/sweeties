@@ -5,7 +5,6 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
 
-from .forms import OrderForm
 from .models import Order, OrderLineItem
 
 from subscriptions.models import User_Subscriptions
@@ -47,15 +46,9 @@ def checkout(request):
             'last_name': request.POST['last_name'],
             'email': request.POST['email'],
             'phone_number': request.POST['phone_number'],
-            'country': request.POST['country'],
-            'post_or_zipcode': request.POST['post_or_zipcode'],
-            'town_or_city': request.POST['town_or_city'],
-            'street_address1': request.POST['street_address1'],
-            'street_address2': request.POST['street_address2'],
-            'county': request.POST['county'],
         }
 
-        order_form = OrderForm(form_data)
+        order_form = UserProfileForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
@@ -101,7 +94,7 @@ def checkout(request):
         if not cart:
             messages.error(request,
                            "There's nothing in your cart at the moment")
-            return redirect(reverse('products'))
+            return redirect(reverse('subscriptions'))
 
         current_cart = cart_contents(request)
         total = current_cart['grand_total']
@@ -115,24 +108,13 @@ def checkout(request):
         # Attempt to prefill the form with any info
         # the user maintains in their profile
         if request.user.is_authenticated:
-            try:
-                profile = User_Profile.objects.get(user=request.user)
-                order_form = OrderForm(initial={
-                    'first_name': profile.user.first_name,
-                    'last_name': profile.user.last_name,
-                    'email': profile.user.email,
-                    'phone_number': profile.phone_number,
-                    'country': profile.country,
-                    'post_or_zipcode': profile.post_or_zipcode,
-                    'town_or_city': profile.town_or_city,
-                    'street_address1': profile.street_address1,
-                    'street_address2': profile.street_address2,
-                    'county': profile.county,
-                })
-            except User_Profile.DoesNotExist:
-                order_form = OrderForm()
-        else:
-            order_form = OrderForm()
+            profile = User_Profile.objects.get(user=request.user)
+            profile_form = UserProfileForm(initial={
+                'first_name': profile.user.first_name,
+                'last_name': profile.user.last_name,
+                'email': profile.user.email,
+                'phone_number': profile.phone_number,
+            })
 
     if not stripe_public_key:
         messages.warning(request, ('Stripe public key is missing. '
@@ -141,7 +123,7 @@ def checkout(request):
 
     template = 'checkout/checkout.html'
     context = {
-        'order_form': order_form,
+        'profile_form': profile_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
@@ -166,12 +148,6 @@ def checkout_success(request, order_number):
         if save_info:
             profile_data = {
                 'phone_number': order.phone_number,
-                'country': order.country,
-                'post_or_zipcode': order.postcode,
-                'default_town_or_city': order.town_or_city,
-                'default_street_address1': order.street_address1,
-                'default_street_address2': order.street_address2,
-                'default_county': order.county,
             }
             user_profile_form = UserProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():

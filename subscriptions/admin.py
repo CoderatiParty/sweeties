@@ -12,7 +12,7 @@ class User_SubscriptionsAdmin(admin.ModelAdmin):
         'auto_renew',
         'purchase_date',
         'renew_date',
-        'user',
+        'paid',
     )
 
 

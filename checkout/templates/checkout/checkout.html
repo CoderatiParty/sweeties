@@ -65,24 +65,14 @@
                     {% csrf_token %}
                     <fieldset class="">
                         <legend class="fieldset-label">PERSONAL DETAILS</legend>
-                        {{ order_form.first_name | as_crispy_field }}
-                        {{ order_form.last_name | as_crispy_field }}
-                    </fieldset>
-                    <br>
-                    <fieldset class="">
-                        <legend class="fieldset-label">ADDRESS</legend>
-                        {{ order_form.street_address1 | as_crispy_field }}
-                        {{ order_form.street_address2 | as_crispy_field }}
-                        {{ order_form.town_or_city | as_crispy_field }}
-                        {{ order_form.county | as_crispy_field }}
-                        {{ order_form.post_or_zipcode | as_crispy_field }}
-                        {{ order_form.country | as_crispy_field }}
+                        {{ profile_form.first_name | as_crispy_field }}
+                        {{ profile_form.last_name | as_crispy_field }}
                     </fieldset>
                     <br>
                     <fieldset class="">
                         <legend class="fieldset-label">CONTACT DETAILS</legend>
-                        {{ order_form.phone_number | as_crispy_field }}
-                        {{ order_form.email | as_crispy_field }}
+                        {{ profile_form.phone_number | as_crispy_field }}
+                        {{ profile_form.email | as_crispy_field }}
                     </fieldset>
                     <br>
                             <label class="" for="id-save-info">Save this information to my profile</label>

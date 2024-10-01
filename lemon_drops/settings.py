@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django_countries',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -89,6 +88,11 @@ TEMPLATES = [
         },
     },
 ]
+
+
+ACCOUNT_FORMS = {
+    'signup': 'profiles.forms.CustomSignupForm',
+}
 
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

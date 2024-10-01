@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from profiles.models import User_Profile
 
 class User_Subscriptions(models.Model):
     type = models.CharField(max_length=12, null=False, blank=False)
@@ -13,8 +12,7 @@ class User_Subscriptions(models.Model):
     renew_date = models.DateTimeField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     image_description = models.CharField(max_length=254, null=True, blank=True)
-    user = models.ForeignKey(User_Profile, null=True, blank=True,
-                                 on_delete=models.SET_NULL)
+    paid = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.type
