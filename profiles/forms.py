@@ -86,12 +86,6 @@ class CustomSignupForm(SignupForm):
         user_profile.first_name = self.cleaned_data.get('first_name', '')
         user_profile.last_name = self.cleaned_data.get('last_name', '')
         user_profile.phone_number = self.cleaned_data.get('phone_number', '')
-        user_profile.street_address1 = self.cleaned_data.get('street_address1', '')
-        user_profile.street_address2 = self.cleaned_data.get('street_address2', '')
-        user_profile.town_or_city = self.cleaned_data.get('town_or_city', '')
-        user_profile.county = self.cleaned_data.get('county', '')
-        user_profile.post_or_zipcode = self.cleaned_data.get('post_or_zipcode', '')
-        user_profile.country = self.cleaned_data.get('country', '')
 
         user_profile.save()
 

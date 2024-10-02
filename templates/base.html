@@ -66,13 +66,13 @@
           <a class="playfair-display-link" href="{% url 'profile' %}">Manage Profile</a>
         </li>
         <li>
-          <a class="playfair-display-link" href="{% url 'account_logout' %}">Sign Out</a>
+          <a class="playfair-display-link" href="{% url 'account_logout' %}">Logout</a>
         </li>
     </ul>
           {% else %}
           <ul>
             <li>
-          <a class="playfair-display-link" href="{% url 'account_login' %}">Members Sign In</a>
+          <a class="playfair-display-link" href="{% url 'account_login' %}">Login</a>
         </li>
         <li>
           <a class="playfair-display-link" href="{% url 'account_signup' %}">Sign Up</a>
@@ -109,7 +109,7 @@
         </div>
       </div>
         {% if cart_items %}
-        <a href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+        <a href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
         {% else %}
         <a href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-plus"></i></a>
         {% endif %}
