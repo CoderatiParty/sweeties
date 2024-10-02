@@ -23,9 +23,15 @@ def cart_contents(request):
         
         cart_items.append({
             'item_id': item_id,
+            'type': item_data['type'],
+            'desciption': 'description',
             'cost': cost,
-            'subscription': subscription,  # Pass the actual subscription object
+            'duration_years': item_data['duration_years'],
+            'duration_days': 'duration_days',
             'auto_renew': item_data['auto_renew'],
+            'purchase_date': 'purchase_date',
+            'renew_date': 'renew_date',
+            'subscription': subscription,
             'image': item_data['image'],
         })
 
