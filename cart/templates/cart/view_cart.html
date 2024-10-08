@@ -84,7 +84,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="container">
-                                    <img src="{{ item.subscription.image }}" alt="{{ item.subscription.image_description }}" class="pic">
+                                    <img src="{{ item.subscription.image.url }}" alt="{{ item.subscription.image_description }}" class="pic">
                                 </div>
                             </td>
                         </tr>
@@ -118,7 +118,7 @@
                 {% else %}
                 <div class="container">
                 <a class="" href="{% url 'account_signup' %}">Create an account</a> or
-                <a class="" href="{% url 'account_login' %}?next={% url 'checkout' %}">login</a> to proceed.
+                <a class="" href="{% url 'account_login' %}">login</a> to proceed.
             </div>
                 {% endif %}
         {% else %}

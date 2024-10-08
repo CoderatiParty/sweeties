@@ -1,13 +1,12 @@
-class AttachRequestToUserMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
+import logging
+from django.utils.deprecation import MiddlewareMixin
 
-    def __call__(self, request):
-        # Process the request
-        response = self.get_response(request)
+logger = logging.getLogger(__name__)
 
-        # Attach the request to the user if the user is authenticated
+class AttachRequestToUserMiddleware(MiddlewareMixin):
+    def process_request(self, request):
         if request.user.is_authenticated:
+            logger.debug(f"Attaching request object to user: {request.user}")
             request.user.request = request
-
-        return response
+        else:
+            logger.debug("Request is anonymous, no user to attach request to.")

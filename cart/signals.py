@@ -6,6 +6,9 @@ from subscriptions.models import User_Subscriptions
 from profiles.models import User_Profile
 from django.shortcuts import redirect, get_object_or_404
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Helper function to handle cart subscription attachment logic
@@ -42,34 +45,22 @@ def attach_subscription_to_profile(user, session_cart):
     return redirect('checkout')  # Replace with your actual checkout page URL or view
 
 
-# Signal to create or update user profile after user is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    """
-    Create a user profile when a new user is created and add subscriptions from the cart.
-    """
     if created:
-        # Create the user profile
-        user_profile, created = User_Profile.objects.get_or_create(user=instance)
+        user_profile, _ = User_Profile.objects.get_or_create(user=instance)
 
-        # Check if the request object is available (might be passed from middleware)
         request = getattr(instance, 'request', None)
-
         if request:
-            # Check for subscriptions in the session cart
+            logger.debug(f"Request found for user: {request.user}, session_cart: {request.session.get('cart', {})}")
+            
             session_cart = request.session.get('cart', {})
-            for item_id in session_cart.keys():
-                try:
-                    # Fetch the subscription using item_id
-                    subscription = get_object_or_404(User_Subscriptions, pk=item_id)
-
-                    # Add subscription to user profile
-                    user_profile.subscription = subscription
-                    user_profile.subscription.paid = False  # Set as unpaid
-                    user_profile.save()
-
-                except User_Subscriptions.DoesNotExist:
-                    continue
+            if session_cart:
+                attach_subscription_to_profile(instance, session_cart)
+            else:
+                logger.debug(f"No items in session cart for user: {request.user}")
+        else:
+            logger.debug("No request object found for the user.")
 
 
 @receiver(user_logged_in)
