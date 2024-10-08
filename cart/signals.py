@@ -1,137 +1,157 @@
-import logging
-from django.contrib.auth.signals import user_logged_in, user_logged_out
-from allauth.account.signals import user_signed_up
+from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in, user_logged_out
 from subscriptions.models import User_Subscriptions
+from profiles.models import User_Profile
+from django.shortcuts import redirect, get_object_or_404
+from django.conf import settings
 
 
-logger = logging.getLogger(__name__)
-
-
-@receiver(user_signed_up)
-def save_session_cart_to_profile(sender, request, user, **kwargs):
+# Helper function to handle cart subscription attachment logic
+def attach_subscription_to_profile(user, session_cart):
     """
-    When a user signs up, save the session cart to the user's profile.
+    Attach the subscription from the session cart to the user's profile 
+    if the user doesn't already have a paid subscription.
     """
-    cart = request.session.get('cart', {})
-    logger.debug(f"Session cart contents during signup: {cart}")
+    try:
+        # Get user profile
+        user_profile = user.user_profile
+    except User_Profile.DoesNotExist:
+        # In case profile does not exist for the user, return early
+        return
 
+    # Check if the user has an existing subscription with 'paid=True'
+    if user_profile.subscription and user_profile.subscription.paid:
+        # If they already have a paid subscription, redirect them to the profile page
+        return redirect('profile_page')  # Replace with your actual profile page URL or view
+
+    # User doesn't have a paid subscription, check the session cart
+    cart = session_cart.get('cart', {})
     if cart:
-        profile = user.user_profile  # Get the user's profile
+        # Retrieve the subscription details from the session cart
+        for item_id, item_data in cart.items():
+            subscription = User_Subscriptions.objects.get(pk=item_id)
 
-        # Clear any existing subscription in the profile
-        profile.subscription = None  # Clear previous subscription
-        
-        for item_id in cart.keys():
-            try:
-                subscription = User_Subscriptions.objects.get(pk=item_id)
+            # Update user's profile subscription with cart details
+            user_profile.subscription = subscription
+            user_profile.subscription.paid = False  # Mark as unpaid until actual payment is made
+            user_profile.save()
 
-                # Assign the new subscription to the user's profile
-                profile.subscription = subscription
-                profile.save()
+    # Return back to the checkout page
+    return redirect('checkout')  # Replace with your actual checkout page URL or view
 
-                logger.info(f"Assigned subscription {subscription} to user profile for {user.username}.")
-            except User_Subscriptions.DoesNotExist:
-                logger.error(f"Subscription with id {item_id} does not exist.")
-                continue
-    else:
-        logger.info(f"No items in cart during signup for user {user.username}.")
+
+# Signal to create or update user profile after user is created
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Create a user profile when a new user is created and add subscriptions from the cart.
+    """
+    if created:
+        # Create the user profile
+        user_profile, created = User_Profile.objects.get_or_create(user=instance)
+
+        # Check if the request object is available (might be passed from middleware)
+        request = getattr(instance, 'request', None)
+
+        if request:
+            # Check for subscriptions in the session cart
+            session_cart = request.session.get('cart', {})
+            for item_id in session_cart.keys():
+                try:
+                    # Fetch the subscription using item_id
+                    subscription = get_object_or_404(User_Subscriptions, pk=item_id)
+
+                    # Add subscription to user profile
+                    user_profile.subscription = subscription
+                    user_profile.subscription.paid = False  # Set as unpaid
+                    user_profile.save()
+
+                except User_Subscriptions.DoesNotExist:
+                    continue
 
 
 @receiver(user_logged_in)
-def manage_cart_and_profile_on_login(sender, request, user, **kwargs):
+def handle_user_login(sender, request, user, **kwargs):
     """
-    Manage the user's cart and profile based on login scenarios:
-    - Scenario 1: User logs in with a subscription in the cart.
-    - Scenario 2: User logs in with nothing in the cart.
+    Handle what happens when a user logs in, including updating the profile
+    based on the cart contents, or redirecting to their profile page if they 
+    already have a paid subscription.
     """
-    profile = user.user_profile  # Get the user's profile
-    cart = request.session.get('cart', {})
-    logger.debug(f"Session cart contents during login: {cart}")
+    # Get the session cart (if any)
+    session_cart = request.session.get('cart', {})
 
-    # Scenario 1: User logs in with a subscription in the cart
-    if cart:
-        item_id = next(iter(cart.keys()))  # Get the first item ID from the cart
-        try:
-            subscription = User_Subscriptions.objects.get(pk=item_id)
-
-            # Check if the stored subscription in the profile is unpaid
-            if profile.subscription and not profile.subscription.paid:
-                # Update the profile's subscription to the new one from the cart
-                profile.subscription = subscription
-                profile.save()
-                logger.info(f"Updated user profile with new subscription {subscription} for user {user.username}.")
-
-                # Re-add the updated subscription to the cart
-                request.session['cart'] = {
-                    subscription.id: {
-                        'type': subscription.type,
-                        'description': subscription.description,
-                        'cost': str(subscription.cost),  # Convert Decimal to string for JSON serialization
-                        'duration_years': str(subscription.duration_years),  # Convert to string
-                        'auto_renew': subscription.auto_renew,
-                        'image': subscription.image.url if subscription.image else None,
-                    }
-                }
-                request.session.modified = True  # Mark the session as modified
-                logger.info(f"Re-added subscription {subscription} to the cart for user {user.username}.")
-            elif profile.subscription and profile.subscription.paid:
-                # User already has a paid subscription
-                logger.warning(f"User {user.username} already has a paid subscription. Emptying cart.")
-                request.session['cart'] = {}  # Empty the cart
-                request.session.modified = True  # Mark the session as modified
-                # Optionally, you could set a message to inform the user
-            else:
-                logger.info(f"No unpaid subscription found for user {user.username}.")
-
-        except User_Subscriptions.DoesNotExist:
-            logger.error(f"Subscription with id {item_id} does not exist in the cart.")
-            # Handle cases where the subscription might not exist
-
-    # Scenario 2: User logs in with nothing in the cart
-    else:
-        if profile.subscription and not profile.subscription.paid:
-            # Re-add the stored unpaid subscription to the cart
-            subscription = profile.subscription
-            request.session['cart'] = {
-                subscription.id: {
-                    'type': subscription.type,
-                    'description': subscription.description,
-                    'cost': str(subscription.cost),  # Convert Decimal to string for JSON serialization
-                    'duration_years': str(subscription.duration_years),  # Convert to string
-                    'auto_renew': subscription.auto_renew,
-                    'image': subscription.image.url if subscription.image else None,
-                }
+    # Check if the user already has an unpaid subscription in their profile
+    user_profile = user.user_profile
+    if user_profile.subscription and not user_profile.subscription.paid:
+        # Place the unpaid subscription ID into the session cart if not already there
+        subscription_id = user_profile.subscription.id
+        
+        # Check if the cart is empty or doesn't already contain this subscription ID
+        if str(subscription_id) not in session_cart:
+            session_cart[str(subscription_id)] = {
+                'subscription_type': user_profile.subscription.subscription_type,
+                # You can choose to include other details if needed, but not cost
             }
-            request.session.modified = True  # Mark the session as modified
-            logger.info(f"Re-added stored subscription {subscription} to the cart for user {user.username}.")
-        else:
-            logger.info(f"No unpaid subscriptions found in profile for user {user.username}. The cart remains empty.")
+            request.session['cart'] = session_cart  # Save the updated cart to the session
+
+    # Attach subscription to profile based on the session cart
+    if session_cart:
+        result = attach_subscription_to_profile(user, session_cart)
+
+        # If the user already has a paid subscription, redirect to profile
+        if result == 'has_paid_subscription':
+            return redirect('profile_page')  # Replace with your actual profile page URL or view
+
+        # If the subscription was attached successfully, return to the checkout page
+        if result == 'subscription_attached':
+            return redirect('checkout')  # Replace with your actual checkout page URL or view
+
+
+# Signal to update profile if cart subscription changes during checkout
+@receiver(post_save, sender=User_Subscriptions)
+def update_profile_on_subscription_change(sender, instance, **kwargs):
+    """
+    Handle updating the user's profile if they change their subscription in the cart
+    and they don't already have a paid subscription.
+    """
+    # Get all users who have this subscription in their profile
+    profiles = User_Profile.objects.filter(subscription=instance)
+
+    for profile in profiles:
+        # If the subscription is unpaid (paid=False), allow the update
+        if not profile.subscription.paid:
+            profile.subscription = instance
+            profile.save()
+
 
 @receiver(user_logged_out)
-def update_profile_on_logout(sender, request, user, **kwargs):
+def handle_user_logout(sender, request, user, **kwargs):
     """
-    Update the user's profile with the current cart subscription on logout.
-    Scenario 3: A logged-in user changes their subscription in the cart then logs out.
+    Handle what happens when a user logs out, ensuring that the current 
+    subscription in their cart is stored against their profile before logout.
     """
-    profile = user.user_profile  # Get the user's profile
-    cart = request.session.get('cart', {})
+    # Get the session cart (if any)
+    session_cart = request.session.get('cart', {})
 
-    if cart:
-        item_id = next(iter(cart.keys()))  # Get the first item ID from the cart
+    # If the cart is not empty, save the cart's subscription to the user's profile
+    if session_cart:
         try:
-            subscription = User_Subscriptions.objects.get(pk=item_id)
+            user_profile = user.user_profile
+        except User_Profile.DoesNotExist:
+            return  # If no profile exists, nothing to do
 
-            # Update profile subscription if the subscription is unpaid
-            if profile.subscription and not profile.subscription.paid:
-                # Store the new subscription from the cart in the profile
-                profile.subscription = subscription
-                profile.save()
-                logger.info(f"User {user.username} logged out. Updated profile with new subscription {subscription}.")
-            else:
-                logger.info(f"User {user.username} logged out. No updates to the profile since paid subscription exists.")
-                
-        except User_Subscriptions.DoesNotExist:
-            logger.error(f"Subscription with id {item_id} does not exist in the cart.")
-    else:
-        logger.info(f"User {user.username} logged out with an empty cart. No updates to the profile.")
+        # We expect the cart to have subscription IDs
+        for item_id in session_cart.keys():
+            try:
+                subscription = User_Subscriptions.objects.get(pk=item_id)
+                # Update the user's profile with the cart's subscription
+                user_profile.subscription = subscription
+                user_profile.subscription.paid = False  # Ensure the subscription is marked unpaid
+                user_profile.save()
+            except User_Subscriptions.DoesNotExist:
+                continue  # Handle case where subscription ID doesn't exist
+            
+        # Clear the cart from the session once saved to profile
+        request.session['cart'] = {}

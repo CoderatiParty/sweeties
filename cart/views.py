@@ -36,7 +36,7 @@ def add_to_cart(request, item_id):
         else:
             # Add the subscription to the cart. Only one item allowed.
             cart[subscription.id] = {
-                'type': subscription.type,
+                'subscription_type': subscription.subscription_type,
                 'cost': str(subscription.cost), # Convert Decimal to string for session storage
                 'duration_years': str(subscription.duration_years),
                 'auto_renew': subscription.auto_renew,

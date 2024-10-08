@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class User_Subscriptions(models.Model):
-    type = models.CharField(max_length=12, null=False, blank=False)
+    subscription_type = models.CharField(max_length=12, null=False, blank=False)
     description = models.CharField(max_length=254, null=False, blank=False)
     cost = models.DecimalField(max_digits=4, decimal_places=2, null=False, blank=False)
     duration_years = models.DecimalField(max_digits=1, decimal_places=0, null=False, blank=False)
@@ -15,4 +15,4 @@ class User_Subscriptions(models.Model):
     paid = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
-        return self.type
+        return self.subscription_type

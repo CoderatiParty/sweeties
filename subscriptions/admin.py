@@ -4,7 +4,7 @@ from .models import User_Subscriptions
 
 class User_SubscriptionsAdmin(admin.ModelAdmin):
     list_display = (
-        'type',
+        'subscription_type',
         'description',
         'cost',
         'duration_years',

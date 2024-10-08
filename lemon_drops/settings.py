@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'cart.middleware.AttachRequestToUserMiddleware',
 ]
 
 ROOT_URLCONF = 'lemon_drops.urls'
