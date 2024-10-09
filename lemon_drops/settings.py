@@ -28,30 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',  # Set to DEBUG to capture all levels of logs
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # This enables debug-level logging for Django
-        },
-        'your_app_name': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Enable debug-level logging for your app
-            'propagate': True,
-        },
-    },
-}
-
-
-
 # Application definition
 
 INSTALLED_APPS = [

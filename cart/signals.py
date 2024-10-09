@@ -6,9 +6,6 @@ from subscriptions.models import User_Subscriptions
 from profiles.models import User_Profile
 from django.shortcuts import redirect, get_object_or_404
 from django.conf import settings
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 # Helper function to handle cart subscription attachment logic
@@ -43,24 +40,6 @@ def attach_subscription_to_profile(user, session_cart):
 
     # Return back to the checkout page
     return redirect('checkout')  # Replace with your actual checkout page URL or view
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        user_profile, _ = User_Profile.objects.get_or_create(user=instance)
-
-        request = getattr(instance, 'request', None)
-        if request:
-            logger.debug(f"Request found for user: {request.user}, session_cart: {request.session.get('cart', {})}")
-            
-            session_cart = request.session.get('cart', {})
-            if session_cart:
-                attach_subscription_to_profile(instance, session_cart)
-            else:
-                logger.debug(f"No items in session cart for user: {request.user}")
-        else:
-            logger.debug("No request object found for the user.")
 
 
 @receiver(user_logged_in)

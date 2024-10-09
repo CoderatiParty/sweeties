@@ -9,10 +9,6 @@ class User_SubscriptionsAdmin(admin.ModelAdmin):
         'cost',
         'duration_years',
         'duration_days',
-        'auto_renew',
-        'purchase_date',
-        'renew_date',
-        'paid',
     )
 
 
