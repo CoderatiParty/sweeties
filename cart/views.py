@@ -5,6 +5,7 @@ from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.urls import reverse
+from profiles.models import User_Profile
 
 # Create your views here.
 
@@ -27,19 +28,30 @@ def add_to_cart(request, item_id):
         # Get auto_renew from the form (if applicable)
         auto_renew = request.POST.get('auto_renew', False)
 
-        # Update the session cart with the new subscription
-        cart[subscription.id] = {
-            'subscription_type': subscription.subscription_type,
-            'cost': str(subscription.cost),
-            'duration_years': str(subscription.duration_years),
-            'auto_renew': auto_renew,
-        }
-        request.session['cart'] = cart  # Save the updated cart in the session
+        user_profile = get_object_or_404(User_Profile, user=request.user)
 
-        # Success message with a link to view the cart
-        cart_url = reverse('view_cart')
-        message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
-        messages.success(request, message)
+        subscription_infos = Subscription_Info_For_User.objects.filter(subscription=subscription, user_profile=user_profile)
+
+        # Check if there are unpaid subscriptions
+        unpaid_subscription = subscription_infos.filter(paid=False).first()
+
+        if unpaid_subscription:
+            cart[subscription.id] = {
+                'subscription_type': subscription.subscription_type,
+                'cost': str(subscription.cost),
+                'duration_years': str(subscription.duration_years),
+                'auto_renew': auto_renew,
+            }
+            request.session['cart'] = cart  # Save the updated cart in the session
+
+            # Success message with a link to view the cart
+            cart_url = reverse('view_cart')
+            message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
+            messages.success(request, message)
+        else:
+            profile_url = reverse('profile')
+            message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
+            messages.success(request, message)
 
         # Redirect to the provided URL
         return redirect(redirect_url)
