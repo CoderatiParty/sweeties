@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from subscriptions.models import User_Subscriptions
+from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from profiles.models import User_Profile
 from django.shortcuts import redirect, get_object_or_404
 from django.conf import settings
@@ -80,20 +80,20 @@ def handle_user_login(sender, request, user, **kwargs):
 
 
 # Signal to update profile if cart subscription changes during checkout
-@receiver(post_save, sender=User_Subscriptions)
-def update_profile_on_subscription_change(sender, instance, **kwargs):
-    """
-    Handle updating the user's profile if they change their subscription in the cart
-    and they don't already have a paid subscription.
-    """
-    # Get all users who have this subscription in their profile
-    profiles = User_Profile.objects.filter(subscription=instance)
-
-    for profile in profiles:
-        # If the subscription is unpaid (paid=False), allow the update
-        if not profile.subscription.paid:
-            profile.subscription = instance
-            profile.save()
+#@receiver(post_save, sender=User_Subscriptions)
+#def update_profile_on_subscription_change(sender, instance, **kwargs):
+#    """
+#    Handle updating the user's profile if they change their subscription in the cart
+#    and they don't already have a paid subscription.
+#    """
+#    # Get all users who have this subscription in their profile
+#    profiles = User_Profile.objects.filter(subscription=instance)
+#
+ #   for profile in profiles:
+  #      # If the subscription is unpaid (paid=False), allow the update
+   #     if not profile.subscription.paid:
+    #        profile.subscription = instance
+     #       profile.save()
 
 
 @receiver(user_logged_out)

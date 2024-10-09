@@ -17,7 +17,7 @@ class User_ProfileAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('phone_number', 'subscription')
+            'fields': ('phone_number',)
         }),
         ('User Information', {
             'fields': ('get_first_name', 'get_last_name', 'member_number', 'get_username', 'get_email')

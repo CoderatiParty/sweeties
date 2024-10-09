@@ -1,7 +1,7 @@
 from django.shortcuts import (
     render, redirect, reverse, HttpResponse, get_object_or_404
 )
-from .models import User_Subscriptions
+from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.urls import reverse
@@ -20,7 +20,7 @@ def add_to_cart(request, item_id):
     if request.method == 'POST':
         # Fetch the subscription item from the database
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
-
+        
         # Retrieve the redirect URL from the form (or set a fallback URL)
         redirect_url = request.POST.get('redirect_url', '/')
 
