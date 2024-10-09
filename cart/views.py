@@ -17,30 +17,34 @@ def view_cart(request):
 
 
 def add_to_cart(request, item_id):
+    """ Add a subscription to the cart. """
     if request.method == 'POST':
+        # Fetch the subscription item from the database
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
         redirect_url = request.POST.get('redirect_url', '/')
         cart = request.session.get('cart', {})
 
-        if cart:
-            cart_url = reverse('view_cart')
-            message = mark_safe(f'You already have a subscription in your <a href="{cart_url}">cart</a>. Please remove it before adding a new one.')
-            messages.error(request, message)
-        else:
-            auto_renew = request.POST.get('auto_renew', False)  # Get from form data
-            cart[subscription.id] = {
-                'subscription_type': subscription.subscription_type,
-                'cost': str(subscription.cost),
-                'duration_years': str(subscription.duration_years),
-                'auto_renew': auto_renew,  # Store auto-renew temporarily in the cart session
-            }
+        # Get auto_renew from the form (if applicable)
+        auto_renew = request.POST.get('auto_renew', False)
 
-            request.session['cart'] = cart
-            success_message = mark_safe(f'Subscription added to your cart successfully! <a href="{reverse("view_cart")}">View Cart</a>')
-            messages.success(request, success_message)
+        # Update the session cart with the new subscription
+        cart[subscription.id] = {
+            'subscription_type': subscription.subscription_type,
+            'cost': str(subscription.cost),
+            'duration_years': str(subscription.duration_years),
+            'auto_renew': auto_renew,
+        }
+        request.session['cart'] = cart  # Save the updated cart in the session
 
+        # Success message with a link to view the cart
+        cart_url = reverse('view_cart')
+        message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
+        messages.success(request, message)
+
+        # Redirect to the provided URL
         return redirect(redirect_url)
 
+    # If the request method is not POST, redirect to a fallback page
     return redirect('/')
 
 
@@ -65,7 +69,6 @@ def update_auto_renew(request, item_id):
         return redirect('view_cart')
 
     return redirect('view_cart')
-
 
 
 def remove_from_cart(request, item_id):

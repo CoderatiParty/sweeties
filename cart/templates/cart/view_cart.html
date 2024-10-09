@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <th>Duration:</th>
-                            <td>{{ item.duration_years }}</td>
+                            <td>{{ item.duration_years }} {% if item.duration_years == 1 %}year{% else %}years{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Price:</th>

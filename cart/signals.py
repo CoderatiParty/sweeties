@@ -12,41 +12,34 @@ def attach_subscription_to_profile(user, session_cart):
     """
     Attach the subscription from the session cart to the user's profile 
     by creating or updating a Subscription_Info_For_User entry.
+    Ensures only one unpaid subscription is attached to the profile.
     """
     try:
-        # Get the user's profile
         user_profile = user.user_profile
     except User_Profile.DoesNotExist:
         return  # If no profile exists, return early
 
-    # Check if the user has an existing subscription that is paid
-    existing_subscription_info = Subscription_Info_For_User.objects.filter(
-        user_profile=user_profile,
-        paid=True
-    ).first()
-
-    if existing_subscription_info:
-        # If they already have a paid subscription, redirect to the profile page
-        return 'has_paid_subscription'
-
     # User doesn't have a paid subscription, check the session cart
     cart = session_cart.get('cart', {})
     if cart:
+        # Delete any existing unpaid subscription for this user
+        Subscription_Info_For_User.objects.filter(user_profile=user_profile, paid=False).delete()
+
+        # Attach the new subscription
         for item_id, item_data in cart.items():
             subscription = get_object_or_404(User_Subscriptions, pk=item_id)
 
-            # Create or update the Subscription_Info_For_User for the user
-            subscription_info, created = Subscription_Info_For_User.objects.update_or_create(
+            # Create the Subscription_Info_For_User for the user
+            Subscription_Info_For_User.objects.create(
                 user_profile=user_profile,
                 subscription=subscription,
-                defaults={
-                    'auto_renew': item_data.get('auto_renew', False),
-                    'paid': False,  # Mark as unpaid until actual payment is made
-                    'renew_date': None  # Set this later based on payment confirmation
-                }
+                auto_renew=item_data.get('auto_renew', False),
+                paid=False,  # Mark as unpaid until actual payment is made
+                renew_date=None  # Set this later based on payment confirmation
             )
 
     return 'subscription_attached'
+
 
 
 @receiver(user_logged_in)
@@ -68,41 +61,32 @@ def handle_user_login(sender, request, user, **kwargs):
         paid=False
     ).first()
 
+    # Sync the unpaid subscription with the session cart
     if unpaid_subscription_info:
         subscription_id = str(unpaid_subscription_info.subscription.id)
 
-        # Place the unpaid subscription in the session cart if not already present
-        if subscription_id not in session_cart:
+        if not session_cart:
             session_cart[subscription_id] = {
                 'subscription_type': unpaid_subscription_info.subscription.subscription_type,
                 'auto_renew': unpaid_subscription_info.auto_renew,
             }
             request.session['cart'] = session_cart
+        else:
+            attach_subscription_to_profile(user, session_cart)
 
-    # Attach any subscription in the session cart to the user's profile
-    if session_cart:
-        result = attach_subscription_to_profile(user, session_cart)
-
-        if result == 'has_paid_subscription':
-            return redirect('profile_page')  # Redirect to profile if they have a paid subscription
-        if result == 'subscription_attached':
-            return redirect('checkout')  # Redirect to checkout if subscription was attached
+    request.session.modified = True  # Ensure the session is marked as modified
 
 
-# Signal to update profile if cart subscription changes during checkout
 @receiver(post_save, sender=User_Subscriptions)
 def update_profile_on_subscription_change(sender, instance, **kwargs):
     """
     Handle updating the user's subscription info if the subscription changes
     and the user does not already have a paid subscription.
     """
-    # Find all users who have this subscription in their subscription info
     subscription_infos = Subscription_Info_For_User.objects.filter(subscription=instance)
 
     for subscription_info in subscription_infos:
-        # If the subscription is unpaid (paid=False), allow the update
         if not subscription_info.paid:
-            # Update the subscription instance in Subscription_Info_For_User
             subscription_info.subscription = instance
             subscription_info.save()
 
@@ -112,30 +96,42 @@ def handle_user_logout(sender, request, user, **kwargs):
     """
     Handle user logout by saving the current subscription in the session cart
     to the user's profile before they log out.
+    Ensures only one unpaid subscription is stored.
     """
+    print("Signal 'handle_user_logout' triggered")
+
     session_cart = request.session.get('cart', {})
+    print(f"Session cart: {session_cart}")  # Print the contents of the session cart
 
     if session_cart:
         try:
             user_profile = user.user_profile
+            print(f"User profile found: {user_profile}")
         except User_Profile.DoesNotExist:
+            print(f"No profile found for user: {user.username}")
             return  # If no profile exists, nothing to do
 
-        # Save the cart's subscription to the user's profile
+        # Delete any existing unpaid subscription before saving the new one
+        Subscription_Info_For_User.objects.filter(user_profile=user_profile, paid=False).delete()
+
+        # Attach the new subscription from the session cart to the user's profile
         for item_id in session_cart.keys():
             try:
                 subscription = User_Subscriptions.objects.get(pk=item_id)
-                # Create or update Subscription_Info_For_User
-                Subscription_Info_For_User.objects.update_or_create(
+                print(f"Subscription found: {subscription}")
+                # Create the new Subscription_Info_For_User
+                Subscription_Info_For_User.objects.create(
                     user_profile=user_profile,
                     subscription=subscription,
-                    defaults={
-                        'paid': False,  # Mark as unpaid until actual payment is made
-                        'auto_renew': session_cart[item_id].get('auto_renew', False),
-                    }
+                    paid=False,  # Mark as unpaid until actual payment is made
+                    auto_renew=session_cart[item_id].get('auto_renew', False),
                 )
+                print(f"New unpaid subscription saved to profile: {subscription}")
             except User_Subscriptions.DoesNotExist:
-                continue  # If subscription does not exist, skip it
+                print(f"Subscription with ID {item_id} does not exist")
+                continue
 
         # Clear the cart from the session
         request.session['cart'] = {}
+        request.session.modified = True  # Ensure the session is marked as modified
+        print("Session cart cleared and modified")
