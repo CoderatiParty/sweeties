@@ -23,7 +23,7 @@ class Subscription_Info_For_User(models.Model):
     paid = models.BooleanField(default=False, null=True, blank=True)
     user_profile = models.ForeignKey(User_Profile, on_delete=models.CASCADE, related_name='user_subscription_info')
     subscription = models.ForeignKey(User_Subscriptions, on_delete=models.CASCADE, related_name='subscription_chosen')
-    payment = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='payment_info')
+    payment = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='payment_info', null=True, blank=True)
 
     def __str__(self):
         return f"{self.user_profile.user.username} - {self.subscription.subscription_type}"

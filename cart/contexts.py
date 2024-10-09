@@ -15,37 +15,26 @@ def cart_contents(request):
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
 
         # Handle authenticated and unauthenticated users
-        auto_renew = False  # Default value for unauthenticated users
+        auto_renew = item_data.get('auto_renew', False)  # Default value for unauthenticated users
 
-        if request.user.is_authenticated:
-            try:
-                # Fetch the user's subscription info if they are logged in
-                subscription_info = Subscription_Info_For_User.objects.filter(
-                    user_profile=request.user.user_profile,
-                    subscription=subscription
-                ).first()  # Use .first() to avoid 404 errors and get None if it doesn't exist
-                if subscription_info:
-                    auto_renew = subscription_info.auto_renew
-            except Subscription_Info_For_User.DoesNotExist:
-                pass
-
-        # Since item_data is a dictionary, extract the relevant information
+        subscription_type = item_data.get('subscription_type', subscription.subscription_type)
         cost = Decimal(item_data.get('cost', subscription.cost))
-        total += cost  # Add the cost to the total
-        product_count += 1  # Allow only one item per cart
+        description = item_data.get('description', subscription.description)
+        duration_years = item_data.get('duration_years', subscription.duration_years)
 
-        
+        # Add subscription details to cart items
         cart_items.append({
             'item_id': item_id,
-            'subscription_type': item_data['subscription_type'],
-            'desciption': 'description',
+            'subscription_type': subscription_type,
             'cost': cost,
-            'duration_years': 'duration_years',
-            'duration_days': 'duration_days',
-            'subscription': subscription,
+            'description': description,
+            'duration_years': duration_years,
             'auto_renew': auto_renew,
-            'image': 'image',
+            'image': subscription.image.url if subscription.image else None,
         })
+
+        total += cost
+        product_count += 1
 
 
     vat_percentage = Decimal(settings.VAT_PERCENTAGE) / Decimal(100)
