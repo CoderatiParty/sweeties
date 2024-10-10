@@ -6,6 +6,9 @@ from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from profiles.models import User_Profile
 from django.shortcuts import redirect, get_object_or_404
 from django.conf import settings
+from django.urls import reverse
+from django.contrib import messages
+from django.utils.safestring import mark_safe
 
 
 def attach_subscription_to_profile(user, session_cart):
@@ -41,7 +44,6 @@ def attach_subscription_to_profile(user, session_cart):
     return 'subscription_attached'
 
 
-
 @receiver(user_logged_in)
 def handle_user_login(sender, request, user, **kwargs):
     """
@@ -49,7 +51,6 @@ def handle_user_login(sender, request, user, **kwargs):
     If the user has an unpaid subscription, put it in the session cart.
     """
     session_cart = request.session.get('cart', {})
-
     try:
         user_profile = user.user_profile
     except User_Profile.DoesNotExist:
@@ -61,18 +62,30 @@ def handle_user_login(sender, request, user, **kwargs):
         paid=False
     ).first()
 
-    # Sync the unpaid subscription with the session cart
-    if unpaid_subscription_info:
-        subscription_id = str(unpaid_subscription_info.subscription.id)
+    # Check if the user has a paid subscription
+    paid_subscription_info = Subscription_Info_For_User.objects.filter(
+        user_profile=user_profile,
+        paid=True
+    ).first()
 
-        if not session_cart:
-            session_cart[subscription_id] = {
+    if paid_subscription_info:
+        profile_url = reverse('profile')
+        message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
+        messages.success(request, message)
+        return
+    else:
+        # Sync the unpaid subscription with the session cart
+        if unpaid_subscription_info:
+            subscription_id = str(unpaid_subscription_info.subscription.id)
+        else:
+            if not session_cart:
+                session_cart[subscription_id] = {
                 'subscription_type': unpaid_subscription_info.subscription.subscription_type,
                 'auto_renew': unpaid_subscription_info.auto_renew,
-            }
-            request.session['cart'] = session_cart
-        else:
-            attach_subscription_to_profile(user, session_cart)
+                }
+                request.session['cart'] = session_cart
+            else:
+                attach_subscription_to_profile(user, session_cart)
 
     request.session.modified = True  # Ensure the session is marked as modified
 
@@ -96,42 +109,54 @@ def handle_user_logout(sender, request, user, **kwargs):
     """
     Handle user logout by saving the current subscription in the session cart
     to the user's profile before they log out.
-    Ensures only one unpaid subscription is stored.
+    Ensures only one unpaid subscription is stored unless they have a paid subscription.
     """
-    print("Signal 'handle_user_logout' triggered")
 
     session_cart = request.session.get('cart', {})
-    print(f"Session cart: {session_cart}")  # Print the contents of the session cart
 
-    if session_cart:
+    # Initialize `user_profile` to None
+    user_profile = None
+
+    # Try to get the user profile if the user is authenticated
+    if user.is_authenticated:
         try:
             user_profile = user.user_profile
-            print(f"User profile found: {user_profile}")
         except User_Profile.DoesNotExist:
-            print(f"No profile found for user: {user.username}")
-            return  # If no profile exists, nothing to do
+            return  # If no profile exists, exit the function
 
+    # If no user profile was found, return early to prevent further errors
+    if not user_profile:
+        return
+
+    # Fetch any paid subscription info after we have confirmed `user_profile` exists
+    paid_subscription_info = Subscription_Info_For_User.objects.filter(
+        user_profile=user_profile,
+        paid=True
+    ).first()
+
+    # If there's a session cart and no paid subscription, proceed to save unpaid subscriptions
+    if session_cart:
         # Delete any existing unpaid subscription before saving the new one
         Subscription_Info_For_User.objects.filter(user_profile=user_profile, paid=False).delete()
 
-        # Attach the new subscription from the session cart to the user's profile
-        for item_id in session_cart.keys():
-            try:
-                subscription = User_Subscriptions.objects.get(pk=item_id)
-                print(f"Subscription found: {subscription}")
-                # Create the new Subscription_Info_For_User
-                Subscription_Info_For_User.objects.create(
-                    user_profile=user_profile,
-                    subscription=subscription,
-                    paid=False,  # Mark as unpaid until actual payment is made
-                    auto_renew=session_cart[item_id].get('auto_renew', False),
-                )
-                print(f"New unpaid subscription saved to profile: {subscription}")
-            except User_Subscriptions.DoesNotExist:
-                print(f"Subscription with ID {item_id} does not exist")
-                continue
+        # If a paid subscription exists, do nothing further
+        if paid_subscription_info:
+            return
+        else:
+            # Attach the new subscription from the session cart to the user's profile
+            for item_id in session_cart.keys():
+                try:
+                    subscription = User_Subscriptions.objects.get(pk=item_id)
+                    # Create the new Subscription_Info_For_User
+                    Subscription_Info_For_User.objects.create(
+                        user_profile=user_profile,
+                        subscription=subscription,
+                        paid=False,  # Mark as unpaid until actual payment is made
+                        auto_renew=session_cart[item_id].get('auto_renew', False),
+                    )
+                except User_Subscriptions.DoesNotExist:
+                    continue
 
         # Clear the cart from the session
-        request.session['cart'] = {}
-        request.session.modified = True  # Ensure the session is marked as modified
-        print("Session cart cleared and modified")
+        #request.session['cart'] = {}
+        #request.session.modified = True  # Ensure the session is marked as modified
