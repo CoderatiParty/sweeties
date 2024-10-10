@@ -55,10 +55,20 @@
     <div id="mainMenu" class="menu-overlay">
         <a id="closeButton" class="closebtn">&times;</a>
         <div class="menu-content">
+        {% if not request.user.is_authenticated or not user_has_paid_subscription %}
+            <br>
           <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
       <hr>
         <a class="playfair-display-link" href="{% url 'subscriptions' %}">Subscriptions</a>
             <hr>
+        {% else %}
+        <br>
+        <br>
+        <br>
+        <br>
+          <a class="playfair-display-link" href="{% url 'home' %}">Front Page</a>
+      <hr>
+        {% endif %}
             <p class="playfair-display-link">Account pages</p>
           {% if request.user.is_authenticated %}
           <ul>
@@ -104,14 +114,18 @@
                     <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
                 </li>
             </ul>
+          {% if not request.user.is_authenticated or not user_has_paid_subscription %}
             <hr>
           <a class="playfair-display-link" href="{% url 'view_cart' %}">View Cart</a>
+          {% endif %}
         </div>
       </div>
+        {% if not request.user.is_authenticated or not user_has_paid_subscription %}
         {% if cart_items %}
         <a href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
         {% else %}
         <a href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-plus"></i></a>
+        {% endif %}
         {% endif %}
        <div id="menuButton" class="menuButton_index">
         <div class="lines_index"></div>

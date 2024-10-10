@@ -28,14 +28,31 @@ def add_to_cart(request, item_id):
         # Get auto_renew from the form (if applicable)
         auto_renew = request.POST.get('auto_renew', False)
 
-        user_profile = get_object_or_404(User_Profile, user=request.user)
+        if request.user.is_authenticated:
+            user_profile = get_object_or_404(User_Profile, user=request.user)
+            subscription_infos = Subscription_Info_For_User.objects.filter(subscription=subscription, user_profile=user_profile)
+            # Check if there are unpaid subscriptions
+            unpaid_subscription = subscription_infos.filter(paid=False).first()
 
-        subscription_infos = Subscription_Info_For_User.objects.filter(subscription=subscription, user_profile=user_profile)
+            if unpaid_subscription:
+                cart[subscription.id] = {
+                    'subscription_type': subscription.subscription_type,
+                    'cost': str(subscription.cost),
+                    'duration_years': str(subscription.duration_years),
+                    'auto_renew': auto_renew,
+                }
+                request.session['cart'] = cart  # Save the updated cart in the session
 
-        # Check if there are unpaid subscriptions
-        unpaid_subscription = subscription_infos.filter(paid=False).first()
-
-        if unpaid_subscription:
+                # Success message with a link to view the cart
+                cart_url = reverse('view_cart')
+                message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
+                messages.success(request, message)
+            else:
+                profile_url = reverse('profile')
+                message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
+                messages.success(request, message)
+        else:
+            # Handle the case for anonymous users, store cart info in the session
             cart[subscription.id] = {
                 'subscription_type': subscription.subscription_type,
                 'cost': str(subscription.cost),
@@ -48,11 +65,7 @@ def add_to_cart(request, item_id):
             cart_url = reverse('view_cart')
             message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
             messages.success(request, message)
-        else:
-            profile_url = reverse('profile')
-            message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
-            messages.success(request, message)
-
+            
         # Redirect to the provided URL
         return redirect(redirect_url)
 
