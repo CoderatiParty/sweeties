@@ -120,7 +120,7 @@
                 {% else %}
                 <div class="container">
                 <a class="" href="{% url 'account_signup' %}">Create an account</a> or
-                <a class="" href="{% url 'account_login' %}">login</a> to proceed.
+                <a class="" href="{% url 'account_login' %}?next={{ request.path }}">login</a> to proceed.
             </div>
                 {% endif %}
         {% else %}

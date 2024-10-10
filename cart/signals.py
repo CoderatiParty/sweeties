@@ -68,24 +68,26 @@ def handle_user_login(sender, request, user, **kwargs):
         paid=True
     ).first()
 
-    if paid_subscription_info:
+    if paid_subscription_info and session_cart:
         profile_url = reverse('profile')
         message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
         messages.success(request, message)
-        return
     else:
-        # Sync the unpaid subscription with the session cart
-        if unpaid_subscription_info:
-            subscription_id = str(unpaid_subscription_info.subscription.id)
+        if paid_subscription_info:
+            return
         else:
-            if not session_cart:
-                session_cart[subscription_id] = {
-                'subscription_type': unpaid_subscription_info.subscription.subscription_type,
-                'auto_renew': unpaid_subscription_info.auto_renew,
-                }
-                request.session['cart'] = session_cart
+            # Sync the unpaid subscription with the session cart
+            if unpaid_subscription_info:
+                subscription_id = str(unpaid_subscription_info.subscription.id)
             else:
-                attach_subscription_to_profile(user, session_cart)
+                if not session_cart:
+                    session_cart[subscription_id] = {
+                    'subscription_type': unpaid_subscription_info.subscription.subscription_type,
+                    'auto_renew': unpaid_subscription_info.auto_renew,
+                    }
+                    request.session['cart'] = session_cart
+                else:
+                    attach_subscription_to_profile(user, session_cart)
 
     request.session.modified = True  # Ensure the session is marked as modified
 

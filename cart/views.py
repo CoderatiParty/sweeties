@@ -30,28 +30,36 @@ def add_to_cart(request, item_id):
 
         if request.user.is_authenticated:
             user_profile = get_object_or_404(User_Profile, user=request.user)
-            subscription_infos = Subscription_Info_For_User.objects.filter(subscription=subscription, user_profile=user_profile)
             # Check if there are unpaid subscriptions
-            unpaid_subscription = subscription_infos.filter(paid=False).first()
+            unpaid_subscription = Subscription_Info_For_User.objects.filter(paid=False).first()
 
             if unpaid_subscription:
-                cart[subscription.id] = {
-                    'subscription_type': subscription.subscription_type,
-                    'cost': str(subscription.cost),
-                    'duration_years': str(subscription.duration_years),
-                    'auto_renew': auto_renew,
-                }
-                request.session['cart'] = cart  # Save the updated cart in the session
+                unpaid_subscription.delete()
 
-                # Success message with a link to view the cart
-                cart_url = reverse('view_cart')
-                message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
-                messages.success(request, message)
-            else:
-                profile_url = reverse('profile')
-                message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
-                messages.success(request, message)
+            Subscription_Info_For_User.objects.create(
+                user_profile=user_profile,
+                subscription=subscription,
+                paid=False,  # Since it's unpaid, set this to False
+                auto_renew=auto_renew
+            )
+
+            cart.clear()
+
+
+            cart[subscription.id] = {
+                'subscription_type': subscription.subscription_type,
+                'cost': str(subscription.cost),
+                'duration_years': str(subscription.duration_years),
+                'auto_renew': auto_renew,
+            }
+            request.session['cart'] = cart  # Save the updated cart in the session
+
+            # Success message with a link to view the cart
+            cart_url = reverse('view_cart')
+            message = mark_safe(f'Subscription added to the cart successfully! <a href="{cart_url}">View Cart</a>')
+            messages.success(request, message)
         else:
+            cart.clear()
             # Handle the case for anonymous users, store cart info in the session
             cart[subscription.id] = {
                 'subscription_type': subscription.subscription_type,
