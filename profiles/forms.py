@@ -1,6 +1,7 @@
 from django import forms
 from .models import User_Profile
-from subscriptions.models import User_Subscriptions
+from django.contrib.auth.models import User
+from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from allauth.account.forms import SignupForm
 from django.shortcuts import get_object_or_404
 from django_countries.fields import CountryField
@@ -9,7 +10,7 @@ from django_countries.fields import CountryField
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User_Profile
-        exclude = ('user', 'member_number', 'subscription')
+        exclude = ('user', 'member_number')
 
     def __init__(self, *args, **kwargs):
         """
@@ -25,7 +26,7 @@ class UserProfileForm(forms.ModelForm):
             'email': 'Email',
         }
 
-        self.fields['phone_number'].widget.attrs['autofocus'] = True
+        self.fields['username'].widget.attrs['autofocus'] = True
         for field in self.fields:
             if field != 'country':
                 if self.fields[field].required:

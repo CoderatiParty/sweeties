@@ -1,15 +1,27 @@
-{% extends "account/base_manage_email.html" %}
-{% load allauth i18n %}
-{% block head_title %}
-    {% trans "Email Addresses" %}
-{% endblock head_title %}
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% block page_header %}
+
+<div class="category-links">
+  <hr>
+  <h2 class="playfair-display-article-heading">Email Addresses</h2>
+  <hr>
+</div>
+
+{% endblock %}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Email Addresses" %}
-    {% endelement %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+
+    <div class="grid-item-article">
+        <div class="login-card">
     {% if emailaddresses %}
         {% element p %}
-            {% trans 'The following email addresses are associated with your account:' %}
+            {% trans '<p class="playfair-display-para">The following email addresses are associated with your account:</p>' %}
         {% endelement %}
         {% url 'account_email' as email_url %}
         {% element form form=form action=email_url method="post" tags="email,list" %}
@@ -54,9 +66,10 @@
     {% else %}
         {% include "account/snippets/warn_no_email.html" %}
     {% endif %}
+    <br>
     {% if can_add_email %}
         {% element h2 %}
-            {% trans "Add Email Address" %}
+        <p class="playfair-display-caption">{% trans "Add Email Address" %}</p>
         {% endelement %}
         {% url 'account_email' as action_url %}
         {% element form form=form method="post" action=action_url tags="email,add" %}
@@ -72,7 +85,10 @@
             {% endslot %}
         {% endelement %}
     {% endif %}
-{% endblock content %}
+</div>
+</div>
+</div>
+{% endblock %}
 {% block extra_body %}
     <script>
 (function() {

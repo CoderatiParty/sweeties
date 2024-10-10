@@ -1,13 +1,24 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
 {% load allauth account %}
-{% block head_title %}
-    {% translate "Sign In" %}
-{% endblock head_title %}
+{% block page_header %}
+
+<div class="category-links">
+  <hr>
+  <h2 class="playfair-display-article-heading">Enter Sign-In Code</h2>
+  <hr>
+</div>
+
+{% endblock %}
+
 {% block content %}
-    {% element h1 %}
-        {% translate "Enter Sign-In Code" %}
-    {% endelement %}
+<div class="grid-container-article">
+
+    <div class="grid-item-article">
+    </div>
+
+    <div class="grid-item-article">
+        <div class="login-card">
     {% setvar email_link %}
         <a href="mailto:{{ email }}">{{ email }}</a>
     {% endsetvar %}
@@ -37,4 +48,7 @@
         <input type="hidden" name="next" value="{% url 'account_login' %}">
         {% csrf_token %}
     </form>
-{% endblock content %}
+</div>
+</div>
+</div>
+{% endblock %}
