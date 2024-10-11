@@ -95,7 +95,7 @@ class CustomSignupForm(SignupForm):
         cart = request.session.get('cart', {})
         if cart:
             for item_id in cart.keys():
-                subscription = get_object_or_404(User_Subscriptions, pk=item_id)
+                subscription = get_object_or_404(Subscription_Info_For_User, pk=item_id)
                 subscription.user = user_profile  # Link the subscription to the User_Profile
                 subscription.save()
 

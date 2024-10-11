@@ -9,7 +9,7 @@ from .models import Order, OrderLineItem
 
 from django.contrib.auth.decorators import login_required
 
-from subscriptions.models import User_Subscriptions
+from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from profiles.models import User_Profile
 from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
@@ -150,7 +150,10 @@ def checkout_success(request, order_number):
         # Save the user's info
         if save_info:
             profile_data = {
-                'phone_number': order.phone_number,
+                'first_name': profile.first_name,
+                'last_name': profile.last_name,
+                'phone_number': profile.phone_number,
+                'email': profile.email,
             }
             user_profile_form = UserProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
