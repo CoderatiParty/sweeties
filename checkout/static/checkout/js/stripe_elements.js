@@ -69,14 +69,12 @@ form.addEventListener('submit', function(ev) {
             payment_method: {
                 card: card,
                 billing_details: {
-                    first_name: $.trim(form.first_name.value),
-                    last_name: $.trim(form.last_name.value),
+                    name: $.trim(form.first_name.value) + ' ' + $.trim(form.last_name.value), // Combine first and last name
                     phone: $.trim(form.phone_number.value),
                     email: $.trim(form.email.value),
                     }
                 }
-            },
-        }).then(function(result) {
+            }).then(function(result) {
             if (result.error) {
                 var errorDiv = document.getElementById('card-errors');
                 var html = `

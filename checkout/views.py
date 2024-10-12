@@ -44,6 +44,9 @@ def checkout(request):
     if request.method == 'POST':
         cart = request.session.get('cart', {})
 
+        # Get the profile for the authenticated user
+        profile, created = User_Profile.objects.get_or_create(user=request.user)
+
         form_data = {
             'first_name': request.POST['first_name'],
             'last_name': request.POST['last_name'],
@@ -51,13 +54,19 @@ def checkout(request):
             'phone_number': request.POST['phone_number'],
         }
 
-        order_form = UserProfileForm(form_data)
-        if order_form.is_valid():
-            order = order_form.save(commit=False)
-            pid = request.POST.get('client_secret').split('_secret')[0]
-            order.stripe_pid = pid
-            order.original_cart = json.dumps(cart)
-            order.save()
+        profile_form = UserProfileForm(form_data, instance=profile)
+        if profile_form.is_valid():
+            # Save the profile form
+            profile_form.save()
+
+            # Now create the order and link it to the user's profile
+            order = Order.objects.create(
+                user_profile=profile,
+                stripe_pid=request.POST.get('client_secret').split('_secret')[0],
+                original_cart=json.dumps(cart)
+            )
+
+            # Iterate over the cart items and create OrderLineItems
             for item_id, item_data in cart.items():
                 try:
                     subscription = User_Subscriptions.objects.get(id=item_id)
@@ -65,40 +74,33 @@ def checkout(request):
                         order_line_item = OrderLineItem(
                             order=order,
                             subscription=subscription,
-                            quantity=item_data,
+                            quantity=item_data
                         )
                         order_line_item.save()
-                    else:
-                        for size, quantity in item_data['items_by_size'].items():
-                            order_line_item = OrderLineItem(
-                                order=order,
-                                subscription=subscription,
-                                quantity=quantity,
-                            )
-                            order_line_item.save()
                 except User_Subscriptions.DoesNotExist:
                     messages.error(request, (
-                        "One of the products in your cart wasn't "
+                        "One of the subscriptions in your cart wasn't "
                         "found in our database. "
-                        "Please call us for assistance!")
-                    )
+                        "Please call us for assistance!"
+                    ))
                     order.delete()
                     return redirect(reverse('view_cart'))
 
             # Save the info to the user's profile if all is well
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success',
-                                    args=[order.order_number]))
+
+            # Redirect to the checkout success page, passing the order number
+            return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, ('There was an error with your form. '
-                                     'Please double check your information.'))
+                                     'Please double-check your information.'))
     else:
         cart = request.session.get('cart', {})
         if not cart:
-            messages.error(request,
-                           "There's nothing in your cart at the moment")
+            messages.error(request, "There's nothing in your cart at the moment")
             return redirect(reverse('subscriptions'))
 
+        # Stripe payment setup
         current_cart = cart_contents(request)
         total = current_cart['grand_total']
         stripe_total = round(total * 100)
@@ -108,14 +110,13 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        # Attempt to prefill the form with any info
-        # the user maintains in their profile
+        # Prefill the form with the user's profile information if available
         if request.user.is_authenticated:
             profile = User_Profile.objects.get(user=request.user)
             profile_form = UserProfileForm(initial={
-                'first_name': profile.user.first_name,
-                'last_name': profile.user.last_name,
-                'email': profile.user.email,
+                'first_name': profile.first_name,
+                'last_name': profile.last_name,
+                'email': profile.email,
                 'phone_number': profile.phone_number,
             })
 
@@ -140,14 +141,18 @@ def checkout_success(request, order_number):
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
+    # Get the related subscriptions for the order
+    order_line_items = OrderLineItem.objects.filter(order=order)
+    subscriptions = [item.subscription for item in order_line_items]
 
     if request.user.is_authenticated:
-        profile = User_Profile.objects.get(user=request.user)
-        # Attach the user's profile to the order
-        order.user_profile = profile
-        order.save()
+        profile = order.user_profile  # Access the related User_Profile
+        if profile:
+            email = profile.email  # Get the email from the profile
+        else:
+            email = request.user.email  # Fallback to user email if profile is missing
 
-        # Save the user's info
+        # Optionally update the profile with the save_info flag
         if save_info:
             profile_data = {
                 'first_name': profile.first_name,
@@ -161,7 +166,7 @@ def checkout_success(request, order_number):
 
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
-        email will be sent to {order.email}.')
+        email will be sent to {email}.')
 
     if 'cart' in request.session:
         del request.session['cart']
@@ -169,6 +174,9 @@ def checkout_success(request, order_number):
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'profile': profile,
+        'subscriptions': subscriptions,
+        'order_line_items': order_line_items,
     }
 
     return render(request, template, context)

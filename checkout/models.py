@@ -4,8 +4,6 @@ from django.db import models
 from django.db.models import Sum
 from django.conf import settings
 
-from django_countries.fields import CountryField
-
 from profiles.models import User_Profile
 
 
@@ -59,6 +57,8 @@ class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False,
                               on_delete=models.CASCADE,
                               related_name='lineitems')
+    subscription = models.ForeignKey('subscriptions.User_Subscriptions', null=False, blank=False, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=False, blank=False, default=1)
     lineitem_total = models.DecimalField(max_digits=4, decimal_places=2,
                                          null=False, blank=False,
                                          editable=False)
@@ -68,8 +68,10 @@ class OrderLineItem(models.Model):
         Override the original save method to set the lineitem total
         and update the order total.
         """
+        from subscriptions.models import User_Subscriptions
         self.lineitem_total = self.subscription.cost * self.quantity
         super().save(*args, **kwargs)
+        self.order.update_total()
 
     def __str__(self):
         return f'{self.subscription.subscription_type} Subscription on order {self.order.order_number}'

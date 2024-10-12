@@ -39,6 +39,15 @@ class UserProfileForm(forms.ModelForm):
                                                         'profile-form-input')
             self.fields[field].label = False
 
+    def save(self, commit=True, user=None):
+        """ Ensure user is passed to the form when saving """
+        profile = super().save(commit=False)
+        if user:
+            profile.user = user  # Set the user explicitly
+        if commit:
+            profile.save()
+        return profile
+
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=80, required=True)
