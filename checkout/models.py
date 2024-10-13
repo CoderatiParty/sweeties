@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.db.models import Sum
 from django.conf import settings
-
+from decimal import Decimal
 from profiles.models import User_Profile
 
 
@@ -13,8 +13,6 @@ class Order(models.Model):
                                      null=True, blank=True,
                                      related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
-    order_total = models.DecimalField(max_digits=4, decimal_places=2,
-                                      null=False, default=0)
     grand_total = models.DecimalField(max_digits=4, decimal_places=2,
                                       null=False, default=0)
     original_cart = models.TextField(null=False, blank=False, default='')
@@ -26,18 +24,6 @@ class Order(models.Model):
         Generate a random, unique order number using UUID
         """
         return uuid.uuid4().hex.upper()
-    
-
-    def update_total(self):
-        """
-        Update grand total each time a line item is added,
-        accounting for delivery costs.
-        """
-        self.order_total = self.lineitems.aggregate(
-            Sum('lineitem_total'))['lineitem_total__sum'] or 0
-        inc_vat = settings.VAT_MULTIPLIER
-        self.grand_total = self.order_total * self.inc_vat
-        self.save()
 
 
     def save(self, *args, **kwargs):
@@ -62,16 +48,14 @@ class OrderLineItem(models.Model):
     lineitem_total = models.DecimalField(max_digits=4, decimal_places=2,
                                          null=False, blank=False,
                                          editable=False)
-
+    
     def save(self, *args, **kwargs):
         """
-        Override the original save method to set the lineitem total
-        and update the order total.
+        Override the save method to calculate the lineitem total.
         """
-        from subscriptions.models import User_Subscriptions
-        self.lineitem_total = self.subscription.cost * self.quantity
+        # Calculate lineitem total: subscription cost * quantity
+        self.lineitem_total = self.subscription.cost * Decimal(self.quantity)
         super().save(*args, **kwargs)
-        self.order.update_total()
 
     def __str__(self):
         return f'{self.subscription.subscription_type} Subscription on order {self.order.order_number}'

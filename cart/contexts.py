@@ -9,7 +9,6 @@ def cart_contents(request):
     total = Decimal(0)  # Using Decimal for accurate financial calculations
     product_count = 0
     cart = request.session.get('cart', {})
-
     for item_id, item_data in cart.items():
         # Fetch the subscription from the database
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
@@ -42,7 +41,6 @@ def cart_contents(request):
     vat_amount = vat_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     grand_total = total + vat_amount
     grand_total = grand_total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-
     context = {
         'cart_items': cart_items,
         'total': total,

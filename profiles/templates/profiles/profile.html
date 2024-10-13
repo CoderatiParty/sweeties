@@ -29,7 +29,7 @@
                 <tr>
                     <th>Order Number</th>
                     <th>Date</th>
-                    <th>Items</th>
+                    <th>Item</th>
                     <th>Expires</th>
                     <th>Order Total</th>
                 </tr>
@@ -38,23 +38,23 @@
                 {% for order in orders %}
                     <tr>
                         <td>
-                            <a href=""
+                            <a href="{% url 'subscription_history' order.order_number %}"
                             title="{{ order.order_number }}">
-                                {{ order.order_number|truncatechars:6 }}
+                                {{ order.order_number|truncatechars:12 }}
                             </a>
                         </td>
                         <td>{{ order.date }}</td>
                         <td>
                             <ul class="list-unstyled">
                                 {% for item in order.lineitems.all %}
-                                    <li class="small">
+                                    <li class="">
                                         {{ item.subscription.subscription_type }}
                                     </li>
                                 {% endfor %}
                             </ul>
                         </td>
-                        <td>{{ subscription.renewal_date }}</td>
-                        <td>${{ order.grand_total }}</td>
+                        <td>{{ item.subscription.renewal_date }}</td>
+                        <td>£{{ order.grand_total }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

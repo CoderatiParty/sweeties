@@ -4,7 +4,7 @@ from django.shortcuts import (
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
-
+from decimal import Decimal
 from .models import Order, OrderLineItem
 
 from django.contrib.auth.decorators import login_required
@@ -45,6 +45,7 @@ def checkout(request):
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
+        print(f"Cart: {cart}")  # Check the contents of the cart
 
         # Get the profile for the authenticated user
         profile, created = User_Profile.objects.get_or_create(user=request.user)
@@ -61,48 +62,80 @@ def checkout(request):
             # Save the profile form
             profile_form.save()
 
+            # Calculate the total and grand total
+            current_cart = cart_contents(request)
+            grand_total = current_cart['grand_total']
+            print(f"Grand Total: {grand_total}")  # Check the grand total being calculated
+
+
             # Creates the order and links it to the user's profile
             order = Order.objects.create(
                 user_profile=profile,
                 stripe_pid=request.POST.get('client_secret').split('_secret')[0],
-                original_cart=json.dumps(cart)
+                original_cart=json.dumps(cart),
+                grand_total=grand_total,
             )
 
             # Iterates over the cart items to create OrderLineItems
             for item_id, item_data in cart.items():
+                print(f"Processing cart item: {item_id}, data: {item_data}")  # Add this to check cart iteration
+                print(f"Item data type for {item_id}: {type(item_data)}")  # Add this to check data type
                 try:
                     subscription = User_Subscriptions.objects.get(id=item_id)
                     # Extracts the auto_renew status from the session cart
                     auto_renew = item_data.get('auto_renew', False)
-                    if isinstance(item_data, int):
-                        order_line_item = OrderLineItem(
-                            order=order,
-                            subscription=subscription,
-                            quantity=item_data
-                        )
-                        order_line_item.save()
+                    quantity = 1
+                    # Creating OrderLineItem for the subscription
+                    print(f"Creating OrderLineItem for {item_id} with quantity {quantity}")  # Debug OrderLineItem creation
+                    order_line_item = OrderLineItem(
+                        order=order,
+                        subscription=subscription,
+                        quantity=quantity
+                    )
+                    order_line_item.save()
 
-                        # Calculates the renew date based on the subscription's duration_days
-                        duration_days = subscription.duration_days
-                        if duration_days == 365:
-                            renew_date = order.date + timedelta(days=366)
-                        elif duration_days == 1461:
-                            renew_date = order.date + timedelta(days=1462)
-                        else:
-                            renew_date = None  # Handle other cases if needed
+                    # Calculates the renew date based on the subscription's duration_days
+                    duration_days = subscription.duration_days
+                    if duration_days == 365:
+                        renew_date = order.date + timedelta(days=366)
+                    elif duration_days == 1461:
+                        renew_date = order.date + timedelta(days=1462)
+                    else:
+                        renew_date = None  # Handle other cases if needed
 
-                        # Creates the subscription info for the user
+                    # Checks if an unpaid subscription already exists for this user
+                    unpaid_subscription_info = Subscription_Info_For_User.objects.filter(
+                        user_profile=profile,
+                        subscription=subscription,
+                        paid=False
+                    ).first()
+                    print(f"Unpaid Subscription Info Found: {unpaid_subscription_info}")  # Check if an unpaid subscription info is found
+
+                    if unpaid_subscription_info:
+                        print("Updating existing unpaid subscription info...")
+                        # Update the unpaid subscription to mark it as paid
+                        unpaid_subscription_info.paid = True
+                        unpaid_subscription_info.payment = order  # Link to the new order
+                        unpaid_subscription_info.auto_renew = auto_renew
+                        unpaid_subscription_info.renew_date = renew_date
+                        unpaid_subscription_info.save()
+                    else:
+                        print("Creating new subscription info...")
+                        # Create the subscription info as paid if no unpaid subscription exists
                         subscription_info = Subscription_Info_For_User.objects.create(
                             user_profile=profile,
                             subscription=subscription,
-                            payment=order,  # Links to the order for payment info
-                            auto_renew=auto_renew,  # You can adjust this based on your logic
-                            renew_date=renew_date,   # You can calculate this based on your subscription model
+                            payment=order,  # Link to the order for payment info
+                            auto_renew=auto_renew,
+                            renew_date=renew_date,
                             paid=True  # Set this to true since payment has been processed
                         )
                         subscription_info.save()
 
-                except User_Subscriptions.DoesNotExist:
+                    print(f"Subscription Info Saved: {subscription_info if not unpaid_subscription_info else unpaid_subscription_info}")
+
+                except User_Subscriptions.DoesNotExist as e:
+                    print(f"Subscription not found for item {item_id}: {e}")  # Add this to catch errors
                     messages.error(request, (
                         "One of the subscriptions in your cart wasn't "
                         "found in our database. "

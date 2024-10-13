@@ -67,7 +67,15 @@
                             <p class="small mb-0">{{ item.quantity }} @ ${{ item.subscription.cost }} each</p>
                         </div>
                     </div>
-                    {% endfor %}
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <p class="small mb-0 text-black font-weight-bold">VAT</p>
+                        </div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="small mb-0">£{% if item.subscription.subscriptyion_type == Annual %}0.61{% else %}2.43{% endif %}</p>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-12 col-md-4">
@@ -95,21 +103,13 @@
 
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Order Total</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">£{{ item.lineitem_total }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
                             <p class="mb-0 text-black font-weight-bold">Grand Total</p>
                         </div>
                         <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">£{{ order_line_items.lineitem_total }}</p>
+                            <p class="mb-0">£{{ order.grand_total }}</p>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -118,13 +118,13 @@
                 {% if from_profile %}
                     <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
                         <span class="icon mr-2">
-                            <i class="fas fa-angle-left"></i>
+                            <i class="fa-solid fa-arrow-left"></i>
                         </span>
-                        <span class="text-uppercase">Back to Profile</span>
+                        <span>Back to Profile</span>
                     </a>
                 {% else %}
                     <a href="{% url 'home' %}" class="btn btn-black rounded-0 my-2">
-                        <span class="text-uppercase">Now check out the latest fake news!</span>
+                        <span>Now check out the latest fake news!</span>
                     </a>
                 {% endif %}
 			</div>
