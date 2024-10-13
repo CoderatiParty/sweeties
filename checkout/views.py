@@ -14,6 +14,8 @@ from profiles.models import User_Profile
 from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
 
+from datetime import timedelta
+
 import stripe
 import json
 
@@ -59,17 +61,19 @@ def checkout(request):
             # Save the profile form
             profile_form.save()
 
-            # Now create the order and link it to the user's profile
+            # Creates the order and links it to the user's profile
             order = Order.objects.create(
                 user_profile=profile,
                 stripe_pid=request.POST.get('client_secret').split('_secret')[0],
                 original_cart=json.dumps(cart)
             )
 
-            # Iterate over the cart items and create OrderLineItems
+            # Iterates over the cart items to create OrderLineItems
             for item_id, item_data in cart.items():
                 try:
                     subscription = User_Subscriptions.objects.get(id=item_id)
+                    # Extracts the auto_renew status from the session cart
+                    auto_renew = item_data.get('auto_renew', False)
                     if isinstance(item_data, int):
                         order_line_item = OrderLineItem(
                             order=order,
@@ -77,6 +81,27 @@ def checkout(request):
                             quantity=item_data
                         )
                         order_line_item.save()
+
+                        # Calculates the renew date based on the subscription's duration_days
+                        duration_days = subscription.duration_days
+                        if duration_days == 365:
+                            renew_date = order.date + timedelta(days=366)
+                        elif duration_days == 1461:
+                            renew_date = order.date + timedelta(days=1462)
+                        else:
+                            renew_date = None  # Handle other cases if needed
+
+                        # Creates the subscription info for the user
+                        subscription_info = Subscription_Info_For_User.objects.create(
+                            user_profile=profile,
+                            subscription=subscription,
+                            payment=order,  # Links to the order for payment info
+                            auto_renew=auto_renew,  # You can adjust this based on your logic
+                            renew_date=renew_date,   # You can calculate this based on your subscription model
+                            paid=True  # Set this to true since payment has been processed
+                        )
+                        subscription_info.save()
+
                 except User_Subscriptions.DoesNotExist:
                     messages.error(request, (
                         "One of the subscriptions in your cart wasn't "
@@ -86,10 +111,10 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_cart'))
 
-            # Save the info to the user's profile if all is well
+            # Saves the info to the user's profile if all is well
             request.session['save_info'] = 'save-info' in request.POST
 
-            # Redirect to the checkout success page, passing the order number
+            # Redirects to the checkout success page, passing the order number
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, ('There was an error with your form. '
@@ -110,7 +135,7 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        # Prefill the form with the user's profile information if available
+        # Prefills the form with the user's profile information
         if request.user.is_authenticated:
             profile = User_Profile.objects.get(user=request.user)
             profile_form = UserProfileForm(initial={
@@ -141,18 +166,18 @@ def checkout_success(request, order_number):
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
-    # Get the related subscriptions for the order
+    # Gets the related subscriptions for the order
     order_line_items = OrderLineItem.objects.filter(order=order)
     subscriptions = [item.subscription for item in order_line_items]
 
     if request.user.is_authenticated:
-        profile = order.user_profile  # Access the related User_Profile
+        profile = order.user_profile  # Accesses the related User_Profile
         if profile:
-            email = profile.email  # Get the email from the profile
+            email = profile.email  # Gets the email from the profile
         else:
             email = request.user.email  # Fallback to user email if profile is missing
 
-        # Optionally update the profile with the save_info flag
+        # Updates the profile with the save_info flag
         if save_info:
             profile_data = {
                 'first_name': profile.first_name,

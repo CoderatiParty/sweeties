@@ -47,8 +47,7 @@ def attach_subscription_to_profile(user, session_cart):
 @receiver(user_logged_in)
 def handle_user_login(sender, request, user, **kwargs):
     """
-    Handle user login by syncing the session cart with the user's profile.
-    If the user has an unpaid subscription, put it in the session cart.
+    Handles user login by syncing the session cart with the user's profile.
     """
     session_cart = request.session.get('cart', {})
     try:
@@ -56,13 +55,13 @@ def handle_user_login(sender, request, user, **kwargs):
     except User_Profile.DoesNotExist:
         return  # If no profile exists, nothing to do
 
-    # Check if the user has an unpaid subscription
+    # Checks if the user has an unpaid subscription
     unpaid_subscription_info = Subscription_Info_For_User.objects.filter(
         user_profile=user_profile,
         paid=False
     ).first()
 
-    # Check if the user has a paid subscription
+    # Checks if the user has a paid subscription
     paid_subscription_info = Subscription_Info_For_User.objects.filter(
         user_profile=user_profile,
         paid=True
@@ -76,17 +75,17 @@ def handle_user_login(sender, request, user, **kwargs):
         if paid_subscription_info:
             return
         else:
-            # Sync the unpaid subscription with the session cart
+            # Syncs the unpaid subscription with the session cart
             if unpaid_subscription_info:
                 subscription_id = str(unpaid_subscription_info.subscription.id)
-            else:
-                if not session_cart:
+                if subscription_id not in session_cart:
                     session_cart[subscription_id] = {
                     'subscription_type': unpaid_subscription_info.subscription.subscription_type,
                     'auto_renew': unpaid_subscription_info.auto_renew,
                     }
                     request.session['cart'] = session_cart
-                else:
+            else:
+                if not session_cart:
                     attach_subscription_to_profile(user, session_cart)
 
     request.session.modified = True  # Ensure the session is marked as modified
