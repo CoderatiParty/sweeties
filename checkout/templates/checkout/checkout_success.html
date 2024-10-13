@@ -22,99 +22,52 @@
    
     <div class="grid-item-article">
         <p class="playfair-display-article-para">Your order information is below. A confirmation email will be sent to <strong>{{ profile.email }}</strong>.</p>
-
-        <div class="row">
-            <div class="col-12 col-lg-7">
-                <div class="order-confirmation-wrapper p-2 border">
-                    <div class="row">
-                        <div class="col">
-                            <small class="text-muted">Order Info:</small>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Order Number</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">{{ order.order_number }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Order Date</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">{{ order.date }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <small class="text-muted">Order Details:</small>
-                        </div>
-                    </div>
-
-                    {% for item in order.lineitems.all %}
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="small mb-0 text-black font-weight-bold">
-                                {{ item.subscription.subscription_type }}
-                            </p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="small mb-0">{{ item.quantity }} @ ${{ item.subscription.cost }} each</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="small mb-0 text-black font-weight-bold">VAT</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="small mb-0">£{% if item.subscription.subscriptyion_type == Annual %}0.61{% else %}2.43{% endif %}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Full Name</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">{{ profile.first_name }} {{ profile.last_name }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Phone Number</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">{{ profile.phone_number }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <small class="text-muted">Billing Info:</small>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <p class="mb-0 text-black font-weight-bold">Grand Total</p>
-                        </div>
-                        <div class="col-12 col-md-8 text-md-right">
-                            <p class="mb-0">£{{ order.grand_total }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-			<div class="col-12 col-lg-7 text-right">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2"><strong>ORDER CONFIRMATION</th>
+                </tr>
+            </thead>
+            {% for item in order.lineitems.all %}
+            <tbody>
+                <tr>
+                    <th>Order Number:</th>
+                    <td>{{ order.order_number }}</td>
+                </tr>
+                <tr>
+                    <th>Order Date:</th>
+                    <td>{{ order.date }}</td>
+                </tr>
+                <tr>
+                    <th>Full Name:</th>
+                    <td>{{ profile.first_name }} {{ profile.last_name }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td>{{ profile.phone_number }}</td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th colspan="2"><strong>SUBSCRIPTION DETAILS</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th>{{ item.subscription.subscription_type }}:</th>
+                    <td>{{ item.quantity }} @ ${{ item.subscription.cost }} each</td>
+                </tr>
+                <tr>
+                    <th>VAT:</th>
+                    <td>£{% if item.subscription.subscriptyion_type == Annual %}0.61{% else %}2.43{% endif %}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Grand Total:</th>
+                    <td>£{{ order.grand_total }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        {% endfor %}
                 {% if from_profile %}
                     <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
                         <span class="icon mr-2">
@@ -127,9 +80,6 @@
                         <span>Now check out the latest fake news!</span>
                     </a>
                 {% endif %}
-			</div>
-		</div>
     </div>
-</div>
 </div>
 {% endblock %}

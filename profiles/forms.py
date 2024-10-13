@@ -26,7 +26,6 @@ class UserProfileForm(forms.ModelForm):
             'email': 'Email',
         }
 
-        self.fields['username'].widget.attrs['autofocus'] = True
         for field in self.fields:
             if field != 'country':
                 if self.fields[field].required:

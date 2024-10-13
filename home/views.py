@@ -52,6 +52,16 @@ def index(request):
 def article(request, article_id):
     """ A view to show each article in full """
 
+    user_has_paid_subscription = False
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = get_object_or_404(User_Profile, user=request.user)
+        subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+        # Check if the user has any paid subscriptions
+        if subscription_infos.filter(paid=True).exists():
+            user_has_paid_subscription = True
+
     current_path = request.path
     referrer = request.META.get('HTTP_REFERER')
 
@@ -62,6 +72,7 @@ def article(request, article_id):
         'article': article,
         'current_path': current_path,
         'referrer': referrer,
+        'user_has_paid_subscription': user_has_paid_subscription,
     }
 
     return render(request, 'home/article.html', context)
