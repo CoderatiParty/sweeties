@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from checkout.models import Order
 from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from checkout.models import Order, OrderLineItem
+from django.urls import reverse
 
 
 # Create your views here.
@@ -36,6 +37,13 @@ def profile(request):
         if form.is_valid():
             # Save the form data to the profile
             form.save()
+            user = request.user
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.email = form.cleaned_data.get('email')
+            user.save()  # Save the User model with updated information
+            messages.success(request, 'Your profile has been updated successfully!')
+
             return redirect('profile')  # Redirect to some 'profile' view after successful update
     else:
         # Prepopulate the form with the existing data
@@ -96,3 +104,39 @@ def subscription_history(request, order_number):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def delete_confirmation(request):
+    """ A view to show the delete confirmation page """
+    
+    user_has_paid_subscription = False
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = get_object_or_404(User_Profile, user=request.user)
+        subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+        # Check if the user has any paid subscriptions
+        if subscription_infos.filter(paid=True).exists():
+            user_has_paid_subscription = True
+
+    current_path = request.path
+    referrer = request.META.get('HTTP_REFERER')
+
+    context = {
+        'current_path': current_path,
+        'referrer': referrer,
+        'user_has_paid_subscription': user_has_paid_subscription,
+    }
+
+    return render(request, 'profiles/delete_confirmation.html', context)
+
+
+@login_required
+def delete_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST' and user == request.user:
+        user.delete()  # Delete the user and related profile
+        messages.success(request, "Your profile has been deleted.")
+        return redirect('home')  # Redirect to home or login page after deletion
+    return redirect('home')  # Redirect back to profile if not POST

@@ -118,6 +118,24 @@ h6 {
   text-align: center;
 }
 
+a.playfair-display-heading,
+a.playfair-display-heading-footer,
+a.playfair-display-caption,
+a.playfair-display-para,
+a.playfair-display-link,
+a.footer-link, {
+  color: #000000 !important;
+}
+
+a.playfair-display-heading:hover,
+a.playfair-display-heading-footer:hover,
+a.playfair-display-caption:hover,
+a.playfair-display-para:hover,
+a.playfair-display-link:hover,
+a.footer-link:hover {
+  color: #000000 !important;
+}
+
 hr {
   border: 0.5px solid black;
 }
@@ -613,6 +631,11 @@ td {
 }
 
 button[type=submit].remove-button {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
+.remove-button {
   background-color: #e53935;
   color: #ffffff;
 }
