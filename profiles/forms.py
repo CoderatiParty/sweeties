@@ -10,7 +10,7 @@ from django_countries.fields import CountryField
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User_Profile
-        exclude = ('user', 'member_number')
+        fields = ('first_name', 'last_name', 'phone_number', 'email',)
 
     def __init__(self, *args, **kwargs):
         """
@@ -27,11 +27,11 @@ class UserProfileForm(forms.ModelForm):
         }
 
         for field in self.fields:
-            if field != 'country':
+            if field != 'user' and field != 'country':
                 if self.fields[field].required:
-                    placeholder = f'{placeholders[field]} *'
+                    placeholder = f'{placeholders.get(field, field.capitalize())} *'
                 else:
-                    placeholder = placeholders[field]
+                    placeholder = placeholders.get(field, field.capitalize())
                 self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = ('border-black '
                                                         'rounded-0 '

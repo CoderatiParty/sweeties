@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import User_Profile
@@ -31,15 +31,14 @@ def profile(request):
     profile = get_object_or_404(User_Profile, user=request.user)
 
     if request.method == 'POST':
+        # Bind the form to POST data
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
+            # Save the form data to the profile
             form.save()
-            messages.success(request, 'Profile updated successfully')
-        else:
-            messages.error(request,
-                           ('Update failed. Please ensure '
-                            'the form is valid.'))
+            return redirect('profile')  # Redirect to some 'profile' view after successful update
     else:
+        # Prepopulate the form with the existing data
         form = UserProfileForm(instance=profile)
     
     orders = profile.orders.all()
