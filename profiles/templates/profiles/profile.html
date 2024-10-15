@@ -37,6 +37,13 @@
                 </tr>
             </thead>
             <tbody>
+                {% if request.user.is_staff %}
+                    <tr>
+                        <td colspan="6" style="text-align:center;">
+                            Staff subscription
+                        </td>
+                    </tr>
+                    {% else %}
                 {% for order in orders %}
                     <tr>
                         <td>
@@ -56,7 +63,8 @@
                         <td>{{ order.renew_date|date:"F d, Y" }}</td>
                         <td>{% if auto_renew_status %}On{% else %}Off{% endif %}</td>
                     </tr>
-                {% endfor %}
+                    {% endfor %}
+                    {% endif %}
             </tbody>
         </table>
         <br>

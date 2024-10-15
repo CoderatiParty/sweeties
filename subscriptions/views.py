@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import User_Subscriptions
+from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
+from profiles.models import User_Profile
 from decimal import Decimal
 from django.conf import settings
 from django.urls import reverse
@@ -45,6 +46,16 @@ def subscriptions(request):
 def add_subscription(request, subscription_id):
     """ A view to show each article in full """
 
+    user_has_paid_subscription = False
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = get_object_or_404(User_Profile, user=request.user)
+        subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+        # Check if the user has any paid subscriptions
+        if subscription_infos.filter(paid=True).exists():
+            user_has_paid_subscription = True
+
     current_path = request.path
     referrer = request.META.get('HTTP_REFERER')
 
@@ -57,6 +68,7 @@ def add_subscription(request, subscription_id):
         'subscription': subscription,
         'current_path': current_path,
         'referrer': referrer,
+        'user_has_paid_subscription': user_has_paid_subscription,
     }
 
     return render(request, 'subscriptions/add_subscription.html', context)

@@ -23,7 +23,7 @@ class Subscription_Info_For_UserAdmin(admin.ModelAdmin):
         'paid',
     )
 
-    readonly_fields = ('auto_renew', 'subscription', 'renew_date', 'paid', 'user_profile', 'payment',)
+    readonly_fields = ('auto_renew', 'subscription', 'renew_date', 'user_profile', 'payment',)
 
 
 admin.site.register(Subscription_Info_For_User, Subscription_Info_For_UserAdmin)
