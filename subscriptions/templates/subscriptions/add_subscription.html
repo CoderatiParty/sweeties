@@ -20,7 +20,7 @@
   
     <div class="grid-item-article">
         <p class="playfair-display-caption">You have {% if cart_items %}added{% else %}selected{% endif %} the {% if subscription.duration_years == 1 %}Standard{% else %}Premium{% endif %} Subscription</p>
-        <img src="media/{{ subscription.image.url }}" alt="{{ subscription.image_description }}" class="pic">
+        <img src="media/{{ subscription.image_description }}" alt="{{ subscription.image_description }}" class="pic">
         {% if not cart_items %}
         <form class="form" action="{% url 'add_to_cart' subscription.id %}" method="POST">
             {% csrf_token %}
