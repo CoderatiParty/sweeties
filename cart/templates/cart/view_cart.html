@@ -125,10 +125,17 @@
             </div>
                 {% endif %}
         {% else %}
-            <p class="playfair-display-link">The cart is empty.</p>
-                <a class="playfair-display-link" href="{% url 'subscriptions' %}">
-                    <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
-                </a>
+            {% if request.user.is_authenticated and user_has_paid_subscription %}
+                <p class="playfair-display-link">You already have a subscription.</p>
+                        <a class="playfair-display-link" href="{% url 'profile' %}">
+                            <i class="fa-solid fa-arrow-left">&nbsp;</i>View Profile
+                        </a>
+            {% else %}
+                <p class="playfair-display-link">The cart is empty.</p>
+                    <a class="playfair-display-link" href="{% url 'subscriptions' %}">
+                        <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
+                    </a>
+            {% endif %}
         {% endif %}
     </div>
    

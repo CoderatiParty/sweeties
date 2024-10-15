@@ -29,10 +29,11 @@
             <thead>
                 <tr>
                     <th>Order Number</th>
-                    <th>Date</th>
+                    <th>Order Date</th>
                     <th>Item</th>
+                    <th>Total</th>
                     <th>Expires</th>
-                    <th>Order Total</th>
+                    <th>Auto Renew</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,17 +46,15 @@
                             </a>
                         </td>
                         <td>{{ order.date }}</td>
+                        {% for item in order.lineitems.all %}
                         <td>
-                            <ul class="list-unstyled">
-                                {% for item in order.lineitems.all %}
-                                    <li class="">
-                                        {{ item.subscription.subscription_type }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
+                                {{ item.subscription.subscription_type }}
                         </td>
-                        <td>{{ order.renew_date|date:"F d, Y" }}</td>
+                        {% endfor %}
+                        </td>
                         <td>£{{ order.grand_total }}</td>
+                        <td>{{ order.renew_date|date:"F d, Y" }}</td>
+                        <td>{% if auto_renew_status %}On{% else %}Off{% endif %}</td>
                     </tr>
                 {% endfor %}
             </tbody>

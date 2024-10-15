@@ -89,22 +89,33 @@ class CustomSignupForm(SignupForm):
     def save(self, request):
         user = super().save(request)
 
+        # Update the email field in the User model
+        user.email = self.cleaned_data.get('email', '')
+        user.save()
+
+        # Create or update the user's profile
         user_profile, created = User_Profile.objects.get_or_create(user=user)
 
-        # Update fields regardless of whether it was created or not
+        # Update fields in profile
         user_profile.first_name = self.cleaned_data.get('first_name', '')
         user_profile.last_name = self.cleaned_data.get('last_name', '')
         user_profile.phone_number = self.cleaned_data.get('phone_number', '')
+        user_profile.email = user.email
 
         user_profile.save()
 
-
-        # Now link subscriptions from the session
+        # Link subscriptions from the session cart
         cart = request.session.get('cart', {})
         if cart:
             for item_id in cart.keys():
-                subscription = get_object_or_404(Subscription_Info_For_User, pk=item_id)
-                subscription.user = user_profile  # Link the subscription to the User_Profile
-                subscription.save()
+                # Retrieve the actual User_Subscriptions object (or the correct model)
+                subscription = get_object_or_404(User_Subscriptions, pk=item_id)
+
+                # Now create or update Subscription_Info_For_User
+                Subscription_Info_For_User.objects.get_or_create(
+                    user_profile=user_profile,
+                    subscription=subscription,
+                    defaults={'auto_renew': cart[item_id].get('auto_renew', False)}
+                )
 
         return user

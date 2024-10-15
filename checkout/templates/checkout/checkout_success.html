@@ -49,7 +49,11 @@
                 </tr>
                 <tr>
                     <th>VAT:</th>
-                    <td>£{% if item.subscription.subscriptyion_type == Annual %}0.61{% else %}2.43{% endif %}</td>
+                    <td>£{% if item.subscription.id == 1 %}0.61{% else %}2.43{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Auto Renew:</th>
+                    <td>{% if auto_renew_status %}On{% else %}Off{% endif %}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -60,6 +64,7 @@
             </tfoot>
         </table>
         {% endfor %}
+        <br>
                 {% if from_profile %}
                     <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
                         <span class="icon mr-2">

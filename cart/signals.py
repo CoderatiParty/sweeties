@@ -47,48 +47,76 @@ def attach_subscription_to_profile(user, session_cart):
 @receiver(user_logged_in)
 def handle_user_login(sender, request, user, **kwargs):
     """
-    Handles user login by syncing the session cart with the user's profile.
+    Handles user login by ensuring that only one unpaid subscription is stored.
+    Replaces any previously stored unpaid subscription if the subscription in the cart has a different ID.
+    If the user has a paid subscription, no changes are made to the cart.
+    If the cart is empty, attach the unpaid subscription to the session cart.
     """
     session_cart = request.session.get('cart', {})
+
     try:
         user_profile = user.user_profile
     except User_Profile.DoesNotExist:
         return  # If no profile exists, nothing to do
 
-    # Checks if the user has an unpaid subscription
-    unpaid_subscription_info = Subscription_Info_For_User.objects.filter(
-        user_profile=user_profile,
-        paid=False
-    ).first()
-
-    # Checks if the user has a paid subscription
+    # Check if the user has a paid subscription
     paid_subscription_info = Subscription_Info_For_User.objects.filter(
         user_profile=user_profile,
         paid=True
     ).first()
 
-    if paid_subscription_info and session_cart:
+    if paid_subscription_info:
+        # If the user has a paid subscription, clear the cart, show a message instead
+        request.session['cart'] = {}
         profile_url = reverse('profile')
         message = mark_safe(f'You already have a paid subscription! <a href="{profile_url}">View Profile</a>')
         messages.success(request, message)
-    else:
-        if paid_subscription_info:
-            return
-        else:
-            # Syncs the unpaid subscription with the session cart
-            if unpaid_subscription_info:
-                subscription_id = str(unpaid_subscription_info.subscription.id)
-                if subscription_id not in session_cart:
-                    session_cart[subscription_id] = {
-                    'subscription_type': unpaid_subscription_info.subscription.subscription_type,
-                    'auto_renew': unpaid_subscription_info.auto_renew,
-                    }
-                    request.session['cart'] = session_cart
-            else:
-                if not session_cart:
-                    attach_subscription_to_profile(user, session_cart)
+        return  # Don't proceed further if there's a paid subscription
 
-    request.session.modified = True  # Ensure the session is marked as modified
+    # Check if the user has an unpaid subscription
+    unpaid_subscription_info = Subscription_Info_For_User.objects.filter(
+        user_profile=user_profile,
+        paid=False
+    ).first()
+
+    if unpaid_subscription_info:
+        # If the cart is empty, add the unpaid subscription to the session cart
+        if not session_cart:
+            session_cart[str(unpaid_subscription_info.subscription.id)] = {
+                'subscription_type': unpaid_subscription_info.subscription.subscription_type,
+                'auto_renew': unpaid_subscription_info.auto_renew,
+            }
+            request.session['cart'] = session_cart
+        else:
+            # If the cart has a different subscription, replace the unpaid one
+            for subscription_id, item_data in session_cart.items():
+                cart_subscription = get_object_or_404(User_Subscriptions, pk=subscription_id)
+
+                if unpaid_subscription_info.subscription.id != cart_subscription.id:
+                    # Delete the existing unpaid subscription since it's a different one
+                    unpaid_subscription_info.delete()
+
+                # Sync the cart with the new or updated subscription (only one will remain)
+                request.session['cart'] = {
+                    subscription_id: {
+                        'subscription_type': cart_subscription.subscription_type,
+                        'auto_renew': item_data.get('auto_renew', False),
+                    }
+                }
+
+                # If no unpaid subscription exists or it's replaced, add this one
+                Subscription_Info_For_User.objects.create(
+                    user_profile=user_profile,
+                    subscription=cart_subscription,
+                    auto_renew=item_data.get('auto_renew', False),
+                    paid=False,  # Mark as unpaid
+                    renew_date=None
+                )
+
+                # Break the loop after processing the first subscription in the cart
+                break
+
+    request.session.modified = True  # Mark the session as modified
 
 
 @receiver(post_save, sender=User_Subscriptions)

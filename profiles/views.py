@@ -8,6 +8,7 @@ from checkout.models import Order
 from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from checkout.models import Order, OrderLineItem
 from django.urls import reverse
+from django.contrib.auth import logout
 
 
 # Create your views here.
@@ -17,14 +18,20 @@ def profile(request):
     """ A view to show profile page """
 
     user_has_paid_subscription = False
+    auto_renew_status = None
 
     # Check if the user is authenticated
     if request.user.is_authenticated:
         user_profile = get_object_or_404(User_Profile, user=request.user)
         subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+
         # Check if the user has any paid subscriptions
         if subscription_infos.filter(paid=True).exists():
             user_has_paid_subscription = True
+
+        # Check if the user has selected auto_renew
+        if subscription_infos.filter(auto_renew=True).exists():
+            auto_renew_status = True
 
     current_path = request.path
     referrer = request.META.get('HTTP_REFERER')
@@ -70,6 +77,7 @@ def profile(request):
         'current_path': current_path,
         'referrer': referrer,
         'user_has_paid_subscription': user_has_paid_subscription,
+        'auto_renew_status': auto_renew_status,
     }
 
     return render(request, template, context)
@@ -77,6 +85,22 @@ def profile(request):
 
 @login_required
 def subscription_history(request, order_number):
+
+    user_has_paid_subscription = False
+    auto_renew_status = None
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = get_object_or_404(User_Profile, user=request.user)
+        subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+
+        # Check if the user has any paid subscriptions
+        if subscription_infos.filter(paid=True).exists():
+            user_has_paid_subscription = True
+
+        # Check if the user has selected auto_renew
+        if subscription_infos.filter(auto_renew=True).exists():
+            auto_renew_status = True
 
     order = get_object_or_404(Order, order_number=order_number)
     order_line_items = OrderLineItem.objects.filter(order=order)
@@ -101,6 +125,8 @@ def subscription_history(request, order_number):
         'order_line_items': order_line_items,
         'first_name': first_name,
         'last_name': last_name,
+        'user_has_paid_subscription': user_has_paid_subscription,
+        'auto_renew_status': auto_renew_status,
     }
 
     return render(request, template, context)
@@ -136,6 +162,8 @@ def delete_confirmation(request):
 def delete_profile(request, user_id):
     user = User.objects.get(id=user_id)
     if request.method == 'POST' and user == request.user:
+        request.session.flush()  # Clears all session data
+        logout(request)
         user.delete()  # Delete the user and related profile
         messages.success(request, "Your profile has been deleted.")
         return redirect('home')  # Redirect to home or login page after deletion

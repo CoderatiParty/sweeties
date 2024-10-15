@@ -13,8 +13,18 @@ def view_cart(request):
     """ A view to show the cart """
     cart = request.session.get('cart', {})
 
+    user_has_paid_subscription = False
 
-    return render(request, 'cart/view_cart.html', {'cart': cart})
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = get_object_or_404(User_Profile, user=request.user)
+        subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+        # Check if the user has any paid subscriptions
+        if subscription_infos.filter(paid=True).exists():
+            user_has_paid_subscription = True
+
+
+    return render(request, 'cart/view_cart.html', {'cart': cart, 'user_has_paid_subscription': user_has_paid_subscription})
 
 
 def add_to_cart(request, item_id):

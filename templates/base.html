@@ -105,12 +105,6 @@
                     <a href="{% url 'privacy' %}" class="playfair-display-link">Privacy</a>
                 </li>
                 <li>
-                    <a href="{% url 'payments' %}" class="playfair-display-link">Payments</a>
-                </li>
-                <li>
-                    <a href="{% url 'refunds' %}" class="playfair-display-link">Refunds</a>
-                </li>
-                <li>
                     <a href="{% url 'terms' %}" class="playfair-display-link">Terms</a>
                 </li>
             </ul>
@@ -136,8 +130,6 @@
         {% url 'faqs' as faqs_url %}
         {% url 'contact' as contact_url %}
         {% url 'privacy' as privacy_url %}
-        {% url 'payments' as payments_url %}
-        {% url 'refunds' as refunds_url %}
         {% url 'terms' as terms_url %}
         {% if request.path != corporate_url and request.path != about_url and request.path != faqs_url and request.path != contact_url and request.path != privacy_url and request.path != payments_url and request.path != refunds_url and request.path != terms_url %}
     <div class="news-head">
@@ -168,8 +160,6 @@
     {% url 'faqs' as faqs_url %}
     {% url 'contact' as contact_url %}
     {% url 'privacy' as privacy_url %}
-    {% url 'payments' as payments_url %}
-    {% url 'refunds' as refunds_url %}
     {% url 'terms' as terms_url %}
     {% if request.path != corporate_url and request.path != about_url and request.path != faqs_url and request.path != contact_url and request.path != privacy_url and request.path != payments_url and request.path != refunds_url and request.path != terms_url %}
     <footer>

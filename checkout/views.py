@@ -43,12 +43,14 @@ def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
+    # Get the profile for the authenticated user
+    profile, created = User_Profile.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
         cart = request.session.get('cart', {})
-        print(f"Cart: {cart}")  # Check the contents of the cart
 
-        # Get the profile for the authenticated user
-        profile, created = User_Profile.objects.get_or_create(user=request.user)
+        # Prefill auto-renew data for each subscription in the cart
+        current_cart = cart_contents(request)
 
         form_data = {
             'first_name': request.POST['first_name'],
@@ -65,7 +67,6 @@ def checkout(request):
             # Calculate the total and grand total
             current_cart = cart_contents(request)
             grand_total = current_cart['grand_total']
-            print(f"Grand Total: {grand_total}")  # Check the grand total being calculated
 
 
             # Creates the order and links it to the user's profile
@@ -78,15 +79,12 @@ def checkout(request):
 
             # Iterates over the cart items to create OrderLineItems
             for item_id, item_data in cart.items():
-                print(f"Processing cart item: {item_id}, data: {item_data}")  # Add this to check cart iteration
-                print(f"Item data type for {item_id}: {type(item_data)}")  # Add this to check data type
                 try:
                     subscription = User_Subscriptions.objects.get(id=item_id)
                     # Extracts the auto_renew status from the session cart
                     auto_renew = item_data.get('auto_renew', False)
                     quantity = 1
                     # Creating OrderLineItem for the subscription
-                    print(f"Creating OrderLineItem for {item_id} with quantity {quantity}")  # Debug OrderLineItem creation
                     order_line_item = OrderLineItem(
                         order=order,
                         subscription=subscription,
@@ -109,10 +107,8 @@ def checkout(request):
                         subscription=subscription,
                         paid=False
                     ).first()
-                    print(f"Unpaid Subscription Info Found: {unpaid_subscription_info}")  # Check if an unpaid subscription info is found
 
                     if unpaid_subscription_info:
-                        print("Updating existing unpaid subscription info...")
                         # Update the unpaid subscription to mark it as paid
                         unpaid_subscription_info.paid = True
                         unpaid_subscription_info.payment = order  # Link to the new order
@@ -120,7 +116,6 @@ def checkout(request):
                         unpaid_subscription_info.renew_date = renew_date
                         unpaid_subscription_info.save()
                     else:
-                        print("Creating new subscription info...")
                         # Create the subscription info as paid if no unpaid subscription exists
                         subscription_info = Subscription_Info_For_User.objects.create(
                             user_profile=profile,
@@ -132,10 +127,8 @@ def checkout(request):
                         )
                         subscription_info.save()
 
-                    print(f"Subscription Info Saved: {subscription_info if not unpaid_subscription_info else unpaid_subscription_info}")
 
                 except User_Subscriptions.DoesNotExist as e:
-                    print(f"Subscription not found for item {item_id}: {e}")  # Add this to catch errors
                     messages.error(request, (
                         "One of the subscriptions in your cart wasn't "
                         "found in our database. "
@@ -199,17 +192,24 @@ def checkout_success(request, order_number):
     """
 
     user_has_paid_subscription = False
+    auto_renew_status = None
 
     # Check if the user is authenticated
     if request.user.is_authenticated:
         user_profile = get_object_or_404(User_Profile, user=request.user)
         subscription_infos = Subscription_Info_For_User.objects.filter(user_profile=user_profile)
+
         # Check if the user has any paid subscriptions
         if subscription_infos.filter(paid=True).exists():
             user_has_paid_subscription = True
 
+        # Check if the user has selected auto_renew
+        if subscription_infos.filter(auto_renew=True).exists():
+            auto_renew_status = True
+
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
+
     # Gets the related subscriptions for the order
     order_line_items = OrderLineItem.objects.filter(order=order)
     subscriptions = [item.subscription for item in order_line_items]
@@ -247,6 +247,7 @@ def checkout_success(request, order_number):
         'subscriptions': subscriptions,
         'order_line_items': order_line_items,
         'user_has_paid_subscription': user_has_paid_subscription,
+        'auto_renew_status': auto_renew_status,
     }
 
     return render(request, template, context)
