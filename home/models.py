@@ -21,8 +21,8 @@ class Article(models.Model):
     category = models.ForeignKey('Category', null=True, blank=False,
                                  on_delete=models.SET_NULL)
     sub_category = models.CharField(max_length=254, null=False, blank=False)
-    headline = models.CharField(max_length=1024, null=False, blank=False)
-    article_text = models.TextField(null=True, blank=True)
+    headline = models.CharField(max_length=1024, null=False, blank=False, db_index=True)
+    article_text = models.TextField(null=True, blank=True, db_index=True)
     date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(null=True, blank=True)
     image_description = models.CharField(max_length=254, null=True, blank=True)
