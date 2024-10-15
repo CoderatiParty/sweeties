@@ -24,7 +24,7 @@
     <div class="grid-item">
      <h1 class="playfair-display-caption">{{ article.sub_category|upper }}</h1>
       <div class="container">
-       <img src="media/{{ article.image }}" alt="{{ article.image_description }}" class="pic">
+       <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
       </div>
        <a href="{% url 'article' article.id %}">{{ article.headline }}</a>
     </div>
