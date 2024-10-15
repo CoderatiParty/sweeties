@@ -25,6 +25,7 @@ class Article(models.Model):
     article_text = models.TextField(null=True, blank=True, db_index=True)
     date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(null=True, blank=True)
+    image_name = models.CharField(max_length=254, null=False, blank=False)
     image_description = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
