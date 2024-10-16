@@ -13,8 +13,7 @@ from django.utils.safestring import mark_safe
 
 def attach_subscription_to_profile(user, session_cart):
     """
-    Attach the subscription from the session cart to the user's profile 
-    by creating or updating a Subscription_Info_For_User entry.
+    Attaches the subscription from the session cart to the user's profile.
     Ensures only one unpaid subscription is attached to the profile.
     """
     try:
@@ -49,7 +48,6 @@ def handle_user_login(sender, request, user, **kwargs):
     """
     Handles user login by ensuring that only one unpaid subscription is stored.
     Replaces any previously stored unpaid subscription if the subscription in the cart has a different ID.
-    If the user has a paid subscription, no changes are made to the cart.
     If the cart is empty, attach the unpaid subscription to the session cart.
     """
     session_cart = request.session.get('cart', {})
@@ -122,7 +120,7 @@ def handle_user_login(sender, request, user, **kwargs):
 @receiver(post_save, sender=User_Subscriptions)
 def update_profile_on_subscription_change(sender, instance, **kwargs):
     """
-    Handle updating the user's subscription info if the subscription changes
+    Handles updating the user's subscription info if the subscription changes
     and the user does not already have a paid subscription.
     """
     subscription_infos = Subscription_Info_For_User.objects.filter(subscription=instance)
@@ -185,7 +183,3 @@ def handle_user_logout(sender, request, user, **kwargs):
                     )
                 except User_Subscriptions.DoesNotExist:
                     continue
-
-        # Clear the cart from the session
-        #request.session['cart'] = {}
-        #request.session.modified = True  # Ensure the session is marked as modified

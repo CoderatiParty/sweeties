@@ -2,36 +2,37 @@
 {% load static %}
 
 {% block page_header %}
-
 <div class="category-links">
   <hr>
-  <h2 class="playfair-display-article-heading">Delete Profile</h2>
+    <h2 class="playfair-display-article-heading">Delete Profile</h2>
   <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
 <div class="grid-container-article">
 
-    <div class="grid-item-article">
-    </div>
-   
-    <div class="grid-item-article">
-        <p class="playfair-display-caption">Are you sure you want to delete your profile?</p>
-        <p class="playfair-display-para">This cannot be undone.</p>
-        <p class="playfair-display-para">All data relating to you and your account will be lost.</p>
-        <p class="playfair-display-para">You will lose access to your account and subscription.</p>
-        <p class="playfair-display-para">Refunds will not be considered.</p>
-        <p class="playfair-display-para">The Internet Gods will look down on you.</p>
-        <p class="playfair-display-para">We will cry.</p>
-        <a class="playfair-display-link" href="{% url 'profile' %}">
-            <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Manage Profile
-          </a>
-        <form action="{% url 'delete_profile' user.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="remove-button right">DELETE PROFILE</button>
-        </form>
-    </div>
+  <div class="grid-item-article">
+  </div>
+  
+  <div class="grid-item-article">
+    <p class="playfair-display-caption">Are you sure you want to delete your profile?</p>
+    <p class="playfair-display-para">This cannot be undone.</p>
+    <p class="playfair-display-para">All data relating to you and your account will be lost.</p>
+    <p class="playfair-display-para">You will lose access to your account and subscription.</p>
+    <p class="playfair-display-para">Refunds will not be considered.</p>
+    <p class="playfair-display-para">The Internet Gods will look down on you.</p>
+    <p class="playfair-display-para">We will cry.</p>
+      <a class="playfair-display-link" href="{% url 'profile' %}">
+        <i class="fa-solid fa-arrow-left">&nbsp;</i>
+        Back to Manage Profile
+      </a>
+      <form action="{% url 'delete_profile' user.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          <button type="submit" class="remove-button right">
+            DELETE PROFILE
+          </button>
+      </form>
+  </div>
 </div>
 {% endblock %}

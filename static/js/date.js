@@ -1,3 +1,4 @@
+// Handles date display on base.html
 function formatDate() {
     const date = new Date();
 

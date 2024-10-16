@@ -6,22 +6,21 @@ from django.contrib import messages
 from django.conf import settings
 from decimal import Decimal
 from .models import Order, OrderLineItem
-
 from django.contrib.auth.decorators import login_required
-
 from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 from profiles.models import User_Profile
 from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
-
 from datetime import timedelta
-
 import stripe
 import json
 
 
 @require_POST
 def cache_checkout_data(request):
+    """
+    Function to cache checkout data
+    """
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -40,8 +39,18 @@ def cache_checkout_data(request):
 
 @login_required
 def checkout(request):
+    """
+    View for checkout page
+    """
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+
+    cart = request.session.get('cart', {})
+
+    subscription = None
+
+    for item_id, item_data in cart.items():
+        subscription = get_object_or_404(User_Subscriptions, pk=item_id)
 
     # Get the profile for the authenticated user
     profile, created = User_Profile.objects.get_or_create(user=request.user)
@@ -61,6 +70,7 @@ def checkout(request):
 
         profile_form = UserProfileForm(form_data, instance=profile)
         if profile_form.is_valid():
+
             # Save the profile form
             profile_form.save()
 
@@ -127,7 +137,6 @@ def checkout(request):
                         )
                         subscription_info.save()
 
-
                 except User_Subscriptions.DoesNotExist as e:
                     messages.error(request, (
                         "One of the subscriptions in your cart wasn't "
@@ -179,6 +188,7 @@ def checkout(request):
     template = 'checkout/checkout.html'
     context = {
         'profile_form': profile_form,
+        'subscription': subscription,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
@@ -188,7 +198,7 @@ def checkout(request):
 
 def checkout_success(request, order_number):
     """
-    Handle successful checkouts
+    Displays page for successful checkouts
     """
 
     user_has_paid_subscription = False

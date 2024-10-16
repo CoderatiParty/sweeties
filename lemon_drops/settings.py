@@ -28,6 +28,9 @@ DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['lemondrops-7ba75e0d4a2a.herokuapp.com', 'localhost']
 
+#DEBUG = True  # Enable this in development
+
+#ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -96,7 +99,6 @@ TEMPLATES = [
 ACCOUNT_FORMS = {
     'signup': 'profiles.forms.CustomSignupForm',
 }
-
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
@@ -200,7 +202,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 if 'USE_AWS' in os.environ:
-# Cache control
+    # Cache control
     AWS_S3_OBJECT_PARAMETERS = {
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
         'CacheControl': 'max-age=94608000',

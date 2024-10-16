@@ -1,0 +1,23 @@
+Hello {{ order.first_name }}!
+
+This is a confirmation of your subscription purchase at Lemon Drops. Thank you for supporting independent media.
+
+Your order information is below:
+
+Order Number: {{ order.order_number }}
+Order Date: {{ order.date }}
+
+Grand Total: ${{ order.grand_total }}
+
+Thank you for your order!
+
+
+Your sincerely,
+
+
+
+Scooby Pips
+
+- - - - - - - - - - - - -
+Editor-in-chief
+Lemon Drops

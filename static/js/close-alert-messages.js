@@ -1,4 +1,4 @@
-// Add event listeners to all the close-alert buttons
+// Adds event listeners to all the close-alert buttons
 document.addEventListener('DOMContentLoaded', function () {
   const closeButtons = document.querySelectorAll('.close-alert');
 

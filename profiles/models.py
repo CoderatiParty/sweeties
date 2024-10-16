@@ -21,8 +21,11 @@ class User_Profile(models.Model):
         return self.user.username
 
     def save(self, *args, **kwargs):
+        """
+        Creates a random 9-digit member number
+        """
         if not self.member_number:
-            self.member_number = random.randint(100000000, 999999999)  # Random 9-digit number
+            self.member_number = random.randint(100000000, 999999999)
         super().save(*args, **kwargs)
 
 

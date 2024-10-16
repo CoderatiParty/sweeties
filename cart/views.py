@@ -7,12 +7,15 @@ from django.utils.safestring import mark_safe
 from django.urls import reverse
 from profiles.models import User_Profile
 
+
 # Create your views here.
 
 def view_cart(request):
-    """ A view to show the cart """
+    """
+    A view to show the cart page
+    """
     cart = request.session.get('cart', {})
-
+    subscription = None
     user_has_paid_subscription = False
 
     # Check if the user is authenticated
@@ -23,12 +26,16 @@ def view_cart(request):
         if subscription_infos.filter(paid=True).exists():
             user_has_paid_subscription = True
 
+    for item_id, item_data in cart.items():
+        subscription = get_object_or_404(User_Subscriptions, pk=item_id)
 
-    return render(request, 'cart/view_cart.html', {'cart': cart, 'user_has_paid_subscription': user_has_paid_subscription})
+    return render(request, 'cart/view_cart.html', {'cart': cart, 'subscription': subscription, 'user_has_paid_subscription': user_has_paid_subscription})
 
 
 def add_to_cart(request, item_id):
-    """ Add a subscription to the cart. """
+    """
+    Adds a subscription to the cart.
+    """
     if request.method == 'POST':
         # Fetch the subscription item from the database
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
@@ -54,7 +61,6 @@ def add_to_cart(request, item_id):
             )
 
             cart.clear()
-
 
             cart[subscription.id] = {
                 'subscription_type': subscription.subscription_type,
@@ -92,6 +98,9 @@ def add_to_cart(request, item_id):
 
 
 def update_auto_renew(request, item_id):
+    """
+    Updates the auto renew setting for the user.
+    """
     if request.method == 'POST':
         cart = request.session.get('cart', {})
 
@@ -115,7 +124,9 @@ def update_auto_renew(request, item_id):
 
 
 def remove_from_cart(request, item_id):
-    """ Remove the subscription from the cart """
+    """
+    Removes the subscription from the cart
+    """
     request.session['cart'] = {}  # Clear the cart
     messages.success(request, 'Subscription removed from cart.')
-    return redirect('view_cart')  # Replace 'cart' with the appropriate view or URL name
+    return redirect('view_cart')

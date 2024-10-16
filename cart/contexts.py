@@ -5,11 +5,19 @@ from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
 
 
 def cart_contents(request):
+    """
+    A function to hold cart contents in the session
+    """
     cart_items = []
+
     total = Decimal(0)  # Using Decimal for accurate financial calculations
+
     product_count = 0
+
     cart = request.session.get('cart', {})
+
     for item_id, item_data in cart.items():
+
         # Fetch the subscription from the database
         subscription = get_object_or_404(User_Subscriptions, pk=item_id)
 
@@ -17,8 +25,11 @@ def cart_contents(request):
         auto_renew = item_data.get('auto_renew', False)  # Default value for unauthenticated users
 
         subscription_type = item_data.get('subscription_type', subscription.subscription_type)
+
         cost = Decimal(item_data.get('cost', subscription.cost))
+
         description = item_data.get('description', subscription.description)
+
         duration_years = item_data.get('duration_years', subscription.duration_years)
 
         # Add subscription details to cart items
@@ -29,18 +40,23 @@ def cart_contents(request):
             'description': description,
             'duration_years': duration_years,
             'auto_renew': auto_renew,
+            'image_name': subscription.image_name,
             'image': subscription.image.url if subscription.image else None,
         })
 
         total += cost
         product_count += 1
 
-
     vat_percentage = Decimal(settings.VAT_PERCENTAGE) / Decimal(100)
+
     vat_amount = vat_percentage * total
+
     vat_amount = vat_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
     grand_total = total + vat_amount
+
     grand_total = grand_total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
     context = {
         'cart_items': cart_items,
         'total': total,

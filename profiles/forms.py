@@ -8,6 +8,9 @@ from django_countries.fields import CountryField
 
 
 class UserProfileForm(forms.ModelForm):
+    """
+    Function for user form data
+    """
     class Meta:
         model = User_Profile
         fields = ('first_name', 'last_name', 'phone_number', 'email',)
@@ -49,6 +52,9 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CustomSignupForm(SignupForm):
+    """
+    Function for custom signup form setup
+    """
     first_name = forms.CharField(max_length=80, required=True)
     last_name = forms.CharField(max_length=80, required=True)
     phone_number = forms.CharField(max_length=20, required=True)
@@ -71,7 +77,6 @@ class CustomSignupForm(SignupForm):
             'password2': 'Confirm Password',
         }
 
-
         self.fields['email'].widget.attrs['autofocus'] = True
         for field in self.fields:
             if field != 'country':
@@ -84,7 +89,6 @@ class CustomSignupForm(SignupForm):
                                                         'rounded-0 '
                                                         'profile-form-input')
             self.fields[field].label = False
-
 
     def save(self, request):
         user = super().save(request)

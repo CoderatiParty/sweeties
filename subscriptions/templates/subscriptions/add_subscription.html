@@ -2,39 +2,60 @@
 {% load static %}
 
 {% block page_header %}
-
 <div class="category-links">
   <hr>
-  <h2 class="playfair-display-article-heading">Add {{ subscription.subscription_type }} Subscription</h2>
+    <h2 class="playfair-display-article-heading">
+      Add {{ subscription.subscription_type }} Subscription
+    </h2>
   <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
-
 <div class="grid-container-article">
 
     <div class="grid-item-article">
     </div>
   
     <div class="grid-item-article">
-        <p class="playfair-display-caption">You have {% if cart_items %}added{% else %}selected{% endif %} the {% if subscription.duration_years == 1 %}Standard{% else %}Premium{% endif %} Subscription</p>
-        <img src="{{ MEDIA_URL }}{{ subscription.image_description }}" alt="{{ subscription.image_description }}" class="pic">
-        {% if not cart_items %}
-        <form class="form" action="{% url 'add_to_cart' subscription.id %}" method="POST">
-            {% csrf_token %}
-                    <p class="playfair-display-link">Want to choose our {% if subscription.duration_years == 1 %}Premium{% else %}Standard{% endif %} option?</p>
-                    <a class="playfair-display-link" href="{% url 'subscriptions' %}">
-                        <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
-                      </a>
+      <p class="playfair-display-caption">
+        You have 
+        {% if cart_items %}
+          added
+        {% else %}
+          selected
+        {% endif %}
+           the 
+          {% if subscription.duration_years == 1 %}
+            Standard
+          {% else %}
+            Premium 
+          {% endif %}
+            Subscription
+      </p>
+        <img src="{{ MEDIA_URL }}{{ subscription.image_name }}" 
+        alt="{{ subscription.image_description }}" class="pic">
+          {% if not cart_items %}
+            <form class="form" action="{% url 'add_to_cart' subscription.id %}" 
+            method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+                <p class="playfair-display-link">
+                  Want to choose our {% if subscription.duration_years == 1 %}
+                    Premium
+                  {% else %}
+                    Standard 
+                  {% endif %}
+                    option?
+                </p>
+                  <a class="playfair-display-link" href="{% url 'subscriptions' %}">
+                    <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
+                  </a>
                     <p class="playfair-display-link">If not...</p>
-                    <input type="submit" value="Add to Cart">
-                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
-        </form>
+                      <input type="submit" value="Add to Cart">
+                      <input type="hidden" name="redirect_url" value="{{ request.path }}">
+              </form>
         {% endif %}
     </div>
    
-   </div>
-   
+</div>   
 {% endblock %}

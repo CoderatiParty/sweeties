@@ -11,7 +11,6 @@ class User_SubscriptionsAdmin(admin.ModelAdmin):
         'duration_days',
     )
 
-
 admin.site.register(User_Subscriptions, User_SubscriptionsAdmin)
 
 

@@ -4,9 +4,9 @@
 {% block page_header %}
 <div class="category-links">
     <hr>
-    <h2 class="playfair-display-article-heading">Shopping Cart</h2>
+        <h2 class="playfair-display-article-heading">Shopping Cart</h2>
     <hr>
-  </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -20,124 +20,129 @@
         {% if cart_items %}
             {% for item in cart_items %}
                 <p class="playfair-display-caption">You are about to purchase:</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="2"><strong>ORDER DETAILS</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Type:</th>
-                            <td>{{ item.subscription_type }} Subscription</td>
-                        </tr>
-                        <tr>
-                            <th>Description:</th>
-                            <td>{{ item.description }}</td>
-                        </tr>
-                        <tr>
-                            <th>Duration:</th>
-                            <td>{{ item.duration_years }} {% if item.duration_years == 1 %}year{% else %}years{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th>Price:</th>
-                            <td>£{{ item.cost }}</td>
-                        </tr>
-                        <tr>
-                            <th>Auto-Renew:</th>
-                            <td>
-                                <form action="{% url 'update_auto_renew' item.item_id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="auto_renew" value="0">
-                                    <input type="checkbox" name="auto_renew" value="1" {% if item.auto_renew %}checked{% endif %}>
-                                    <button type="submit" class="cart-button right">Update Auto-Renew</button>
-                                    Enable
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><strong>ORDER DETAILS</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Type:</th>
+                                <td>{{ item.subscription_type }} Subscription</td>
+                            </tr>
+                            <tr>
+                                <th>Description:</th>
+                                <td>{{ item.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Duration:</th>
+                                <td>{{ item.duration_years }} {% if item.duration_years == 1 %}year{% else %}years{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Price:</th>
+                                <td>£{{ item.cost }}</td>
+                            </tr>
+                            <tr>
+                                <th>Auto-Renew:</th>
+                                <td>
+                                    <form action="{% url 'update_auto_renew' item.item_id %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            <input type="hidden" name="auto_renew" value="0">
+                                            <input type="checkbox" name="auto_renew" value="1" {% if item.auto_renew %}checked{% endif %}>
+                                                <button type="submit" class="cart-button right">
+                                                    Update Auto-Renew
+                                                </button>
+                                        Enable
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="2"><strong>CONFIRMATION</th>
-                        </tr>
-                        <tr>
-                            <th>Proceed or:</th>
-                            <td>
-                                <form action="{% url 'remove_from_cart' item.item_id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" class="remove-button">Remove from Cart</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </thead>
-                </table>
-            <br>
-            <br>
-                <!-- Cart Summary -->
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="2"><strong>CART SUMMARY</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2">
-                                <div class="container">
-                                    <img src="{{ item.image }}" alt="{{ item.subscription.image_description }}" class="pic">
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        <tr>
-                            <th>Total Items:</th>
-                            <td>{{ product_count }}</td>
-                        </tr>
-                        <tr>
-                            <th>Subtotal:</th>
-                            <td>£{{ total }}</td>
-                        </tr>
-                        <tr>
-                            <th>VAT:</th>
-                            <td>£{{ vat_amount }}</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Grand Total:</th>
-                            <td>£{{ grand_total }}</td>
-                        </tr>
-                    </tfoot>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><strong>CONFIRMATION</th>
+                            </tr>
+                            <tr>
+                                <th>Proceed or:</th>
+                                <td>
+                                    <form action="{% url 'remove_from_cart' item.item_id %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <button type="submit" class="remove-button">
+                                            Remove from Cart
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                <br>
+                <br>
+                    <!-- Cart Summary -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><strong>CART SUMMARY</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="container">
+                                        <img src="{{ MEDIA_URL }}{{ subscription.image_name }}" alt="{{ item.subscription.image_description }}" class="pic">
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <th>Total Items:</th>
+                                <td>{{ product_count }}</td>
+                            </tr>
+                            <tr>
+                                <th>Subtotal:</th>
+                                <td>£{{ total }}</td>
+                            </tr>
+                            <tr>
+                                <th>VAT:</th>
+                                <td>£{{ vat_amount }}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Grand Total:</th>
+                                <td>£{{ grand_total }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
             <br>
             {% if request.user.is_authenticated %}
                 <!-- Checkout Button -->
                  <div class="container">
                     <a href="{% url 'checkout' %}" class="cart-button">Proceed to Checkout <i class="fas fa-lock"></i></a>
                 </div>
-                {% else %}
+            {% else %}
                 <div class="container">
-                <a class="" href="{% url 'account_signup' %}">Create an account</a> or
-                <a class="" href="{% url 'account_login' %}?next={{ request.path }}">login</a> to proceed.
-            </div>
-                {% endif %}
+                    <a class="" href="{% url 'account_signup' %}">Create an account</a> or
+                    <a class="" href="{% url 'account_login' %}?next={{ request.path }}">login</a> to proceed.
+                </div>
+            {% endif %}
         {% else %}
             {% if request.user.is_authenticated and user_has_paid_subscription %}
                 <p class="playfair-display-link">You already have a subscription.</p>
                         <a class="playfair-display-link" href="{% url 'profile' %}">
-                            <i class="fa-solid fa-arrow-left">&nbsp;</i>View Profile
+                            <i class="fa-solid fa-arrow-left">&nbsp;</i>
+                            View Profile
                         </a>
             {% else %}
                 <p class="playfair-display-link">The cart is empty.</p>
                     <a class="playfair-display-link" href="{% url 'subscriptions' %}">
-                        <i class="fa-solid fa-arrow-left">&nbsp;</i>Back to Subscriptions
+                        <i class="fa-solid fa-arrow-left">&nbsp;</i>
+                        Back to Subscriptions
                     </a>
             {% endif %}
         {% endif %}
     </div>
-   
 </div>
 {% endblock %}

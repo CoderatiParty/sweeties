@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 
-# Create your views here.
 
 def subscriptions(request):
     """ A view to show subscriptions page """

@@ -3,7 +3,9 @@ from django.utils import timezone
 
 
 class Category(models.Model):
-
+    """
+    Model for categories.
+    """
     class Meta:
         verbose_name_plural = 'Categories'
 
@@ -18,6 +20,9 @@ class Category(models.Model):
 
 
 class Article(models.Model):
+    """
+    Model for news article info
+    """
     category = models.ForeignKey('Category', null=True, blank=False,
                                  on_delete=models.SET_NULL)
     sub_category = models.CharField(max_length=254, null=False, blank=False)

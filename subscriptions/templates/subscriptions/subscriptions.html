@@ -2,17 +2,14 @@
 {% load static %}
 
 {% block page_header %}
-
 <div class="category-links">
   <hr>
-  <h2 class="playfair-display-article-heading">Subscriptions</h2>
+    <h2 class="playfair-display-article-heading">Subscriptions</h2>
   <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
-
 <div class="grid-container-article">
 
     <div class="grid-item-article">
@@ -20,28 +17,73 @@
    
     <div class="grid-item-article">
       <h2 class="playfair-display-caption">Select a subscription and join today!</h2>
-      {% for item in subscriptions %}
-      <br>
-      {% if cart_items %}
-      <a href="" class="box-link">
-        <div class="subscription-box">
-          <p class="playfair-display-article-caption"><b>{{ item.subscription.subscription_type|upper }}<span class="right">{% if item.subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} MEMBER</b></span></p>
-          <p class="playfair-display-para">{{ item.subscription.description }}</p>
-          <p class="playfair-display-caption"><b>Duration: </b>{{ item.subscription.duration_years }} {% if item.subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ item.vat_cost|floatformat:2 }}</span></p>
-        </div>
-      </a>
-      {% else %}
-      <a href="{% url 'add_subscription' item.subscription.id %}" class="box-link">
-        <div class="subscription-box">
-          <p class="playfair-display-article-caption"><b>{{ item.subscription.subscription_type|upper }}<span class="right">{% if item.subscription.duration_years == 1 %}STANDARD{% else %}PREMIUM{% endif %} MEMBER</b></span></p>
-          <p class="playfair-display-para">{{ item.subscription.description }}</p>
-          <p class="playfair-display-caption"><b>Duration: </b>{{ item.subscription.duration_years }} {% if item.subscription.duration_years == 1 %}year{% else %}years{% endif %}<span class="right"><b>Price: </b>£{{ item.vat_cost|floatformat:2 }}</span></p>
-        </div>
-      </a>
-      {% endif %}
-     {% endfor %}
+        {% for item in subscriptions %}
+          <br>
+            {% if cart_items %}
+              <a href="" class="box-link">
+                <div class="subscription-box">
+                  <p class="playfair-display-article-caption">
+                    <b>{{ item.subscription.subscription_type|upper }}
+                      <span class="right">
+                        {% if item.subscription.duration_years == 1 %}
+                          STANDARD 
+                        {% else %}
+                          PREMIUM 
+                        {% endif %}
+                          MEMBER
+                      </span>
+                    </b>
+                  </p>
+                  <p class="playfair-display-para">{{ item.subscription.description }}</p>
+                  <p class="playfair-display-caption">
+                    <b>Duration: </b>
+                      {{ item.subscription.duration_years }} 
+                      {% if item.subscription.duration_years == 1 %}
+                        year
+                      {% else %}
+                        years
+                      {% endif %}
+                    <span class="right">
+                      <b>Price: </b>
+                      £{{ item.vat_cost|floatformat:2 }}
+                    </span>
+                  </p>
+                </div>
+              </a>
+            {% else %}
+              <a href="{% url 'add_subscription' item.subscription.id %}" class="box-link">
+                <div class="subscription-box">
+                  <p class="playfair-display-article-caption">
+                    <b>{{ item.subscription.subscription_type|upper }}
+                      <span class="right">
+                        {% if item.subscription.duration_years == 1 %}
+                          STANDARD 
+                        {% else %}
+                          PREMIUM 
+                        {% endif %}
+                          MEMBER
+                      </span>
+                    </b>
+                  </p>
+                  <p class="playfair-display-para">{{ item.subscription.description }}</p>
+                  <p class="playfair-display-caption">
+                    <b>Duration: </b>
+                    {{ item.subscription.duration_years }} 
+                    {% if item.subscription.duration_years == 1 %}
+                      year
+                    {% else %}
+                      years
+                    {% endif %}
+                    <span class="right">
+                      <b>Price: </b>
+                      £{{ item.vat_cost|floatformat:2 }}
+                    </span>
+                  </p>
+                </div>
+              </a>
+            {% endif %}
+        {% endfor %}
     </div>
    
-   </div>
-   
+</div>
 {% endblock %}

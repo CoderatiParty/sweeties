@@ -4,34 +4,42 @@
 {% block page_header %}
 <div class="category-links">
   <hr>
-    <a class="playfair-display-link" onclick="goBack('{{ referrer }}')">
+    <a class="playfair-display-link" href="{% url 'home' %}">
       <i class="fa-solid fa-arrow-left">&nbsp;</i>Back
     </a>
   <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
-
 <div class="grid-container-article">
 
-    <div class="grid-item-article">
+  <div class="grid-item-article">
+  </div>
+  
+  <div class="grid-item-article">
+    <h1 class="playfair-display-article-heading">{{ article.headline }}</h1>
+      <p class="date">{{ article.date }}</p>
+        <div class="container">
+          <img src="{{ MEDIA_URL }}{{ article.image_name }}" alt="{{ article.image_description }}" class="pic">
+        </div>
+          <br>
+            <p class="playfair-display-para justify">
+              {{ article.article_text }}
+            </p>
+            {% if request.user.is_staff %}
+              <small class="ml-3">
+                <a href="{% url 'edit_article' article.id %}" class="playfair-display-para btn add-article">
+                  Edit Article
+                </a>
+                <a href="{% url 'delete_article' article.id %}" class="playfair-display-para btn remove-button right">
+                  Delete Article
+                </a>
+              </small>
+            {% endif %}
     </div>
    
-    <div class="grid-item-article">
-      <h1 class="playfair-display-article-heading">{{ article.headline }}</h1>
-       <p class="date">{{ article.date }}</p>
-       <div class="container">
-        <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
-       </div>
-      <p class="playfair-display-para justify">
-        {{ article.article_text }}
-      </p>
-    </div>
-   
-   </div>
-   
+</div>
 {% endblock %}
 
 {% block postloadjs %}

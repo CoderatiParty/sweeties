@@ -356,9 +356,9 @@ p.playfair-display-link {
 }
 
 .corp-head a {
-text-decoration: none;
-cursor: pointer;
-padding-left: 45px;
+  text-decoration: none;
+  cursor: pointer;
+  padding-left: 45px;
 }
 
 .date {
@@ -482,6 +482,10 @@ footer .fa-lemon {
   font-size: 34px;
 }
 
+.container .fa-lemon {
+  font-size: 34px;
+}
+
 .grid-container-footer {
   display: grid;
   grid-template-columns: 30% 70%;
@@ -527,6 +531,24 @@ footer .fa-lemon {
   font-size: 20px;
   cursor: n-resize;
   float: right;
+}
+
+/* ARTICLE PAGES */
+
+.add-article {
+  background-color: #fff700;
+  color: #000000;
+  border: 0.5px solid black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cancel {
+  background-color: #b5b5b5;
+  color: #000000;
+  border: 0.5px solid black;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* SUBSCRIPTION PAGE */

@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Article, Category
 from profiles.models import User_Profile
 from subscriptions.models import User_Subscriptions, Subscription_Info_For_User
-
-
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import AddArticleForm
 
 
 def index(request):
@@ -64,7 +64,6 @@ def article(request, article_id):
     current_path = request.path
     referrer = request.META.get('HTTP_REFERER')
 
-
     article = get_object_or_404(Article, pk=article_id)
 
     context = {
@@ -75,3 +74,75 @@ def article(request, article_id):
     }
 
     return render(request, 'home/article.html', context)
+
+
+@login_required
+def add_article(request):
+    """ A route to add an article to the site """
+    if not request.user.is_staff:
+        messages.error(request, 'Sorry, only journos can do that.')
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        form = AddArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added article!')
+            return redirect(reverse('home'))
+        else:
+            messages.error(request,
+                           ('Failed to add article. '
+                            'Please ensure the form is valid.'))
+    else:
+        form = AddArticleForm()
+
+    template = 'home/add_article.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def edit_article(request, article_id):
+    """ A route to edit an article """
+    if not request.user.is_staff:
+        messages.error(request, 'Sorry, only journos can do that.')
+        return redirect(reverse('home'))
+
+    article = get_object_or_404(Article, pk=article_id)
+    if request.method == 'POST':
+        form = AddArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated article!')
+            return redirect(reverse('article', args=[article.id]))
+        else:
+            messages.error(request,
+                           ('Failed to update article. '
+                            'Please ensure the form is valid.'))
+    else:
+        form = AddArticleForm(instance=article)
+        messages.info(request, f'You are editing {article.headline}')
+
+    template = 'home/edit_article.html'
+    context = {
+        'form': form,
+        'article': article,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def delete_article(request, article_id):
+    """ To delete an article from the site """
+    if not request.user.is_staff:
+        messages.error(request, 'Sorry, only journos can do that.')
+        return redirect(reverse('home'))
+
+    article = get_object_or_404(Article, pk=article_id)
+    article.delete()
+    messages.success(request, 'Article deleted!')
+    return redirect(reverse('home'))

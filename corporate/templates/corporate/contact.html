@@ -3,63 +3,141 @@
 
 {% block page_header %}
 <div class="corp-head">
-    <a href="{% url 'corporate' %}" class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</a>
+    <a href="{% url 'corporate' %}" class="playfair-display-heading">
+        Corporate <i class="fa-solid fa-lemon"></i> Pages
+    </a>
         <h6 class="playfair-display-sub-heading">Where the will to live dies</h6>
-    <br>
-    <br>
+            <br>
+            <br>
 </div>
 {% endblock %}
+
 {% block content %}
 <div class="corp-body">
     <hr>
-    <div class="grid-container-corp">
-        <div class="grid-item-corp">
-            <p class="playfair-display-quote">"Words are a wonderful form of communication, but they will never replace kisses and punches."<br><span class="playfair-display-name">Ashleigh Brilliant</span></p>
-            <br>
-            <p class="playfair-display-text justify"><b>Subscriptions: </b><a href="{% url 'subscriptions' %}">Subscriptions</a></p>
-            <p class="playfair-display-text justify"><b>Refunds: </b><a href="{% url 'refunds' %}">Refunds</a></p>
-            <p class="playfair-display-text justify"><b>Data protection requests: </b><a href="mailto:yawn@lemondrops.com">yawn@lemondrops.com</a></p>
-            <p class="playfair-display-text justify"><b>Fan mail: </b><a href="mailto:lets-get-a-room@lemondrops.com">lets-get-a-room@lemondrops.com</a></p>
-            <p class="playfair-display-text justify"><b>Submit a story: </b><a href="mailto:dont-bother@lemondrops.com">dont-bother@lemondrops.com</a></p>
-            <p class="playfair-display-text justify"><b>Make a complaint: </b><a href="mailto:not-bothered@lemondrops.com">not-bothered@lemondrops.com</a></p>
-                <ul>
-                    <li>
-                        <a href="{% url 'about' %}" class="playfair-display-para">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'faqs' %}" class="playfair-display-para">FAQs</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contact' %}" class="playfair-display-para"><u>Contact</u></a>
-                    </li>
-                    <li>
-                        <a href="{% url 'privacy' %}" class="playfair-display-para">Privacy</a>
-                    </li>
-                </ul>
-        </div>
-        <div class="grid-item-corp">
-            <div class="container">
-                <a href="{% url 'home' %}" class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
-                <a href="{% url 'subscriptions' %}" class="playfair-display-caption">Subscriptions</a>
+        <div class="grid-container-corp">
+            <div class="grid-item-corp">
+                <p class="playfair-display-quote">
+                    "Words are a wonderful form of communication, but they will never replace kisses and punches."
+                    <br>
+                        <span class="playfair-display-name">
+                            Ashleigh Brilliant
+                        </span>
+                </p>
+                    <br>
+                <p class="playfair-display-text justify">
+                    <b>Subscriptions: </b>
+                        <a href="{% url 'subscriptions' %}">
+                            Subscriptions
+                        </a>
+                </p>
+                <p class="playfair-display-text justify">
+                    <b>Refunds: </b>
+                        <a href="{% url 'refunds' %}">
+                            Refunds
+                        </a>
+                </p>
+                <p class="playfair-display-text justify">
+                    <b>Data protection requests: </b>
+                        <a href="mailto:yawn@lemondrops.com">
+                            yawn@lemondrops.com
+                        </a>
+                </p>
+                <p class="playfair-display-text justify">
+                    <b>Fan mail: </b>
+                        <a href="mailto:lets-get-a-room@lemondrops.com">
+                            lets-get-a-room@lemondrops.com
+                        </a>
+                </p>
+                <p class="playfair-display-text justify">
+                    <b>Submit a story: </b>
+                        <a href="mailto:dont-bother@lemondrops.com">
+                            dont-bother@lemondrops.com
+                        </a>
+                </p>
+                <p class="playfair-display-text justify">
+                    <b>Make a complaint: </b>
+                        <a href="mailto:not-bothered@lemondrops.com">
+                            not-bothered@lemondrops.com
+                        </a>
+                </p>
+                    <ul>
+                        <li>
+                            <a href="{% url 'about' %}" class="playfair-display-para">
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'faqs' %}" class="playfair-display-para">
+                                FAQs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'contact' %}" class="playfair-display-para">
+                                <u>Contact</u>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'privacy' %}" class="playfair-display-para">
+                                Privacy
+                            </a>
+                        </li>
+                    </ul>
             </div>
-            <p class="playfair-display-text justify">Should you wish to <a href="{% url 'subscriptions' %}">subscribe</a> to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup></p>
-            <p class="playfair-display-text justify">Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. That's right, world leading spam for less 1 pence a day! <sup>*</sup></p>
-            <p class="playfair-display-text justify">Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.</p>
-            <p class="playfair-display-text justify"><a href="{% url 'subscriptions' %}">Subscriptions</a> are available on an annual or quadrennial basis.</p>
-            <p class="playfair-display-text justify">Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? Below we have compiled some pages of legal sounding words to convince you otherwise.</p>
-                <ul>
-                    <li>
-                        <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
-                    </li>
-                </ul>
-            <p class="playfair-display-text justify"><sup>*</sup> <a href="{% url 'subscriptions' %}">Subscribe</a> for 4 years and get leap day free!</p>
-    </div>
-    </div>
+            <div class="grid-item-corp">
+                <div class="container">
+                    <a href="{% url 'home' %}" class="playfair-display-heading-footer">
+                        Lemon <i class="fa-solid fa-lemon"></i> Drops
+                    </a>
+                    <a href="{% url 'subscriptions' %}" class="playfair-display-caption">
+                        Subscriptions
+                    </a>
+                </div>
+                    <p class="playfair-display-text justify">
+                        Should you wish to 
+                            <a href="{% url 'subscriptions' %}">
+                                subscribe
+                            </a>
+                             to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup>
+                            </p>
+                    <p class="playfair-display-text justify">
+                        Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. 
+                        That's right, world leading spam for less 1 pence a day! <sup>*</sup>
+                    </p>
+                    <p class="playfair-display-text justify">
+                        Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.
+                    </p>
+                    <p class="playfair-display-text justify">
+                        <a href="{% url 'subscriptions' %}">
+                            Subscriptions
+                        </a>
+                         are available on an annual or quadrennial basis.
+                        </p>
+                    <p class="playfair-display-text justify">
+                        Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? 
+                        Below we have compiled some pages of legal sounding words to convince you otherwise.
+                    </p>
+                        <ul>
+                            <li>
+                                <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
+                            </li>
+                        </ul>
+                    <p class="playfair-display-text justify">
+                        <sup>*</sup> 
+                            <a href="{% url 'subscriptions' %}">
+                                Subscribe
+                            </a>
+                         for 4 years and get leap day free!
+                    </p>
+            </div>
+        </div>
     <hr>
-    <div class="corp-footer">
-    <button onclick="topFunction()" class="back_to_top">&#8673;</button>
-    <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
-    </div>
+        <div class="corp-footer">
+            <button onclick="topFunction()" class="back_to_top">&#8673;</button>
+                <h2 class="playfair-display-sub-heading-footer">
+                    &copy; <span id="copyright"></span>. All rights reserved.
+                </h2>
+        </div>
     <br>
 </div>
 {% endblock %}

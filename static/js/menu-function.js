@@ -1,3 +1,4 @@
+// Handles menu animation
 let menuButton = document.getElementById("menuButton");
 menuButton.addEventListener("click", openMenu);
 

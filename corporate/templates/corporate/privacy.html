@@ -5,98 +5,149 @@
 <div class="corp-head">
     <a href="{% url 'corporate' %}" class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</a>
         <h6 class="playfair-display-sub-heading">Where the will to live dies</h6>
-    <br>
-    <br>
+            <br>
+            <br>
 </div>
 {% endblock %}
+
 {% block content %}
 <div class="corp-body">
     <hr>
-    <div class="grid-container-corp">
-        <div class="grid-item-corp">
-            <p class="playfair-display-quote">"It's a beautiful day to leave me alone."<br><span class="playfair-display-name">Anon</span></p>
-            <br>
-            <article class="playfair-display-text justify">
-                <h3 class="playfair-display-caption">LEMON DROPS' <sup>TM</sup> PRIVACY POLICY</h3>
-                <p>This Privacy Policy describes the way we handle any personal data that you provide to us. In accordance with the Data Protection Act 1998, the data controller is Lemon Drops <sup>TM</sup>.</p>
-                <p>This agreement should be viewed in conjunction with our: <a href="{% url 'terms' %}">Terms and Conditions</a>.</p>
-                <p>We may collect and process the following data about you:</p>
-                <ul>
-                <li>If you contact us (which you can't!) requesting further material or services, we may keep a record of correspondence (which we won't!)</li>
-                </ul>
-            <p>We cannot guarantee the security of data you transmit through the Site but we use procedures to prevent unauthorised access to information once it's received. (Full disclosure, hackers are smarter than us.)
-            <br>
-            <br>
-            We may use information you provide us to supply information and updates about our activities, products or services. (Yeah, right! Who we kidding?!)
-            <br>
-            <br>
-            As per our terms, any unsolicited material received either electronically or through traditional mail services will be disposed of unread. (This is true.)
-            <br>
-            <br>
-            We may disclose your personal information to third parties:</p>
-                <ul>
-                <li>If Lemon Drops <sup>TM</sup> is acquired by a third party, as it will be considered an asset. (We will sell you out in a heart beat.)</li>
-                <li>If we are obliged to do so in order to comply with a legal obligation, or to protect the rights, property, or safety of Lemon Drops <sup>TM</sup>. This includes fraud protection. (Yup! Defo not going to prison for you.)</li>
-                </ul>
-            <p>We do not process your personal data for marketing purposes. (Too much effort.)
-            <br>
-            <br>
-            The Act gives you the right to access information held about you. (Particularly those who have a life.)
-            <br>
-            <br>
-            <h4 class="playfair-display-caption">DEFINITIONS</h4>
-            <p>Except to the extent expressly provided otherwise, in this Agreement:
-            <br>
-            <br>
-            "<b>Website</b>" or "<b>Site</b>" means the domain www.lemondrops.com and all its pages.
-            <br>
-            <br>
-            "<b>Us</b>" or "<b>We</b>" means owners of the website Lemon Drops <sup>TM</sup>.
-            <br>
-            <br>
-            "<b>You</b>" means visitors to the domain www.lemondrops.com and all its pages.
-            <br>
-            <br>
-            "<b>the Act</b>" means the Data Protection Act 1998.</p>
-            </article>
-                <ul>
-                    <li>
-                        <a href="{% url 'about' %}" class="playfair-display-para">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'faqs' %}" class="playfair-display-para">FAQs</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contact' %}" class="playfair-display-para">Contact</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'privacy' %}" class="playfair-display-para"><u>Privacy</u></a>
-                    </li>
-                </ul>
-        </div>
-        <div class="grid-item-corp">
-            <div class="container">
-                <a href="{% url 'home' %}" class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
-                <a href="{% url 'subscriptions' %}" class="playfair-display-caption">Subscriptions</a>
+        <div class="grid-container-corp">
+            <div class="grid-item-corp">
+                <p class="playfair-display-quote">
+                    "It's a beautiful day to leave me alone."
+                    <br>
+                    <span class="playfair-display-name">Anon</span></p>
+                    <br>
+                        <article class="playfair-display-text justify">
+                            <h3 class="playfair-display-caption">
+                                LEMON DROPS' <sup>TM</sup> PRIVACY POLICY
+                            </h3>
+                                <p>This Privacy Policy describes the way we handle any personal data that you provide to us. 
+                                    In accordance with the Data Protection Act 1998, the data controller is Lemon Drops <sup>TM</sup>.</p>
+                                <p>This agreement should be viewed in conjunction with our: <a href="{% url 'terms' %}">Terms and Conditions</a>.</p>
+                                <p>We may collect and process the following data about you:</p>
+                                    <ul>
+                                        <li>
+                                            If you contact us (which you can't!) requesting further material or services, we may keep a record of correspondence 
+                                            (which we won't!)
+                                        </li>
+                                    </ul>
+                                <p>We cannot guarantee the security of data you transmit through the Site 
+                                    but we use procedures to prevent unauthorised access to information once it's received. 
+                                    (Full disclosure, hackers are smarter than us.)
+                                    <br>
+                                    <br>
+                                We may use information you provide us to supply information and updates about our activities, 
+                                products or services. (Yeah, right! Who we kidding?!)
+                                    <br>
+                                    <br>
+                                As per our terms, any unsolicited material received either electronically or through traditional mail services will be disposed of unread. 
+                                (This is true.)
+                                    <br>
+                                    <br>
+                                We may disclose your personal information to third parties:</p>
+                                    <ul>
+                                        <li>If Lemon Drops <sup>TM</sup> is acquired by a third party, as it will be considered an asset. 
+                                            (We will sell you out in a heart beat.)
+                                        </li>
+                                        <li>
+                                            If we are obliged to do so in order to comply with a legal obligation, or to protect the rights, 
+                                            property, or safety of Lemon Drops <sup>TM</sup>. This includes fraud protection. 
+                                            (Yup! Defo not going to prison for you.)
+                                        </li>
+                                    </ul>
+                                <p>We do not process your personal data for marketing purposes. (Too much effort.)
+                                    <br>
+                                    <br>
+                                The Act gives you the right to access information held about you. (Particularly those who have a life.)
+                                    <br>
+                                    <br>
+                            <h4 class="playfair-display-caption">
+                                DEFINITIONS
+                            </h4>
+                                <p>Except to the extent expressly provided otherwise, in this Agreement:
+                                    <br>
+                                    <br>
+                                "<b>Website</b>" or "<b>Site</b>" means the domain www.lemondrops.com and all its pages.
+                                    <br>
+                                    <br>
+                                "<b>Us</b>" or "<b>We</b>" means owners of the website Lemon Drops <sup>TM</sup>.
+                                    <br>
+                                    <br>
+                                "<b>You</b>" means visitors to the domain www.lemondrops.com and all its pages.
+                                    <br>
+                                    <br>
+                                "<b>the Act</b>" means the Data Protection Act 1998.</p>
+                        </article>
+                    <ul>
+                        <li>
+                            <a href="{% url 'about' %}" class="playfair-display-para">About</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'faqs' %}" class="playfair-display-para">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'contact' %}" class="playfair-display-para">Contact</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'privacy' %}" class="playfair-display-para"><u>Privacy</u></a>
+                        </li>
+                    </ul>
             </div>
-            <p class="playfair-display-text justify">Should you wish to <a href="{% url 'subscriptions' %}">subscribe</a> to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup></p>
-            <p class="playfair-display-text justify">Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. That's right, world leading spam for less 1 pence a day! <sup>*</sup></p>
-            <p class="playfair-display-text justify">Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.</p>
-            <p class="playfair-display-text justify"><a href="{% url 'subscriptions' %}">Subscriptions</a> are available on an annual or quadrennial basis.</p>
-            <p class="playfair-display-text justify">Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? Below we have compiled some pages of legal sounding words to convince you otherwise.</p>
-                <ul>
-                    <li>
-                        <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
-                    </li>
-                </ul>
-            <p class="playfair-display-text justify"><sup>*</sup> <a href="{% url 'subscriptions' %}">Subscribe</a> for 4 years and get leap day free!</p>
-    </div>
-    </div>
+            <div class="grid-item-corp">
+                <div class="container">
+                    <a href="{% url 'home' %}" class="playfair-display-heading-footer">
+                        Lemon <i class="fa-solid fa-lemon"></i> Drops
+                    </a>
+                    <a href="{% url 'subscriptions' %}" class="playfair-display-caption">
+                        Subscriptions
+                    </a>
+                </div>
+                <p class="playfair-display-text justify">
+                    Should you wish to 
+                    <a href="{% url 'subscriptions' %}">
+                        subscribe
+                    </a>
+                     to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup>
+                </p>
+                <p class="playfair-display-text justify">
+                    Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. 
+                    That's right, world leading spam for less 1 pence a day! <sup>*</sup>
+                </p>
+                <p class="playfair-display-text justify">
+                    Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.
+                </p>
+                <p class="playfair-display-text justify">
+                    <a href="{% url 'subscriptions' %}">
+                        Subscriptions
+                    </a>
+                     are available on an annual or quadrennial basis.</p>
+                <p class="playfair-display-text justify">
+                    Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? 
+                    Below we have compiled some pages of legal sounding words to convince you otherwise.
+                </p>
+                    <ul>
+                        <li>
+                            <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
+                        </li>
+                    </ul>
+                <p class="playfair-display-text justify"><sup>*</sup> 
+                    <a href="{% url 'subscriptions' %}">
+                        Subscribe
+                    </a>
+                     for 4 years and get leap day free!
+                </p>
+            </div>
+        </div>
     <hr>
-    <div class="corp-footer">
-    <button onclick="topFunction()" class="back_to_top">&#8673;</button>
-    <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
-    </div>
+        <div class="corp-footer">
+            <button onclick="topFunction()" class="back_to_top">&#8673;</button>
+                <h2 class="playfair-display-sub-heading-footer">
+                    &copy; <span id="copyright"></span>. All rights reserved.
+                </h2>
+        </div>
     <br>
 </div>
 {% endblock %}

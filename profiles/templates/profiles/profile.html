@@ -2,13 +2,11 @@
 {% load static %}
 
 {% block page_header %}
-
 <div class="category-links">
   <hr>
-  <h2 class="playfair-display-article-heading">Manage Profile</h2>
+    <h2 class="playfair-display-article-heading">Manage Profile</h2>
   <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
@@ -18,13 +16,15 @@
     </div>
    
     <div class="grid-item-article">
-        <form action="{% url 'profile' %}" method="POST" id="profile-update-form">
+        <form action="{% url 'profile' %}" method="POST" id="profile-update-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            <button class="cart-button">Update Information</button>
+                <button class="cart-button">
+                    Update Information
+                </button>
         </form>
-        <br>
-        <br>
+            <br>
+            <br>
         <table>
             <thead>
                 <tr>
@@ -67,9 +67,12 @@
                     {% endif %}
             </tbody>
         </table>
-        <br>
-        <a class="btn remove-button right playfair-display-link" style="text-decoration:none;" href="{% url 'delete_confirmation' %}">DELETE PROFILE
-          </a>
+            <br>
+                <a class="btn remove-button right playfair-display-link" style="text-decoration:none;" 
+                    href="{% url 'delete_confirmation' %}">
+                    DELETE PROFILE
+                </a>
     </div>
+
 </div>
 {% endblock %}

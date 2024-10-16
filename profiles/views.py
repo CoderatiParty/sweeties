@@ -11,8 +11,6 @@ from django.urls import reverse
 from django.contrib.auth import logout
 
 
-# Create your views here.
-
 @login_required
 def profile(request):
     """ A view to show profile page """
@@ -85,7 +83,9 @@ def profile(request):
 
 @login_required
 def subscription_history(request, order_number):
-
+    """
+    A route to link to the checkout success view to display old orders 
+    """
     user_has_paid_subscription = False
     auto_renew_status = None
 
@@ -109,7 +109,6 @@ def subscription_history(request, order_number):
     profile = get_object_or_404(User_Profile, user=request.user)
     first_name = user.first_name
     last_name = user.last_name
-
 
     messages.info(request, (
         f'This is a past confirmation for order number {order_number}. '
@@ -135,7 +134,7 @@ def subscription_history(request, order_number):
 @login_required
 def delete_confirmation(request):
     """ A view to show the delete confirmation page """
-    
+
     user_has_paid_subscription = False
 
     # Check if the user is authenticated
@@ -160,6 +159,9 @@ def delete_confirmation(request):
 
 @login_required
 def delete_profile(request, user_id):
+    """
+    A page to delete the user profile.
+    """
     user = User.objects.get(id=user_id)
     if request.method == 'POST' and user == request.user:
         request.session.flush()  # Clears all session data

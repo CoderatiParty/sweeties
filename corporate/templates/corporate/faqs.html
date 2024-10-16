@@ -5,137 +5,192 @@
 <div class="corp-head">
     <a href="{% url 'corporate' %}" class="playfair-display-heading">Corporate <i class="fa-solid fa-lemon"></i> Pages</a>
         <h6 class="playfair-display-sub-heading">Where the will to live dies</h6>
-    <br>
-    <br>
+          <br>
+          <br>
 </div>
 {% endblock %}
+
 {% block content %}
 <div class="corp-body">
-    <hr>
+  <hr>
     <div class="grid-container-corp">
-        <div class="grid-item-corp">
-            <p class="playfair-display-quote">"Why is it that no matter what color bubble bath you use the bubbles are always white?"<br><span class="playfair-display-name">Anon</span></p>
-            <article class="playfair-display-text justify">
-                <h2 class="playfair-display-caption">
-                    Frequently Asked Questions...
-                </h2>
-                  <p>Okay, we might not be able to answer every question. Here we have tried to do so for the ones we are usually asked.</p>
-                  <section>
-                    <details>
+      <div class="grid-item-corp">
+        <p class="playfair-display-quote">
+          "Why is it that no matter what color bubble bath you use the bubbles are always white?"
+          <br>
+          <span class="playfair-display-name">Anon</span>
+        </p>
+          <article class="playfair-display-text justify">
+            <h2 class="playfair-display-caption">
+                Frequently Asked Questions...
+            </h2>
+              <p>
+                Okay, we might not be able to answer every question. 
+                Here we have tried to do so for the ones we are usually asked.
+              </p>
+                <section>
+                  <details>
+                    <summary>
+                      What is Lemon Drops <sup>TM</sup>?
+                    </summary>
+                      <p>
+                          Lemon Drops <sup>TM</sup> is not a private website-navigator. 
+                          Try looking here: 
+                          <a href="{% url 'about' %}" class="playfair-display-text">
+                            About
+                          </a>
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                      Do you charge for the service you offer?
+                    </summary>
+                      <p>
+                        Heck yeah, we're desperate capitalists. 
+                        Please, sir, can we have some more 
+                        <a href="{% url 'subscriptions' %}" class="playfair-display-text">
+                          subscriptions
+                        </a>
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                      Can I work for you?
+                    </summary>
+                      <p>
+                        We struggle to be responsible for ourselves. 
+                        Taking a wide-eyed innocent on-board to make our tea is more than we can handle.
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                      Don't you think you're taking liberties with free speech?
+                    </summary>
+                      <p>
+                        Ummm... isn't that a contradiction in terms?!
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                      I find your content offensive and I want to complain. I've written to 
+                      <a href="mailto:not-bothered@lemondrops.com">
+                        not-bothered@lemondrops.com
+                      </a>
+                       but I don't get a response.
+                    </summary>
+                      <p>
+                        Sorry about that, let us get back to you...
+                      </p>
+                  </details>
+                  <details>
                       <summary>
-                        What is Lemon Drops <sup>TM</sup>?
+                          I've been waiting for a response for far too long now. I'm very angry!
                       </summary>
                         <p>
-                            Lemon Drops <sup>TM</sup> is not a private website-navigator. Try looking here: <a href="{% url 'about' %}" class="playfair-display-text">About</a>
+                          Let's find a colleague. One moment...
                         </p>
-                    </details>
-                    <details>
-                      <summary>
-                        Do you charge for the service you offer?
-                      </summary>
-                        <p>
-                          Heck yeah, we're desperate capitalists. Please, sir, can we have some more <a href="{% url 'subscriptions' %}" class="playfair-display-text">subscriptions</a>
-                        </p>
-                    </details>
-                    <details>
-                      <summary>
-                        Can I work for you?
-                      </summary>
-                        <p>
-                          We struggle to be responsible for ourselves. Taking a wide-eyed innocent on-board to make our tea is more than we can handle.
-                        </p>
-                    </details>
-                    <details>
-                      <summary>
-                        Don't you think you're taking liberties with free speech?
-                      </summary>
-                        <p>
-                          Ummm... isn't that a contradiction in terms?!
-                        </p>
-                    </details>
-                    <details>
-                      <summary>
-                        I find your content offensive and I want to complain. I've written to <a href="mailto:not-bothered@lemondrops.com">not-bothered@lemondrops.com</a> but I don't get a response.
-                      </summary>
-                        <p>
-                          Sorry about that, let us get back to you...
-                        </p>
-                    </details>
-                    <details>
-                        <summary>
-                            I've been waiting for a response for far too long now. I'm very angry!
-                        </summary>
-                          <p>
-                            Let's find a colleague. One moment...
-                          </p>
-                      </details>
-                      <details>
-                        <summary>
-                            I'm still waiting! How dare you treat me like this!! Who's in charge there?
-                        </summary>
-                          <p>
-                            Is anyone in charge anywhere?
-                          </p>
-                      </details>
-                      <details>
-                        <summary>
-                            I find you insolent in the extreme! This is an outrage!!!
-                        </summary>
-                          <p>
-                            Excellent. Have you considered a <a href="{% url 'subscriptions' %}" class="playfair-display-text"><u>subscription</u></a>?
-                          </p>
-                      </details>
-                      <details>
-                        <summary>
-                            I do not want a subscription!!!! I want to sue!
-                        </summary>
-                          <p>
-                            Please don't. For site visitors who wish to sue, we recommend face-planting an crispy lettuce<sup>*</sup>. You may find it helps to relive stress.
-                          </p>
-                          <p class="tab">
-                            <sup>*</sup> Not recommended for site visitors with pre-existing health conditions or the ability to breathe unaided.
-                          </p>
-                      </details>
+                  </details>
+                  <details>
+                    <summary>
+                        I'm still waiting! How dare you treat me like this!! Who's in charge there?
+                    </summary>
+                      <p>
+                        Is anyone in charge anywhere?
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                        I find you insolent in the extreme! This is an outrage!!!
+                    </summary>
+                      <p>
+                        Excellent. Have you considered a 
+                        <a href="{% url 'subscriptions' %}" class="playfair-display-text">
+                          <u>subscription</u>
+                        </a>
+                        ?
+                      </p>
+                  </details>
+                  <details>
+                    <summary>
+                        I do not want a subscription!!!! I want to sue!
+                    </summary>
+                      <p>
+                        Please don't. For site visitors who wish to sue, we recommend face-planting an crispy lettuce<sup>*</sup>. 
+                        You may find it helps to relive stress.
+                      </p>
+                      <p class="tab">
+                        <sup>*</sup> Not recommended for site visitors with pre-existing health conditions or the ability to breathe unaided.
+                      </p>
+                  </details>
                 </section>
-              </article>
-                <ul>
-                    <li>
-                        <a href="{% url 'about' %}" class="playfair-display-para">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'faqs' %}" class="playfair-display-para"><u>FAQs</u></a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contact' %}" class="playfair-display-para">Contact</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'privacy' %}" class="playfair-display-para">Privacy</a>
-                    </li>
-                </ul>
+          </article>
+            <ul>
+              <li>
+                  <a href="{% url 'about' %}" class="playfair-display-para">About</a>
+              </li>
+              <li>
+                  <a href="{% url 'faqs' %}" class="playfair-display-para"><u>FAQs</u></a>
+              </li>
+              <li>
+                  <a href="{% url 'contact' %}" class="playfair-display-para">Contact</a>
+              </li>
+              <li>
+                  <a href="{% url 'privacy' %}" class="playfair-display-para">Privacy</a>
+              </li>
+            </ul>
+      </div>
+      <div class="grid-item-corp">
+        <div class="container">
+          <a href="{% url 'home' %}" class="playfair-display-heading-footer">
+            Lemon <i class="fa-solid fa-lemon"></i> Drops
+          </a>
+          <a href="{% url 'subscriptions' %}" class="playfair-display-caption">
+            Subscriptions
+          </a>
         </div>
-        <div class="grid-item-corp">
-            <div class="container">
-                <a href="{% url 'home' %}" class="playfair-display-heading-footer">Lemon <i class="fa-solid fa-lemon"></i> Drops</h1>
-                <a href="{% url 'subscriptions' %}" class="playfair-display-caption">Subscriptions</a>
-            </div>
-            <p class="playfair-display-text justify">Should you wish to <a href="{% url 'subscriptions' %}">subscribe</a> to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup></p>
-            <p class="playfair-display-text justify">Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. That's right, world leading spam for less 1 pence a day! <sup>*</sup></p>
-            <p class="playfair-display-text justify">Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.</p>
-            <p class="playfair-display-text justify"><a href="{% url 'subscriptions' %}">Subscriptions</a> are available on an annual or quadrennial basis.</p>
-            <p class="playfair-display-text justify">Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? Below we have compiled some pages of legal sounding words to convince you otherwise.</p>
-                <ul>
-                    <li>
-                        <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
-                    </li>
-                </ul>
-            <p class="playfair-display-text justify"><sup>*</sup> <a href="{% url 'subscriptions' %}">Subscribe</a> for 4 years and get leap day free!</p>
+        <p class="playfair-display-text justify">
+          Should you wish to 
+          <a href="{% url 'subscriptions' %}">
+              subscribe
+          </a>
+           to this most trusted source of libel, you can do so from less than 1 pence a day. <sup>*</sup>
+      </p>
+      <p class="playfair-display-text justify">
+          Subscribers receive exclusive news bulletins sent directly to their email before anything actually happens. 
+          That's right, world leading spam for less 1 pence a day! <sup>*</sup>
+      </p>
+      <p class="playfair-display-text justify">
+          Over <i>one</i> subscriber(s) can't be wrong. Moolah really does make us try harder.
+      </p>
+      <p class="playfair-display-text justify">
+          <a href="{% url 'subscriptions' %}">
+              Subscriptions
+          </a>
+           are available on an annual or quadrennial basis.</p>
+      <p class="playfair-display-text justify">
+          Concerned we might be charlatans, scammers, fakes, phoneys hackers with nefarious intent or terrorist funders? 
+          Below we have compiled some pages of legal sounding words to convince you otherwise.
+      </p>
+          <ul>
+              <li>
+                  <a href="{% url 'terms' %}" class="playfair-display-para">Terms</a>
+              </li>
+          </ul>
+      <p class="playfair-display-text justify"><sup>*</sup> 
+          <a href="{% url 'subscriptions' %}">
+              Subscribe
+          </a>
+           for 4 years and get leap day free!
+      </p>
+      </div>
     </div>
-    </div>
-    <hr>
+      <hr>
     <div class="corp-footer">
-    <button onclick="topFunction()" class="back_to_top">&#8673;</button>
-    <h2 class="playfair-display-sub-heading-footer">&copy; <span id="copyright"></span>. All rights reserved.</h2>
+      <button onclick="topFunction()" class="back_to_top">&#8673;</button>
+        <h2 class="playfair-display-sub-heading-footer">
+          &copy; <span id="copyright"></span>. All rights reserved.
+        </h2>
     </div>
-    <br>
+  <br>
 </div>
 {% endblock %}

@@ -58,7 +58,6 @@ class User_ProfileAdmin(admin.ModelAdmin):
         
         super().save_model(request, obj, form, change)  # Save the User_Profile instance
 
-
     # Short descriptions for the list_display
     get_email.short_description = 'Email'
     get_username.short_description = 'Username'

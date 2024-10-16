@@ -9,9 +9,9 @@
 {% block page_header %}
 <div class="category-links">
     <hr>
-    <h2 class="playfair-display-article-heading">Thank You!</h2>
+        <h2 class="playfair-display-article-heading">Thank You!</h2>
     <hr>
-  </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -21,60 +21,69 @@
     </div>
    
     <div class="grid-item-article">
-        <p class="playfair-display-article-para">Your order information is below. A confirmation email will be sent to <strong>{{ profile.email }}</strong>.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="2"><strong>ORDER CONFIRMATION</th>
-                </tr>
-            </thead>
-            {% for item in order.lineitems.all %}
-            <tbody>
-                <tr>
-                    <th>Order Number:</th>
-                    <td>{{ order.order_number }}</td>
-                </tr>
-                <tr>
-                    <th>Order Date:</th>
-                    <td>{{ order.date }}</td>
-                </tr>
+        <p class="playfair-display-article-para">
+            Your order information is below. A confirmation email will be sent to 
+            <strong>
+                {{ profile.email }}
+            </strong>.
+        </p>
+            <table>
                 <thead>
                     <tr>
-                        <th colspan="2"><strong>SUBSCRIPTION DETAILS</th>
+                        <th colspan="2"><strong>ORDER CONFIRMATION</th>
                     </tr>
                 </thead>
-                <tr>
-                    <th>{{ item.subscription.subscription_type }}:</th>
-                    <td>{{ item.quantity }} @ ${{ item.subscription.cost }} each</td>
-                </tr>
-                <tr>
-                    <th>VAT:</th>
-                    <td>£{% if item.subscription.id == 1 %}0.61{% else %}2.43{% endif %}</td>
-                </tr>
-                <tr>
-                    <th>Auto Renew:</th>
-                    <td>{% if auto_renew_status %}On{% else %}Off{% endif %}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Grand Total:</th>
-                    <td>£{{ order.grand_total }}</td>
-                </tr>
-            </tfoot>
-        </table>
-        {% endfor %}
-        <br>
+                {% for item in order.lineitems.all %}
+                <tbody>
+                    <tr>
+                        <th>Order Number:</th>
+                        <td>{{ order.order_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Order Date:</th>
+                        <td>{{ order.date }}</td>
+                    </tr>
+                    <thead>
+                        <tr>
+                            <th colspan="2"><strong>SUBSCRIPTION DETAILS</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <th>{{ item.subscription.subscription_type }}:</th>
+                        <td>{{ item.quantity }} @ ${{ item.subscription.cost }} each</td>
+                    </tr>
+                    <tr>
+                        <th>VAT:</th>
+                        <td>£{% if item.subscription.id == 1 %}0.61{% else %}2.43{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>Auto Renew:</th>
+                        <td>{% if auto_renew_status %}On{% else %}Off{% endif %}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Grand Total:</th>
+                        <td>£{{ order.grand_total }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+                {% endfor %}
+            <br>
                 {% if from_profile %}
                     <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
                         <span class="icon mr-2">
                             <i class="fa-solid fa-arrow-left"></i>
                         </span>
-                        <span>Back to Profile</span>
+                        <span>
+                            Back to Profile
+                        </span>
                     </a>
                 {% else %}
                     <a href="{% url 'home' %}" class="btn btn-black rounded-0 my-2">
-                        <span>Now check out the latest fake news!</span>
+                        <span>
+                            Now check out the latest fake news!
+                        </span>
                     </a>
                 {% endif %}
     </div>

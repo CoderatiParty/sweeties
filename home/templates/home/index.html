@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block page_header %}
-
 <div class="category-links">
     <hr>
         <a class="playfair-display-link" href="?latest=true">
@@ -15,20 +14,27 @@
             {% endfor %}
     <hr>
 </div>
-
 {% endblock %}
 
 {% block content %}
-<div class="grid-container">
-    {% for article in articles %}
-    <div class="grid-item">
-     <h1 class="playfair-display-caption">{{ article.sub_category|upper }}</h1>
-      <div class="container">
-       <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
-      </div>
-       <a href="{% url 'article' article.id %}">{{ article.headline }}</a>
+{% if request.user.is_staff %}
+    <div class="container">
+        <a href="{% url 'add_article' %}" class="playfair-display-para btn add-article"><i class="fa-solid fa-plus"></i>
+             ADD ARTICLE
+            </a>
     </div>
-    {% endfor %}
-</div>
-
+{% endif %}
+    <div class="grid-container">
+        {% for article in articles %}
+            <div class="grid-item">
+                <h1 class="playfair-display-caption">{{ article.sub_category|upper }}</h1>
+                    <div class="container">
+                        <img src="media/{{ article.image_name }}" alt="{{ article.image_description }}" class="pic">
+                    </div>
+                        <a href="{% url 'article' article.id %}">
+                            {{ article.headline }}
+                        </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
