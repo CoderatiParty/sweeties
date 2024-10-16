@@ -26,8 +26,8 @@ def index(request):
             user_has_paid_subscription = True
 
     if latest:
-        # Fetch the 20 most recent articles ordered by 'date' in descending order
-        articles = Article.objects.order_by('-date')[:8]
+        # Fetch the 12 most recent articles ordered by 'date' in descending order
+        articles = Article.objects.order_by('-date')[:12]
     else:
         # If not showing the latest, check if filtering by category
         category_id = request.GET.get('category')
