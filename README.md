@@ -730,9 +730,9 @@ The website was tested on the following browsers:
 On deployment, it was discovered that Heroku has an ephemeral file system, meaning Django admin could not be used to upload a photo for each article, as was originally planned. To solve this, a workaround was devised whereby an extra image_name column was added to the article and subscription models. The corresponding templates were then updated to use image_name as the image source instead of the url, and, after migrating the changes to the database, this allowed the images stored in Amazon AWS to be displayed.
 
 #### Old Code
-```
-Subscriptions models.py:
 
+Subscriptions models.py:
+```
 class User_Subscriptions(models.Model):
     """
     Defines the subscription info.
@@ -776,9 +776,9 @@ index.html:
 <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
 ```
 ##### New Code
-```
-Subscription models.py:
 
+Subscription models.py:
+```
 class User_Subscriptions(models.Model):
     """
     Defines the subscription info.
