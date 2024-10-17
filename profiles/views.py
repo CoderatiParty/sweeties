@@ -38,7 +38,7 @@ def profile(request):
 
     if request.method == 'POST':
         # Bind the form to POST data
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
             # Save the form data to the profile
             form.save()
