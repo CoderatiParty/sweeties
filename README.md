@@ -878,7 +878,7 @@ A number of sources were used for the content and media on Lemon Drops website. 
 ### Content
 
 - Crispy forms supported by Bootstrap: <https://getbootstrap.com>
-- ChatGPT for offering solutions to error messages: <https://chatgpt.com>
+- ChatGPT for offering solutions to error messages: <https://chatgpt.com> Without chat GPT some of the views.py routes would not have worked.
 
 ### Media
 
