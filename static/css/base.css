@@ -2,7 +2,6 @@
 
 .playfair-display-heading {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 56px;
@@ -10,7 +9,6 @@
 
 .playfair-display-heading-footer {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 45px;
@@ -18,7 +16,6 @@
 
 .playfair-display-sub-heading-footer {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
@@ -26,7 +23,6 @@
 
 .playfair-display-article-heading {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 550;
   font-style: normal;
   font-size: 33px;
@@ -34,7 +30,6 @@
 
 .playfair-display-sub-heading {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
@@ -42,7 +37,6 @@
 
 .playfair-display-caption {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -50,7 +44,6 @@
 
 .playfair-display-para {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 450;
   font-style: normal;
   font-size: 17px;
@@ -58,7 +51,6 @@
 
 .playfair-display-text {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
@@ -66,7 +58,6 @@
 
 .playfair-display-link {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
   font-size: 18px;
@@ -74,7 +65,6 @@
 
 .playfair-display-quote {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -83,7 +73,6 @@
 
 .playfair-display-name {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
@@ -123,7 +112,7 @@ a.playfair-display-heading-footer,
 a.playfair-display-caption,
 a.playfair-display-para,
 a.playfair-display-link,
-a.footer-link, {
+a.footer-link {
   color: #000000 !important;
 }
 
@@ -142,7 +131,6 @@ hr {
 
 label {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
   font-size: 18px;
@@ -152,7 +140,6 @@ label {
 input[type=text], [type=email], [type=password] {
   color: #000000;
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
@@ -172,7 +159,6 @@ input[type=text], [type=email], [type=password] {
 
 button[type=submit] {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
@@ -283,22 +269,22 @@ p.playfair-display-link {
 
 .flash.error {
   background-color: #e53935;
-  color: #ffffff;
+  color: #000000;
 }
 
 .flash.warning {
   background-color: #e53935;
-  color: #ffffff;
+  color: #000000;
 }
 
 .flash.success {
   background-color: #00c853;
-  color: #ffffff;
+  color: #000000;
 }
 
 .flash.info {
-  background-color: #00c853;
-  color: #ffffff;
+  background-color: #fff700;
+  color: #000000;
 }
 
 .close-alert {
@@ -431,7 +417,7 @@ p.playfair-display-link {
   text-align: left;
 }
 
-.grid-item a:HOVER {
+.grid-item a:hover {
   text-decoration: underline;
 }
 
@@ -533,9 +519,9 @@ footer .fa-lemon {
   float: right;
 }
 
-/* ARTICLE PAGES */
+/* ARTICLE BUTTONS */
 
-.add-article {
+.container a.playfair-display-para.add-article {
   background-color: #fff700;
   color: #000000;
   border: 0.5px solid black;
@@ -543,12 +529,51 @@ footer .fa-lemon {
   text-decoration: none;
 }
 
-.cancel {
+.container a.playfair-display-para.add-article:hover {
+  background-color: #fefdcf;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.grid-item-article form a.cancel {
   background-color: #b5b5b5;
   color: #000000;
+  padding: 5px;
   border: 0.5px solid black;
   cursor: pointer;
   text-decoration: none;
+}
+
+.grid-item-article form a.cancel:hover {
+  background-color: #c0c0c0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.grid-item-article a.delete-article {
+  background-color: #e53935;
+  color: #000000;
+  padding: 5px;
+  border: 0.5px solid black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.grid-item-article a.delete-article:hover {
+  background-color: #de504e;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.grid-item-article a.edit-article {
+  background-color: #fff700;
+  color: #000000;
+  padding: 5px;
+  border: 0.5px solid black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.grid-item-article a.edit-article:hover {
+  background-color: #fefdcf;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 /* SUBSCRIPTION PAGE */
@@ -580,7 +605,6 @@ a .subscription-box {
 
 input[type=submit] {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
@@ -615,7 +639,6 @@ tfoot {
   background-color: #fefdcf;
   color: #000000;
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -628,7 +651,6 @@ tfoot td {
 
 th {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
   font-size: 18px;
@@ -637,7 +659,6 @@ th {
 
 th.head {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -645,7 +666,6 @@ th.head {
 
 td {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
   font-size: 18px;
@@ -668,7 +688,6 @@ button[type=submit].remove-button {
 
 .cart-button {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;
@@ -682,6 +701,7 @@ button[type=submit].remove-button {
 
 .cart-button:hover {
   opacity: .7;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 a.cart-button:hover {

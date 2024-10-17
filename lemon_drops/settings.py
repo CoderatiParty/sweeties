@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
-#import dj_database_url
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,18 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 #SECRET_KEY = 'django-insecure-$sjwyb@64%9x1^oh^76u+!&#00ele-=35ns^=7er1)za^&(i=m'
+#DEBUG = True  # Enable this in development
+#ALLOWED_HOSTS = []
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = 'DEVELOPMENT' in os.environ
-
 ALLOWED_HOSTS = ['lemondrops-7ba75e0d4a2a.herokuapp.com', 'localhost']
-
-#DEBUG = True  # Enable this in development
-
-#ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -133,28 +130,28 @@ WSGI_APPLICATION = 'lemon_drops.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-#if 'DATABASE_URL' in os.environ:
-#    DATABASES = {
-#        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
-#else:
-#    DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.sqlite3',
-#            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#        }
-#    }
+#}
 
 #DATABASES = {
 #     'default': dj_database_url.parse('postgres://ufhomuytmtp:5WBGKWNbMDnL@ep-gentle-mountain-a23bxz6h-pooler.eu-central-1.aws.neon.tech/finch_salsa_crisp_181769')
 #}
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

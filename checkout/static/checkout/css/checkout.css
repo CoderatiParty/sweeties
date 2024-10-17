@@ -3,7 +3,6 @@ legend {
   color: #000000;
   text-align: center;
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -15,7 +14,6 @@ fieldset {
   color: #000000;
   text-align: center;
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 24px;
@@ -30,7 +28,6 @@ fieldset {
 select {
   color: #000000;
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 18px;

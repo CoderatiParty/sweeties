@@ -127,11 +127,11 @@
       </div>
         {% if not request.user.is_authenticated or not user_has_paid_subscription %}
           {% if cart_items %}
-            <a href="{% url 'view_cart' %}">
+            <a href="{% url 'view_cart' %}" aria-label="Full cart">
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
           {% else %}
-            <a href="{% url 'view_cart' %}">
+            <a href="{% url 'view_cart' %}" aria-label="Empty cart">
               <i class="fa-solid fa-cart-plus"></i>
             </a>
           {% endif %}

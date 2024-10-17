@@ -35,6 +35,7 @@ class AddArticleForm(forms.ModelForm):
                 else:
                     placeholder = placeholders.get(field, field.capitalize())
                 self.fields[field].widget.attrs['placeholder'] = placeholder
+                self.fields[field].widget.attrs['aria-label'] = placeholders.get(field, field.capitalize())
             self.fields[field].widget.attrs['class'] = ('border-black '
                                                         'rounded-0 '
                                                         'profile-form-input')

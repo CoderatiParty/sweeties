@@ -28,14 +28,12 @@
               {{ article.article_text }}
             </p>
             {% if request.user.is_staff %}
-              <small class="ml-3">
-                <a href="{% url 'edit_article' article.id %}" class="playfair-display-para btn add-article">
+                <a href="{% url 'edit_article' article.id %}" class="btn edit-article left">
                   Edit Article
                 </a>
-                <a href="{% url 'delete_article' article.id %}" class="playfair-display-para btn remove-button right">
+                <a href="{% url 'delete_article' article.id %}" class="btn delete-article right">
                   Delete Article
                 </a>
-              </small>
             {% endif %}
     </div>
    
