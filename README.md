@@ -712,7 +712,7 @@ The website was tested on the following browsers:
 </details>
 <br>
 
-13. Offer tips on not suing the site owner
+14. Offer tips on not suing the site owner
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
