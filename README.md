@@ -730,7 +730,7 @@ The website was tested on the following browsers:
 On deployment, it was discovered that Heroku has an ephemeral file system, meaning Django admin could not be used to upload a photo for each article, as was originally planned. To solve this, a workaround was devised whereby an extra image_name column was added to the article and subscription models. The corresponding templates were then updated to use image_name as the image source instead of the url, and, after migrating the changes to the database, this allowed the images stored in Amazon AWS to be displayed.
 
 #### Old Code
-
+```
 Subscriptions models.py:
 
 class User_Subscriptions(models.Model):
@@ -747,14 +747,14 @@ class User_Subscriptions(models.Model):
 
     def __str__(self):
         return self.subscription_type
-
+```
 add_subscription.html
-
+```
 <img src="{{ subscription.image.url }}" alt="{{ subscription.image_description }}" class="pic">
-
+```
 
 Home models.py:
-
+```
 class Article(models.Model):
     """
     Model for news article info
@@ -770,13 +770,13 @@ class Article(models.Model):
 
     def __str__(self):
         return self.headline
-
+```
 index.html:
-
+```
 <img src="{{ article.image.url }}" alt="{{ article.image_description }}" class="pic">
-
+```
 ##### New Code
-
+```
 Subscription models.py:
 
 class User_Subscriptions(models.Model):
@@ -794,14 +794,14 @@ class User_Subscriptions(models.Model):
 
     def __str__(self):
         return self.subscription_type
-
+```
 add_subscription.html
-
+```
 <img src="{{ MEDIA_URL }}{{ subscription.image_name }}" alt="{{ subscription.image_description }}" class="pic">
-
+```
 
 Home models.py:
-
+```
 class Article(models.Model):
     """
     Model for news article info
@@ -818,11 +818,11 @@ class Article(models.Model):
 
     def __str__(self):
         return self.headline
-
+```
 index.html:
-
+```
 <img src="{{ MEDIA_URL }}{{ article.image_name }}" alt="{{ article.image_description }}" class="pic">
-
+```
 #### Results
 
 [Add article form](docs/add_article.png) 
